@@ -2,6 +2,8 @@
     background-size: cover;
     background-position: center;
     color: white; /* Isso pode ajudar a garantir que o texto seja legível */
+    width: 500px;
+    margin: 0 auto;
   }
 
   .card-bg::before {
