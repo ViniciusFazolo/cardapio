@@ -1,4 +1,4 @@
-<div
+<a
   class="card card-bg"
   [ngStyle]="{ 'background-image': 'url(' + bgimage + ')' }"
 >
@@ -13,4 +13,7 @@
       <p class="card-text">{{ text }}</p>
     </div>
   </div>
+</a>
+<div class="product-options">
+  <ng-content></ng-content>
 </div>

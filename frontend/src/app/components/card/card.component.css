@@ -2,8 +2,11 @@
     background-size: cover;
     background-position: center;
     color: white; /* Isso pode ajudar a garantir que o texto seja legível */
-    width: 500px;
+  }
+
+  .product-options, .card-bg{
     margin: 0 auto;
+    width: 500px;
   }
 
   .card-bg::before {
@@ -21,3 +24,8 @@
   .card-body{
     z-index: 1;
   }
+
+  a{
+    text-decoration: none;
+  }
+
