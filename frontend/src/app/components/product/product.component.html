@@ -1,0 +1,13 @@
+<div class="card card-body border border-0">
+  <div class="row align-items-center">
+    <div class="col-3">
+        <img [src]="image" [alt]="imageDescription" class="img-fluid rounded-2">
+    </div>
+    <div class="col-6">
+        <h5 [textContent]="description"></h5>
+    </div>
+    <div class="col-3">
+        <span>{{ price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+    </div>
+  </div>
+</div>
