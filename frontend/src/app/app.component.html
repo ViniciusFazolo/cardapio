@@ -1,0 +1,19 @@
+<app-header [establishment]="'Nelson Vinicius restaurante'" [tableNumber]="4"></app-header>
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="row flex-column">
+    <div class="col mb-3">
+      <app-card [title]="'Espetinho'" [subtitle]="'seg - sex'" [text]="'Das 16 as 18'" [bgimage]="'assets/images/espetinho.jpg'" data-bs-toggle="collapse" data-bs-target="#espetinhoCollapse" aria-expanded="false" aria-controls="espetinhoCollapse">
+        <div class="collapse" id="espetinhoCollapse">
+         <app-product [image]="'assets/images/espetinho.jpg'" [imageDescription]="'Espeto de boi'" [description]="'Boi'" [price]="'7'"/>
+         <hr>
+        </div>
+      </app-card>  
+    </div>
+    <div class="col mb-3">
+      <app-card [title]="'Hamburgueres'" [subtitle]="'seg - sex'" [text]="'Das 16 as 18'" [bgimage]="'assets/images/hamburguer.jpeg'"></app-card>
+    </div>
+  </div>
+</div>
+
