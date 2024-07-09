@@ -1,6 +1,4 @@
-<div class="d-flex align-items-center height100 justify-content-center gap-3">
-  <div class="col-4">
-    <form>
+<app-login-layout [btnText]="'Login'">
       <app-primary-input
         [inputName]="'email'"
         [label]="'Email'"
@@ -13,12 +11,4 @@
         [placeholder]="'Senha'"
         [type]="'password'"
       ></app-primary-input>
-      <button type="submit" class="btn btn-primary mt-2">Login</button>
-    </form>
-  </div>
-  <div class="col-4">
-    <div class="imagem">
-       
-    </div>
-  </div>
-</div>
+</app-login-layout>
