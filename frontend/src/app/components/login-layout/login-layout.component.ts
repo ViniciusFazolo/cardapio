@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-login-layout',
@@ -8,6 +8,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './login-layout.component.css'
 })
 export class LoginLayoutComponent {
-  @Input() title: string = ''
-  @Input() btnText: string = ''
+  @Output('submit') onSubmit = new EventEmitter()
+  @Input() disableBtn: boolean = true;
+
+  submit(){
+    this.onSubmit.emit()
+  }
 }
