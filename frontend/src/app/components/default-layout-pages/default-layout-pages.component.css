@@ -1,0 +1,8 @@
+.card-header{
+    font-weight: 400;
+    padding: 0.7rem !important;
+}
+
+.card-body{
+    min-height: 60dvh;
+}

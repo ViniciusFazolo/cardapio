@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { UserlayoutComponent } from './components/userlayout/userlayout.component';
-import { AdminlayoutComponent } from './components/adminlayout/adminlayout.component';
+import { DefaultLayoutPagesComponent } from './components/default-layout-pages/default-layout-pages.component';
 
 export const routes: Routes = [
     {
@@ -10,7 +10,7 @@ export const routes: Routes = [
     },
     {
         path: 'adm',
-        component: AdminlayoutComponent,
+        component: DefaultLayoutPagesComponent,
     },
     {
         path: 'login',
