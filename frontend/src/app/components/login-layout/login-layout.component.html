@@ -1,9 +1,7 @@
 <div class="d-flex align-items-center height100 justify-content-center gap-3">
     <div class="col-4">
-        <form action="">
-            <ng-content></ng-content>
-            <button type="submit" class="btn btn-primary mt-2">{{btnText}}</button>
-        </form>
+        <ng-content></ng-content>
+        <button class="btn btn-primary mt-2" (click)="submit()" [disabled]="disableBtn">Login</button>
     </div>
     <div class="col-4">
         <div class="imagem"></div>
