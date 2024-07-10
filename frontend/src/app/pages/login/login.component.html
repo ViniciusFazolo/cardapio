@@ -1,0 +1,18 @@
+<app-login-layout (submit)="submit()" [disableBtn]="!loginForm.valid">
+  <form [formGroup]="loginForm">
+    <app-primary-input
+      [inputName]="'email'"
+      [label]="'Email'"
+      [placeholder]="'Email'"
+      [type]="'email'"
+      formControlName="email"
+    ></app-primary-input>
+    <app-primary-input
+      [inputName]="'password'"
+      [label]="'Senha'"
+      [placeholder]="'Senha'"
+      [type]="'password'"
+      formControlName="password"
+    ></app-primary-input>
+  </form>
+</app-login-layout>
