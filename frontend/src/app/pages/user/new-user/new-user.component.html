@@ -1,0 +1,35 @@
+<app-default-layout-pages [title]="'Novo usuário'">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="mb-3">
+        <label for="username" class="form-label">Nome: *</label>
+        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="username" id="username">
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="mb-3">
+        <label for="usuemail" class="form-label">Email: *</label>
+        <input type="email" class="form-control shadow-sm" placeholder="teste@gmail.com" name="usuemail" id="usuemail">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label for="usupassword" class="form-label">Senha: *</label>
+        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="usupassword" id="usupassword">
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-4">
+        <label for="usupassword2" class="form-label">Repetir senha: *</label>
+        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="usupassword2" id="usupassword2">
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="usuactive" name="usuactive" checked>
+        <label class="form-check-label" for="usuactive">Ativo</label>
+      </div>
+    </div>
+  </div>
+  <app-btns-end [previousPage]="'/adm/user'"></app-btns-end> 
+</app-default-layout-pages>
