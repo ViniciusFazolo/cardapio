@@ -3,3 +3,7 @@
 *{
     font-family: 'Poppins', sans-serif ;
 }
+
+body{
+    background-color: rgb(240, 239, 239) !important;
+}
