@@ -7,3 +7,19 @@
 body{
     background-color: rgb(240, 239, 239) !important;
 }
+
+/* bootstrap custom */
+.form-control{
+    background-color: #eff3f6 !important;
+}
+
+input::placeholder{
+    color: rgb(214, 214, 214) !important;
+}
+
+label{
+    font-size: 0.8rem;
+    color: #888888;
+}
+/* end bootstrap custom */
+
