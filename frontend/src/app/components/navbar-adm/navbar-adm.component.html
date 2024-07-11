@@ -1,10 +1,17 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid justify-content-start">
-        <button class="btn btn-secondary me-4" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <a class="navbar-brand" href="/">Logo</a>
+    <div class="container-fluid">
+        <div>
+            <button class="btn btn-secondary me-4" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a class="navbar-brand" routerLink="/">Logo</a>
+        </div>
+        <div>
+            <a href="#" class="logout btn btn-danger btn-sm">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
     </div>
 </nav>
 
@@ -17,11 +24,13 @@
     <div class="offcanvas-body">
         <div class="row flex-column">
             <div class="col">
-                <a href="#" class="nav-link">
-                    <i class="fa-solid fa-user me-2"></i> 
+                <a routerLink="user" class="nav-link">
+                    <i class="fa-solid fa-user me-2"></i>
                     Usuários
                 </a>
-                <a href="#" class="nav-link">
+            </div>
+            <div class="col">
+                <a routerLink="product" class="nav-link">
                     <i class="fa-solid fa-box me-2"></i>
                     Produtos
                 </a>

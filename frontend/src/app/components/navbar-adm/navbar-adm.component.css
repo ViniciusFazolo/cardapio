@@ -1,14 +1,14 @@
-.nav-link{
-    padding: 10px 20px;
-    transition: 0.3s;
+.nav-link {
+  padding: 10px 20px;
+  transition: 0.3s;
 }
 
-.nav-link:hover{
-    background-color: grey;
-    border-radius: 10px;
-    color: white;
+.nav-link:hover {
+  background-color: grey;
+  border-radius: 10px;
+  color: white;
 }
 
 .offcanvas-start {
-    transition: transform 0.5s ease-in-out;
-  }
+  transition: transform 0.5s ease-in-out;
+}
