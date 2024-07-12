@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLinkWithHref } from '@angular/router';
 
 @Component({
@@ -10,4 +10,9 @@ import { RouterLinkWithHref } from '@angular/router';
 })
 export class BtnsEndComponent {
   @Input() previousPage: string = ''
+  @Output() onClickEmitter = new EventEmitter();
+
+  onClick(){
+    this.onClickEmitter.emit()
+  }
 }
