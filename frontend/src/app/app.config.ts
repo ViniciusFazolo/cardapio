@@ -12,6 +12,7 @@ import { routes } from './app.routes';
 import { CurrencyPipe, registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 
 registerLocaleData(ptBr);
 
@@ -21,6 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAnimations(),
     provideToastr(),
+    provideEnvironmentNgxMask(),
     CurrencyPipe,
     {
       provide: LOCALE_ID,

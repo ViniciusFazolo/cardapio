@@ -4,6 +4,8 @@ import { UserlayoutComponent } from './components/userlayout/userlayout.componen
 import { HomeComponent } from './pages/home/home.component';
 import { ListUserComponent } from './pages/user/list-user/list-user.component';
 import { NewUserComponent } from './pages/user/new-user/new-user.component';
+import { ListProductComponent } from './pages/product/list-product/list-product.component';
+import { NewProductComponent } from './pages/product/new-product/new-product.component';
 
 export const routes: Routes = [
     {
@@ -23,7 +25,15 @@ export const routes: Routes = [
             },
             {
                 path: 'user/create',
-                component: NewUserComponent
+                component: NewUserComponent,
+            },
+            {
+                path: 'product',
+                component: ListProductComponent
+            },
+            {
+                path: 'product/create',
+                component: NewProductComponent
             }
         ]
     },

@@ -1,0 +1,23 @@
+<app-default-layout-pages [title]="'Novo Produto'">
+    <div class="row">
+        <div class="col-12">
+          <div class="mb-3">
+            <label for="image" class="form-label">Imagem: *</label>
+            <input type="file" class="form-control shadow-sm" name="image" id="image">
+          </div>
+        </div>
+      <div class="col-md-8">
+        <div class="mb-3">
+          <label for="description" class="form-label">Descrição: *</label>
+          <input type="text" class="form-control shadow-sm" placeholder="Coca-Cola" name="description" id="description">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-3">
+          <label for="price" class="form-label">Preço: *</label>
+          <input type="text" class="form-control shadow-sm" placeholder="R$ 6,99" name="price" id="price" mask="separator.2" thousandSeparator="." prefix="R$ ">
+        </div>
+      </div>
+    </div>
+    <app-btns-end [previousPage]="'/adm/product'"></app-btns-end> 
+  </app-default-layout-pages>
