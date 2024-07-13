@@ -9,8 +9,7 @@ public record ResponseProductDTO(
     String description,
     int quantity,
     String urlImage,
-    Category category,
-    boolean ative
+    Category category
 ) {
     
 }

@@ -64,10 +64,4 @@ public class CategoryService {
             throw new RuntimeException("Category not found");
         }
     }
-
-    public void changeAtivo(String id){
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        category.setAtive(!category.isAtive());
-        categoryRepository.save(category);
-    }
 }

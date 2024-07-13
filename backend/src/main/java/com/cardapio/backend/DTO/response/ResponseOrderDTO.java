@@ -7,8 +7,7 @@ public record ResponseOrderDTO(
     int tableNumber,
     int phoneNumber,
     String clientName,
-    LocalDateTime dateHour,
-    boolean ative
+    LocalDateTime dateHour
 ) {
     
 }

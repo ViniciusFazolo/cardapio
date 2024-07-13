@@ -22,8 +22,7 @@ public class CategoryMapper {
         return new ResponseCategoryDTO(
             category.getId(),
             category.getName(),
-            category.getDescription(),
-            category.isAtive()
+            category.getDescription()
         );
     }
 

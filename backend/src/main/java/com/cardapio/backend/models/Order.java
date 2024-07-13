@@ -20,6 +20,5 @@ public class Order {
     private int phoneNumber;
     private String clientName;
     private LocalDateTime dateHour;
-    private boolean ative = true;
 
 }

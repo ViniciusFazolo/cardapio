@@ -20,7 +20,6 @@ public class Product {
     private String description;
     private int quantity;
     private String urlImage;
-    private boolean ative = true;
 
     @ManyToOne
     private Category category;

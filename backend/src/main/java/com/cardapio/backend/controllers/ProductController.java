@@ -49,9 +49,4 @@ public class ProductController {
         productService.delete(id);
     }
 
-    @PutMapping("/changeAtivo/{id}")
-    public void changeAtivo(@PathVariable String id){
-        productService.changeAtivo(id);
-    }
-
 }
