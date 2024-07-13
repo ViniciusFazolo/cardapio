@@ -49,4 +49,9 @@ public class CategoryController {
         categoryService.delete(id);
     }
 
+    @PutMapping("/changeAtivo/{id}")
+    public void changeAtivo(@PathVariable String id){
+        categoryService.changeAtivo(id);
+    }
+
 }

@@ -68,4 +68,10 @@ public class ProductService {
             throw new RuntimeException("Product not found");
         }
     }
+
+    public void changeAtivo(String id){
+        Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        product.setAtive(!product.isAtive());
+        productRepository.save(product);
+    }
 }
