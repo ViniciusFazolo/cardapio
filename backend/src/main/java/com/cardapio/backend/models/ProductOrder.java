@@ -4,17 +4,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
 @Data
-public class Categoria {
+public class ProductOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     
-    private String nome;
-    private String descricao;
-    private boolean ativo = true;
+    @ManyToOne
+    private Order order;
+
+    @ManyToOne
+    private Product product;
+
+    private int quantity;
+
 }

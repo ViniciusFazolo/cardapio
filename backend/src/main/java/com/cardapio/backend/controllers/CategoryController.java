@@ -13,40 +13,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cardapio.backend.DTO.request.RequestCategoriaDTO;
-import com.cardapio.backend.DTO.response.ResponseCategoriaDTO;
-import com.cardapio.backend.services.CategoriaService;
+import com.cardapio.backend.DTO.request.RequestCategoryDTO;
+import com.cardapio.backend.DTO.response.ResponseCategoryDTO;
+import com.cardapio.backend.services.CategoryService;
 
 @RestController
-@RequestMapping("/api/categoria")
-public class CategoriaController {
+@RequestMapping("/api/category")
+public class CategoryController {
     
     @Autowired
-    private CategoriaService categoriaService;
+    private CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseCategoriaDTO> save(@RequestBody RequestCategoriaDTO request){
-            return categoriaService.save(request);
+    public ResponseEntity<ResponseCategoryDTO> save(@RequestBody RequestCategoryDTO request){
+            return categoryService.save(request);
     }
 
     @GetMapping("/listAll")
-    public ResponseEntity<List<ResponseCategoriaDTO>> listAll(){
-        return categoriaService.listAll();
+    public ResponseEntity<List<ResponseCategoryDTO>> listAll(){
+        return categoryService.listAll();
     }
 
     @GetMapping("/list/{id}")
-    public ResponseEntity<ResponseCategoriaDTO> findById(@PathVariable String id){
-        return categoriaService.findById(id);
+    public ResponseEntity<ResponseCategoryDTO> findById(@PathVariable String id){
+        return categoryService.findById(id);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseCategoriaDTO> update(@RequestBody RequestCategoriaDTO request, @PathVariable String id){
-        return categoriaService.update(request, id);
+    public ResponseEntity<ResponseCategoryDTO> update(@RequestBody RequestCategoryDTO request, @PathVariable String id){
+        return categoryService.update(request, id);
     }
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable String id){
-        categoriaService.delete(id);
+        categoryService.delete(id);
     }
 
 }
