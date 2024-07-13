@@ -30,8 +30,8 @@ public class CategoryService {
             });
         }
 
-        Category newcategory = categoryRepository.save(categoryMapper.toEntity(request));
-        return ResponseEntity.ok().body(categoryMapper.toDTO(newcategory));
+        Category newCategory = categoryRepository.save(categoryMapper.toEntity(request));
+        return ResponseEntity.ok().body(categoryMapper.toDTO(newCategory));
     }
 
     public ResponseEntity<List<ResponseCategoryDTO>> listAll(){
