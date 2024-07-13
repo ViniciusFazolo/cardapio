@@ -1,16 +1,27 @@
-<app-default-layout-pages [title]="'Nova categoria'" (submit)="onClick()">
-    <form [formGroup]="myForm">
-        <div class="row">
-            <div class="col">
-              <div class="mb-3">
-                <label for="description" class="form-label">Descrição: *</label>
-                <input type="text" class="form-control shadow-sm" formControlName="description" id="description" placeholder="Refrigerantes">
-                @if (myForm.controls['description'].invalid && myForm.controls['description'].touched) {
-                    <small class="text-danger">Campo obrigatório</small>
-                }
-              </div>
-            </div>
+<app-default-layout-pages [title]="id ? 'Editar categoria' : 'Nova categoria'" (submit)="save()">
+  <form [formGroup]="myForm">
+    <div class="row">
+      <div class="col-12">
+        <div class="mb-3">
+          <label for="image" class="form-label">Imagem: *</label>
+          <input type="file" class="form-control shadow-sm" id="image" formControlName="image" (change)="uploadImage($event)">
+          @if (myForm.controls['image'].invalid &&
+          myForm.controls['image'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
         </div>
-        <app-btns-end [previousPage]="'/adm/category'"></app-btns-end> 
-    </form>
-  </app-default-layout-pages>
+      </div>
+      <div class="col-12">
+        <div class="mb-4">
+          <label for="description" class="form-label">Descrição: *</label>
+          <input type="text" class="form-control shadow-sm" formControlName="description" id="description" placeholder="Refrigerantes" />
+          @if (myForm.controls['description'].invalid &&
+          myForm.controls['description'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
+        </div>
+      </div>
+    </div>
+    <app-btns-end [previousPage]="'/adm/category'"></app-btns-end>
+  </form>
+</app-default-layout-pages>

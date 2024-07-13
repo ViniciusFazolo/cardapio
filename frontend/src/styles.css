@@ -22,6 +22,9 @@ label{
     color: #888888;
 }
 /* end bootstrap custom */
+
+/* input validation */
 input.ng-touched.ng-invalid{
     border: 1px solid red;
 }
+/* end input validation */
