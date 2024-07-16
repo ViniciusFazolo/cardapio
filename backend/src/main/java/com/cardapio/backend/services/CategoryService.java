@@ -48,8 +48,8 @@ public class CategoryService {
 
     public ResponseEntity<ResponseCategoryDTO> update(RequestCategoryDTO request, String id){
         return categoryRepository.findById(id).map(category -> {
-            category.setName(request.name());
             category.setDescription(request.description());
+            category.setUrlImage(request.urlImage());
 
             Category updatedCategory = categoryRepository.save(category);
             return ResponseEntity.ok().body(categoryMapper.toDTO(updatedCategory));

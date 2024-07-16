@@ -12,8 +12,8 @@ public class CategoryMapper {
     public Category toEntity(RequestCategoryDTO request) {
 
         Category category = new Category();
-        category.setName(request.name());
         category.setDescription(request.description());
+        category.setUrlImage(request.urlImage());
         return category;
     }
 
@@ -21,7 +21,7 @@ public class CategoryMapper {
         
         return new ResponseCategoryDTO(
             category.getId(),
-            category.getName(),
+            category.getUrlImage(),
             category.getDescription()
         );
     }
