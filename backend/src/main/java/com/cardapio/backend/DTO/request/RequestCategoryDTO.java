@@ -1,8 +1,10 @@
 package com.cardapio.backend.DTO.request;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public record RequestCategoryDTO(
     String id,
-    String urlImage,
+    MultipartFile image,
     String description
 ) {
     
