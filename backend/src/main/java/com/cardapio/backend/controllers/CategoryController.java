@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +25,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseCategoryDTO> save(@RequestBody RequestCategoryDTO request){
+    public ResponseEntity<ResponseCategoryDTO> save(@ModelAttribute RequestCategoryDTO request){
             return categoryService.save(request);
     }
 
@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseCategoryDTO> update(@RequestBody RequestCategoryDTO request, @PathVariable String id){
+    public ResponseEntity<ResponseCategoryDTO> update(@ModelAttribute RequestCategoryDTO request, @PathVariable String id){
         return categoryService.update(request, id);
     }
 
