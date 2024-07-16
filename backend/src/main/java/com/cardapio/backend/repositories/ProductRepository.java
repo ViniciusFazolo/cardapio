@@ -3,9 +3,9 @@ package com.cardapio.backend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cardapio.backend.models.Produto;
+import com.cardapio.backend.models.Product;
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, String>{
+public interface ProductRepository extends JpaRepository<Product, String>{
     
 }

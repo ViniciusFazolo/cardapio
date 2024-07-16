@@ -3,9 +3,9 @@ package com.cardapio.backend.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cardapio.backend.models.Categoria;
+import com.cardapio.backend.models.Category;
 
 @Repository
-public interface CategoriaRepository extends JpaRepository<Categoria, String>{
+public interface CategoryRepository extends JpaRepository<Category, String>{
     
 }
