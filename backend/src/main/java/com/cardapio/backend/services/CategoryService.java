@@ -28,7 +28,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private final String uploadDir = "resources\\static\\images";
+    private final String uploadDir = "src\\main\\resources\\static\\images";
 
     public CategoryService() {
         try {
