@@ -10,7 +10,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Order {
+public class Customer_Order {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.cardapio.backend.DTO.mapper.OrderMapper;
 import com.cardapio.backend.DTO.request.RequestOrderDTO;
 import com.cardapio.backend.DTO.response.ResponseOrderDTO;
-import com.cardapio.backend.models.Order;
+import com.cardapio.backend.models.Customer_Order;
 import com.cardapio.backend.repositories.OrderRepository;
 
 @Service
@@ -29,7 +29,7 @@ public class OrderService {
             });
         }
 
-        Order newOrder = orderRepository.save(orderMapper.toEntity(request));
+        Customer_Order newOrder = orderRepository.save(orderMapper.toEntity(request));
         return ResponseEntity.ok().body(orderMapper.toDTO(newOrder));
     }
 
@@ -40,7 +40,7 @@ public class OrderService {
     }
 
     public ResponseEntity<ResponseOrderDTO> findById(String id){
-        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        Customer_Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
         return ResponseEntity.ok().body(orderMapper.toDTO(order));
     }
 
@@ -50,7 +50,7 @@ public class OrderService {
             order.setPhoneNumber(request.phoneNumber());
             order.setClientName(request.clientName());
 
-            Order updatedOrder = orderRepository.save(order);
+            Customer_Order updatedOrder = orderRepository.save(order);
             return ResponseEntity.ok().body(orderMapper.toDTO(updatedOrder));
         }).orElseThrow(() -> new RuntimeException("Order not found"));
     }

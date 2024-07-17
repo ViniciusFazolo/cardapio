@@ -1,10 +1,12 @@
 package com.cardapio.backend.services;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private final String uploadDir = "resources\\static\\images";
+    private final String uploadDir = System.getProperty("user.dir") + File.separator + "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "categoryImages";
 
     public CategoryService() {
         try {
@@ -37,7 +39,6 @@ public class CategoryService {
             throw new RuntimeException("Directory not exists", e);
         }
     }
-
 
     public ResponseEntity<ResponseCategoryDTO> save(RequestCategoryDTO request) {
         if(request.id() != null){
@@ -74,6 +75,9 @@ public class CategoryService {
         return categoryRepository.findById(id).map(category -> {
             category.setDescription(request.description());
 
+            //apaga o arquivo antes de atualizar
+            fileExists(category.getUrlImage());
+
             if (request.image() != null) {
                 String imageUrl = saveImage(request.image());
                 category.setUrlImage(imageUrl);
@@ -95,12 +99,41 @@ public class CategoryService {
 
     private String saveImage(MultipartFile image) {
         try {
-            String filename = image.getOriginalFilename();
-            Path path = Paths.get(uploadDir + filename); // caminho que vai salvar
+            //gera um nome único
+            String uniqueFilename = UUID.randomUUID().toString();
+            
+            //salva a extensão do arquivo
+            String imageExtension = getFileExtension(image.getOriginalFilename());
+   
+            String filename = uniqueFilename + "." + imageExtension;
+   
+            Path path = Paths.get(uploadDir, filename); // caminho que vai salvar
             Files.write(path, image.getBytes()); //salva no caminho especificado
             return filename;
         } catch (IOException e) {
             throw new RuntimeException("Erro ao salvar a imagem", e);
+        }
+    }
+
+    private static String getFileExtension(String fileName) {
+        if(fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
+            return fileName.substring(fileName.lastIndexOf(".") + 1);
+        } else {
+            return "";
+        }
+    }
+
+    private void fileExists(String imageUrl){
+        File directory = new File(uploadDir);
+        File[] files = directory.listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().equalsIgnoreCase(imageUrl)) {
+                    file.delete();
+                    break;
+                }
+            }
         }
     }
 }

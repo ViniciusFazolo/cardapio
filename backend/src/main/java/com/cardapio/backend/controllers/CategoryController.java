@@ -26,7 +26,7 @@ public class CategoryController {
 
     @PostMapping("/create")
     public ResponseEntity<ResponseCategoryDTO> save(@ModelAttribute RequestCategoryDTO request){
-            return categoryService.save(request);
+        return categoryService.save(request);
     }
 
     @GetMapping("/listAll")
