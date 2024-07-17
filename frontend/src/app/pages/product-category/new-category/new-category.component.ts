@@ -27,8 +27,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NewCategoryComponent implements OnInit {
   myForm: FormGroup;
   id: string | null = '';
-  itemToEdit: Category = {description: '', urlImage: null};
+  itemToEdit: Category = {description: '', image: null};
   imageUploaded!: File
+  imagePreview: any
 
   constructor(
     private categoryService: CategoryService,
@@ -65,8 +66,12 @@ export class NewCategoryComponent implements OnInit {
   }
 
   create() {
+    const category = new FormData()
+    category.append('description', this.myForm.value.description)
+    category.append('image', this.imageUploaded)
+
     this.categoryService
-      .create({ description: this.myForm.value.description, urlImage:  this.imageUploaded!})
+      .create(category)
       .subscribe(
         (response) => {
           this.toastr.success('Cadastrado com sucesso!');
@@ -79,7 +84,15 @@ export class NewCategoryComponent implements OnInit {
   }
 
   update() {
-    this.categoryService.update({id: this.itemToEdit.id, description: this.myForm.value.description, urlImage: this.imageUploaded}).subscribe(
+    const category = new FormData()
+    category.append('description', this.myForm.value.description)
+    category.append('image', this.imageUploaded)
+
+    if(this.id){
+      category.append('id', this.id)
+    }
+
+    this.categoryService.update(category).subscribe(
       (response) => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/category']);

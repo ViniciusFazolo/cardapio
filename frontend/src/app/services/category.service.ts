@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Category{
   id?: string,
   description: string,
-  urlImage: File | null
+  image: File | null
 }
 
 @Injectable({
@@ -13,7 +13,7 @@ export interface Category{
 })
 
 export class CategoryService {
-  private url: string = 'http://localhost:8080/api/categoria'
+  private url: string = 'http://localhost:8080/api/category'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,13 +25,12 @@ export class CategoryService {
     return this.httpClient.get<Category>(`${this.url}/list/` + id)
   }
 
-  create(category: Category): Observable<Category>{
+  create(category: FormData): Observable<Category>{
     return this.httpClient.post<Category>(`${this.url}/create`, category);
   }
 
-  update(category: Category): Observable<Category>{
-    console.log(category)
-    return this.httpClient.put<Category>(`${this.url}/update/` + category.id, category)
+  update(category: FormData): Observable<Category>{
+    return this.httpClient.put<Category>(`${this.url}/update/` + category.get('id'), category)
   }
 
   delete(id: string): Observable<void>{

@@ -47,7 +47,6 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     this.categoryService.getAll().subscribe((categories) => {
       this.categories = categories;
       if (this.dtElement.dtInstance == undefined) {
-        console.log('aq')
         this.dtTrigger.next(null);
       }else{
         this.rerender()
