@@ -11,6 +11,7 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "tb_order")
 public class Order {
     
     @Id
