@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private final String uploadDir = System.getProperty("user.dir") + File.separator + "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "categoryImages";
+    private final String uploadDir = System.getProperty("user.dir") + File.separator + "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "categoryImages";
 
     public CategoryService() {
         try {
@@ -76,7 +77,7 @@ public class CategoryService {
             category.setDescription(request.description());
 
             //apaga o arquivo antes de atualizar
-            fileExists(category.getUrlImage());
+            fileExistsDelete(category.getUrlImage());
 
             if (request.image() != null) {
                 String imageUrl = saveImage(request.image());
@@ -90,6 +91,9 @@ public class CategoryService {
 
     public void delete(String id){
         if(categoryRepository.existsById(id)){
+            Optional<Category> obj = categoryRepository.findById(id);
+            fileExistsDelete(obj.get().getUrlImage());
+
             categoryRepository.deleteById(id);
         }
         else{
@@ -123,7 +127,7 @@ public class CategoryService {
         }
     }
 
-    private void fileExists(String imageUrl){
+    private void fileExistsDelete(String imageUrl){
         File directory = new File(uploadDir);
         File[] files = directory.listFiles();
 

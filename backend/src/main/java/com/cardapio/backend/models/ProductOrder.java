@@ -16,7 +16,7 @@ public class ProductOrder {
     private String id;
     
     @ManyToOne
-    private Customer_Order order;
+    private Order order;
 
     @ManyToOne
     private Product product;

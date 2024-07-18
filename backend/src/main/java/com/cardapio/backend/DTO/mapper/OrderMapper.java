@@ -4,13 +4,13 @@ import org.springframework.stereotype.Component;
 
 import com.cardapio.backend.DTO.request.RequestOrderDTO;
 import com.cardapio.backend.DTO.response.ResponseOrderDTO;
-import com.cardapio.backend.models.Customer_Order;
+import com.cardapio.backend.models.Order;
 
 @Component
 public class OrderMapper {
     
-    public Customer_Order toEntity(RequestOrderDTO request){
-        Customer_Order order = new Customer_Order();
+    public Order toEntity(RequestOrderDTO request){
+        Order order = new Order();
         order.setTableNumber(request.tableNumber());
         order.setPhoneNumber(request.phoneNumber());
         order.setClientName(request.clientName());
@@ -18,7 +18,7 @@ public class OrderMapper {
         return order;
     }
 
-    public ResponseOrderDTO toDTO(Customer_Order order){
+    public ResponseOrderDTO toDTO(Order order){
         return new ResponseOrderDTO(
             order.getId(),
             order.getTableNumber(),
