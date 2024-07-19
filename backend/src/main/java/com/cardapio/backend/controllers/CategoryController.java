@@ -3,6 +3,7 @@ package com.cardapio.backend.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ public class CategoryController {
     @GetMapping("/listAll")
     public ResponseEntity<List<ResponseCategoryDTO>> listAll(){
         return categoryService.listAll();
+    }
+
+    @GetMapping("/assets/{filename}")
+    public ResponseEntity<Resource> file(@PathVariable String filename){
+        return categoryService.file(filename);
     }
 
     @GetMapping("/list/{id}")
