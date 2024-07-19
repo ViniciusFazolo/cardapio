@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withFetch()),
     provideAnimations(),
-    provideToastr(),
+    provideToastr({progressBar: true, closeButton: true}),
     provideEnvironmentNgxMask(),
     CurrencyPipe,
     {

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 export interface Category{
   id?: string,
   description: string,
-  image: File | null
+  image: string
 }
 
 @Injectable({
@@ -35,5 +35,9 @@ export class CategoryService {
 
   delete(id: string): Observable<void>{
     return this.httpClient.delete<void>(`${this.url}/delete/${id}`)
+  }
+
+  searchImg(filename: string):Observable<Blob>{
+    return this.httpClient.get<Blob>(`${this.url}/assets/` + filename, { responseType: 'blob' as 'json' })
   }
 }
