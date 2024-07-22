@@ -29,6 +29,11 @@ public class UserController {
         return userService.save(request);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<ResponseUserDTO> login(@RequestBody RequestUserDTO request){
+        return userService.login(request);
+    }
+
     @GetMapping("/listAll")
     public ResponseEntity<List<ResponseUserDTO>> listAll(){
         return userService.listAll();
