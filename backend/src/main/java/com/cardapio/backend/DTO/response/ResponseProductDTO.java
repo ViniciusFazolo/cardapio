@@ -6,7 +6,7 @@ public record ResponseProductDTO(
     String id,
     float price,
     String description,
-    String urlImage,
+    String image,
     Category category
 ) {
     

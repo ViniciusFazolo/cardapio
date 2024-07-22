@@ -13,7 +13,7 @@ public class ProductMapper {
         Product product = new Product();
         product.setPrice(request.price());
         product.setDescription(request.description());
-        product.setUrlImage(request.urlImage());
+        product.setUrlImage(request.image().getOriginalFilename());
         product.setCategory(request.category());
 
         return product;
