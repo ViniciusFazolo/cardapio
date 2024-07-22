@@ -24,7 +24,8 @@ public class UserMapper {
             usuario.getName(),
             usuario.getEmail(),
             usuario.getPassword(),
-            usuario.getActive()
+            usuario.getActive(),
+            usuario.getToken()
         );
     }
 }

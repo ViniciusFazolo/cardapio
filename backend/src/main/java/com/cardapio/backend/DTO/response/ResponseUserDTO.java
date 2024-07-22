@@ -4,8 +4,9 @@ public record ResponseUserDTO(
     String id,
     String name,
     String email,
-    String password,
-    Boolean active
+    String token,
+    Boolean active,
+    String password
 ) {
     
 }
