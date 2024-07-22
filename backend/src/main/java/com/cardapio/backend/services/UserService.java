@@ -53,7 +53,7 @@ public class UserService {
         User user = this.userRepository.findByEmail(request.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(request.password(),user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseUserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword(), token));
+            return ResponseEntity.ok(new ResponseUserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getActive(),token));
         }
         return ResponseEntity.badRequest().build();
     }    
