@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cardapio.backend.DTO.mapper.UserMapper;
@@ -12,12 +13,19 @@ import com.cardapio.backend.DTO.request.RequestUserDTO;
 import com.cardapio.backend.DTO.response.ResponseUserDTO;
 import com.cardapio.backend.models.User;
 import com.cardapio.backend.repositories.UserRepository;
+import com.cardapio.backend.security.TokenService;
 
 @Service
 public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private UserMapper userMapper;
@@ -29,9 +37,26 @@ public class UserService {
             });
         }
         
-        User newUser = userRepository.save(userMapper.toEntity(request));
+        User newUser = new User();
+        newUser.setName(request.name());
+        newUser.setEmail(request.email());
+        newUser.setPassword(passwordEncoder.encode(request.password()));
+
+        String token = tokenService.generateToken(newUser);
+        newUser.setToken(token);
+        
+        userRepository.save(newUser);
         return ResponseEntity.ok().body(userMapper.toDTO(newUser));
     }
+
+    public ResponseEntity<ResponseUserDTO> login(RequestUserDTO request){
+        User user = this.userRepository.findByEmail(request.email()).orElseThrow(() -> new RuntimeException("User not found"));
+        if(passwordEncoder.matches(request.password(),user.getPassword())){
+            String token = this.tokenService.generateToken(user);
+            return ResponseEntity.ok(new ResponseUserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword(), token));
+        }
+        return ResponseEntity.badRequest().build();
+    }    
 
     public ResponseEntity<List<ResponseUserDTO>> listAll(){
         List<ResponseUserDTO> users = userRepository.findAll().stream().map(userMapper::toDTO).collect(Collectors.toList());
