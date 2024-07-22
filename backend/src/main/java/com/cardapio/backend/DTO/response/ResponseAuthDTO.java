@@ -1,11 +1,11 @@
 package com.cardapio.backend.DTO.response;
 
-public record ResponseUserDTO(
+public record ResponseAuthDTO(
     String id,
     String name,
     String email,
-    String password,
-    Boolean active
+    Boolean active,
+    String token
 ) {
     
 }

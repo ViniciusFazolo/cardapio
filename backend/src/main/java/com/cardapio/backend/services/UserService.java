@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.cardapio.backend.DTO.mapper.UserMapper;
 import com.cardapio.backend.DTO.request.RequestUserDTO;
+import com.cardapio.backend.DTO.response.ResponseAuthDTO;
 import com.cardapio.backend.DTO.response.ResponseUserDTO;
 import com.cardapio.backend.models.User;
 import com.cardapio.backend.repositories.UserRepository;
@@ -30,7 +31,7 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public ResponseEntity<ResponseUserDTO> save(RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> save(RequestUserDTO request){
         if(request.id() != null){
             userRepository.findByEmail(request.email()).ifPresent(user -> {
                 throw new RuntimeException("Usuario already exists");
@@ -41,19 +42,19 @@ public class UserService {
         newUser.setName(request.name());
         newUser.setEmail(request.email());
         newUser.setPassword(passwordEncoder.encode(request.password()));
+        newUser.setActive(request.active());
+        userRepository.save(newUser);
 
         String token = tokenService.generateToken(newUser);
-        newUser.setToken(token);
         
-        userRepository.save(newUser);
-        return ResponseEntity.ok().body(userMapper.toDTO(newUser));
+        return ResponseEntity.ok(new ResponseAuthDTO(newUser.getId(), newUser.getName(), newUser.getEmail(), newUser.getActive(), token));
     }
 
-    public ResponseEntity<ResponseUserDTO> login(RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> login(RequestUserDTO request){
         User user = this.userRepository.findByEmail(request.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(request.password(),user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseUserDTO(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.getActive(),token));
+            return ResponseEntity.ok(new ResponseAuthDTO(user.getName(), user.getName(), user.getEmail(), user.getActive(), token));
         }
         return ResponseEntity.badRequest().build();
     }    
