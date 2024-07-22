@@ -1,23 +1,85 @@
-<app-default-layout-pages [title]="'Novo Produto'">
-    <div class="row">
-        <div class="col-12">
-          <div class="mb-3">
-            <label for="image" class="form-label">Imagem: *</label>
-            <input type="file" class="form-control shadow-sm" name="image" id="image">
+<app-default-layout-pages [title]="id ? 'Editar Produto' : 'Novo Produto'" (submit)="save()">
+  <form [formGroup]="myForm">
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="col" *ngIf="imgUrl">
+          <div class="mb-2">
+            <img [src]="imgUrl" class="img-fluid border border-1">
+          </div>
+          <div class="mb-2">
+            <button class="btn btn-sm btn-secondary" type="button" (click)="chooseImage()" *ngIf="!showInputFile">Escolher outra imagem</button>
           </div>
         </div>
-      <div class="col-md-8">
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Imagem: *</label>
+          <input
+            type="file"
+            class="form-control shadow-sm"
+            formControlName="image"
+            id="image"
+            (change)="uploadImage($event)"
+          />
+          @if (myForm.controls['image'].invalid &&
+          myForm.controls['image'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
+        </div>
+      </div>
+      <div class="col-md-4">
         <div class="mb-3">
           <label for="description" class="form-label">Descrição: *</label>
-          <input type="text" class="form-control shadow-sm" placeholder="Coca-Cola" name="description" id="description">
+          <input
+            type="text"
+            class="form-control shadow-sm"
+            placeholder="Coca-Cola"
+            formControlName="description"
+            id="description"
+          />
+          @if (myForm.controls['description'].invalid &&
+          myForm.controls['description'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
         </div>
       </div>
       <div class="col-md-4">
         <div class="mb-3">
           <label for="price" class="form-label">Preço: *</label>
-          <input type="text" class="form-control shadow-sm" placeholder="R$ 6,99" name="price" id="price" mask="separator.2" thousandSeparator="." prefix="R$ ">
+          <input
+            type="text"
+            class="form-control shadow-sm"
+            placeholder="R$ 6,99"
+            formControlName="price"
+            id="price"
+            mask="separator.2"
+            thousandSeparator="."
+            prefix="R$ "
+          />
+          @if (myForm.controls['price'].invalid &&
+          myForm.controls['price'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-3">
+          <label for="category" class="form-label">Categoria: *</label>
+          <select
+            class="form-select form-control shadow-sm"
+            id="category"
+            formControlName="category"
+          >
+            @for (category of categories; track $index) {
+            <option [value]="category.id">{{ category.description }}</option>
+            }
+          </select>
+          @if (myForm.controls['category'].invalid &&
+          myForm.controls['category'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
         </div>
       </div>
     </div>
-    <app-btns-end [previousPage]="'/adm/product'"></app-btns-end> 
-  </app-default-layout-pages>
+    <app-btns-end [previousPage]="'/adm/product'"></app-btns-end>
+  </form>
+</app-default-layout-pages>
