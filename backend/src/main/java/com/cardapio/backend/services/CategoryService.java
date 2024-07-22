@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private final String uploadDir = System.getProperty("user.dir") + File.separator + "backend" + File.separator
-            + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
+    private final String uploadDir = "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
             + File.separator + "categoryImages";
 
     public CategoryService() {
@@ -53,7 +51,7 @@ public class CategoryService {
                 throw new RuntimeException("Category already exists");
             });
         }
-
+        System.out.println(uploadDir);
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
         String imageUrl = UtilFunctions.saveImage(image, uploadDir);

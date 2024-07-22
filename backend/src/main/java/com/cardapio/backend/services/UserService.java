@@ -50,6 +50,7 @@ public class UserService {
             user.setName(request.name());
             user.setEmail(request.email());
             user.setPassword(request.password());
+            user.setActive(request.active());
 
             User updatedUser = userRepository.save(user);
             return ResponseEntity.ok().body(userMapper.toDTO(updatedUser));
