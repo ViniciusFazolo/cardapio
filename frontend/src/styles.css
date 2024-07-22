@@ -27,4 +27,13 @@ label{
 input.ng-touched.ng-invalid{
     border: 1px solid red;
 }
+
 /* end input validation */
+
+small{
+    font-size: 0.7rem !important;
+}
+
+a{
+    text-decoration: none !important;
+}

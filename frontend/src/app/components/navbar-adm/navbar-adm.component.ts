@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-adm',
@@ -8,6 +8,4 @@ import { RouterLinkWithHref } from '@angular/router';
   templateUrl: './navbar-adm.component.html',
   styleUrl: './navbar-adm.component.css'
 })
-export class NavbarAdmComponent {
-
-}
+export class NavbarAdmComponent {}

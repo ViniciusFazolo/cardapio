@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { Category, CategoryService } from '../../../services/category.service';
 import { CommonModule } from '@angular/common';
@@ -38,19 +38,25 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     this.createDataTable();
     this.getCategories();
   }
-
+  
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
-
+  
   getCategories() {
     this.categoryService.getAll().subscribe((categories) => {
       this.categories = categories;
-      if (this.dtElement.dtInstance == undefined) {
-        this.dtTrigger.next(null);
-      }else{
+
+      // for (const obj of this.categories) {
+      //   obj.imageUrl = 'http://localhost:8080/categoryImages/' + obj.image 
+      // }
+
+      if (this.dtElement.dtInstance != undefined) {
         this.rerender()
+        return
       }
+      
+      this.dtTrigger.next(null);
     });
   }
 
@@ -81,8 +87,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
       columnDefs: [
         {
           orderable: false,
-          target: -1,
-        },
+          targets: -1
+        }
       ],
       lengthMenu: [5, 10, 25, 50, 100],
     };

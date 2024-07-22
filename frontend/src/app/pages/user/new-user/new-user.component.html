@@ -1,35 +1,55 @@
-<app-default-layout-pages [title]="'Novo usuário'">
+<app-default-layout-pages [title]="id ? 'Editar Usuário' : 'Novo usuário'" (submit)="save()">
+ <form [formGroup]="myForm">
   <div class="row">
     <div class="col-md-4">
       <div class="mb-3">
         <label for="username" class="form-label">Nome: *</label>
-        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="username" id="username">
+        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" formControlName="username" id="username">
+        @if (myForm.controls['username'].invalid &&
+        myForm.controls['username'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+        }
       </div>
     </div>
     <div class="col-md-8">
       <div class="mb-3">
         <label for="usuemail" class="form-label">Email: *</label>
-        <input type="email" class="form-control shadow-sm" placeholder="teste@gmail.com" name="usuemail" id="usuemail">
+        <input type="email" class="form-control shadow-sm" placeholder="teste@gmail.com" formControlName="email" id="email">
+        @if (myForm.controls['email'].errors?.['required'] && myForm.controls['email'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+        }
+        @if(myForm.controls['email'].errors?.['email']){
+          <small class="text-danger">Email inválido</small>
+        }
       </div>
     </div>
     <div class="col-md-6">
       <div class="mb-3">
         <label for="usupassword" class="form-label">Senha: *</label>
-        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="usupassword" id="usupassword">
+        <input type="password" class="form-control shadow-sm" formControlName="password" id="password">
+        @if (myForm.controls['password'].invalid &&
+        myForm.controls['password'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+        }
       </div>
     </div>
     <div class="col-md-6">
-      <div class="mb-4">
+      <div class="mb-3">
         <label for="usupassword2" class="form-label">Repetir senha: *</label>
-        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" name="usupassword2" id="usupassword2">
+        <input type="password" class="form-control shadow-sm" formControlName="password2" id="password2">
+        @if (myForm.controls['password2'].invalid &&
+        myForm.controls['password2'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+        }
       </div>
     </div>
-    <div class="col">
+    <div class="col mb-3">
       <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" role="switch" id="usuactive" name="usuactive" checked>
-        <label class="form-check-label" for="usuactive">Ativo</label>
+        <input class="form-check-input" type="checkbox" role="switch" id="active" formControlName="active" checked>
+        <label class="form-check-label" for="active">Ativo</label>
       </div>
     </div>
   </div>
   <app-btns-end [previousPage]="'/adm/user'"></app-btns-end> 
+ </form>
 </app-default-layout-pages>

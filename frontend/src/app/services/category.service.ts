@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 export interface Category{
   id?: string,
   description: string,
-  image: string
+  image: string,
+  imageUrl?: string
 }
 
 @Injectable({

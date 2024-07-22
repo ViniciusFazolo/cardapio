@@ -30,6 +30,10 @@ export const routes: Routes = [
         component: NewUserComponent,
       },
       {
+        path: 'user/update/:id',
+        component: NewUserComponent
+      },
+      {
         path: 'product',
         component: ListProductComponent,
       },
