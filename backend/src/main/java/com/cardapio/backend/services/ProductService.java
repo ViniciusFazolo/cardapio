@@ -48,10 +48,8 @@ public class ProductService {
 
     public ResponseEntity<ResponseProductDTO> update(RequestProductDTO request, String id){
         return productRepository.findById(id).map(product -> {
-            product.setName(request.name());
             product.setPrice(request.price());
             product.setDescription(request.description());
-            product.setQuantity(request.quantity());
             product.setUrlImage(request.urlImage());
             product.setCategory(request.category());
 

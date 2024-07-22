@@ -15,10 +15,8 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String name;
     private float price;
     private String description;
-    private int quantity;
     private String urlImage;
 
     @ManyToOne
