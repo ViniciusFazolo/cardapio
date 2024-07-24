@@ -1,6 +1,7 @@
 <app-login-layout (submit)="submit()" [disableBtn]="!loginForm.valid">
   <form [formGroup]="loginForm">
     <app-primary-input
+      [classes]="'form-control shadow-sm'"
       [inputName]="'email'"
       [label]="'Email'"
       [placeholder]="'Email'"
@@ -8,6 +9,7 @@
       formControlName="email"
     ></app-primary-input>
     <app-primary-input
+      [classes]="'form-control shadow-sm'"
       [inputName]="'password'"
       [label]="'Senha'"
       [placeholder]="'Senha'"

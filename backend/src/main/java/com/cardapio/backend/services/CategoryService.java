@@ -79,6 +79,7 @@ public class CategoryService {
 
         try {
             img = new UrlResource(path.toUri());
+            System.out.println(img);
 
             if (imgExtension.equals("png")) {
                 mediaType = MediaType.IMAGE_PNG;

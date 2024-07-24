@@ -1,7 +1,7 @@
 <div class="mb-2">
   <label [htmlFor]="inputName">{{ label }}:</label>
   <input
-    class="form-control"
+    [classList]="classes"
     [type]="type"
     [placeholder]="placeholder"
     [value]="value"
