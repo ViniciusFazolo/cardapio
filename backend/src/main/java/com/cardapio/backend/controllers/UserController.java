@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cardapio.backend.DTO.request.RequestUserDTO;
+import com.cardapio.backend.DTO.response.ResponseAuthDTO;
 import com.cardapio.backend.DTO.response.ResponseUserDTO;
 import com.cardapio.backend.services.UserService;
 
@@ -25,12 +26,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseUserDTO> save(@RequestBody RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> save(@RequestBody RequestUserDTO request){
         return userService.save(request);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseUserDTO> login(@RequestBody RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> login(@RequestBody RequestUserDTO request){
         return userService.login(request);
     }
 
