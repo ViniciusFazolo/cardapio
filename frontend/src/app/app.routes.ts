@@ -8,6 +8,8 @@ import { ListProductComponent } from './pages/product/list-product/list-product.
 import { NewProductComponent } from './pages/product/new-product/new-product.component';
 import { ListCategoryComponent } from './pages/product-category/list-category/list-category.component';
 import { NewCategoryComponent } from './pages/product-category/new-category/new-category.component';
+import { AuthguardService } from './services/authguard.service';
+import { AuthguardInverseService } from './services/authguard-inverse.service';
 
 export const routes: Routes = [
   {
@@ -16,6 +18,7 @@ export const routes: Routes = [
   },
   {
     path: 'adm',
+    canActivate: [AuthguardService],
     children: [
       {
         path: '',
@@ -31,7 +34,7 @@ export const routes: Routes = [
       },
       {
         path: 'user/update/:id',
-        component: NewUserComponent
+        component: NewUserComponent,
       },
       {
         path: 'product',
@@ -52,11 +55,16 @@ export const routes: Routes = [
       {
         path: 'category/update/:id',
         component: NewCategoryComponent,
-      }
+      },
     ],
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [AuthguardInverseService]
   },
+  {
+    path: '**',
+    component: UserlayoutComponent
+  }
 ];
