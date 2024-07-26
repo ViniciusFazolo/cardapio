@@ -10,11 +10,12 @@ import { ListCategoryComponent } from './pages/product-category/list-category/li
 import { NewCategoryComponent } from './pages/product-category/new-category/new-category.component';
 import { AuthguardService } from './services/authguard.service';
 import { AuthguardInverseService } from './services/authguard-inverse.service';
+import { HomeUserComponent } from './pages/home-user/home-user.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: UserlayoutComponent,
+    component: HomeUserComponent,
   },
   {
     path: 'adm',
