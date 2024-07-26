@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cardapio.backend.DTO.mapper.UserMapper;
+import com.cardapio.backend.DTO.request.RequestAuthDTO;
 import com.cardapio.backend.DTO.request.RequestUserDTO;
 import com.cardapio.backend.DTO.response.ResponseAuthDTO;
 import com.cardapio.backend.DTO.response.ResponseUserDTO;
@@ -50,11 +51,11 @@ public class UserService {
         return ResponseEntity.ok(new ResponseAuthDTO(newUser.getId(), newUser.getName(), newUser.getEmail(), newUser.getActive(), token));
     }
 
-    public ResponseEntity<ResponseAuthDTO> login(RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> login(RequestAuthDTO request){
         User user = this.userRepository.findByEmail(request.email()).orElseThrow(() -> new RuntimeException("User not found"));
         if(passwordEncoder.matches(request.password(),user.getPassword())){
             String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseUserDTO(user.getId(), user.getName(), user.getEmail(), token,  user.getActive(), user.getPassword()));
+            return ResponseEntity.ok(new ResponseAuthDTO(user.getId(), user.getName(), user.getEmail(), user.getActive(), token));
         }
         return ResponseEntity.badRequest().build();
     }    

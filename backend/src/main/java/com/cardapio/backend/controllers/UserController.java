@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cardapio.backend.DTO.request.RequestAuthDTO;
 import com.cardapio.backend.DTO.request.RequestUserDTO;
 import com.cardapio.backend.DTO.response.ResponseAuthDTO;
 import com.cardapio.backend.DTO.response.ResponseUserDTO;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseAuthDTO> login(@RequestBody RequestUserDTO request){
+    public ResponseEntity<ResponseAuthDTO> login(@RequestBody RequestAuthDTO request){
         return userService.login(request);
     }
 
