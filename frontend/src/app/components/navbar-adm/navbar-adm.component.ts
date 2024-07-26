@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterLinkWithHref } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar-adm',
