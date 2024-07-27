@@ -126,12 +126,12 @@ export class NewCategoryComponent implements OnInit {
       this.myForm.controls['image'].clearValidators();
       this.myForm.controls['image'].updateValueAndValidity();
 
-      this.imgUrl = 'http://localhost:8080/categoryImages/' + this.itemToEdit.image;
       this.loadImage(response)
       this.showInputFile = false;
     });
   }
 
+  //recebe uma imagem do input file
   uploadImage(e: any) {
     const file = e.target.files[0];
 
@@ -162,9 +162,11 @@ export class NewCategoryComponent implements OnInit {
     this.imgUrl = null
   }
 
+  //carrega a imagem de uma categoria
   loadImage(response: Category){
     this.categoryService.searchImg(response.image).subscribe((res) => {
       const file = new File([res], response.image, { type: res.type });
+      this.imgUrl = URL.createObjectURL(file)
       this.imageUploaded = file
     })
   }

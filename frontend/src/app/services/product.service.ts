@@ -1,46 +1,65 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from './category.service';
 
 export interface Product {
-  id?: string,
-  price: number,
-  description: string,
-  urlImage: string,
-  category: Category
+  id?: string;
+  price: number;
+  description: string;
+  urlImage: string;
+  category: Category;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class ProductService {
-  private url: string = 'http://localhost:8080/api/product'
+  private url: string = 'http://localhost:8080/api/product';
+  private header: HttpHeaders;
 
-  constructor(private httpClient: HttpClient) { }
-
-  getAll(): Observable<Product[]>{
-    return this.httpClient.get<Product[]>(`${this.url}/listAll`);
+  constructor(private httpClient: HttpClient) {
+    this.header = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
+    })
   }
 
-  getById(id: string): Observable<Product>{
-    return this.httpClient.get<Product>(`${this.url}/list/` + id)
+  getAll(): Observable<Product[]> {
+    return this.httpClient.get<Product[]>(`${this.url}/listAll`, {
+      headers: this.header,
+    });
   }
 
-  create(product: FormData): Observable<Product>{
-    return this.httpClient.post<Product>(`${this.url}/create`, product);
+  getById(id: string): Observable<Product> {
+    return this.httpClient.get<Product>(`${this.url}/list/` + id, {
+      headers: this.header,
+    });
   }
 
-  update(product: FormData): Observable<Product>{
-    return this.httpClient.put<Product>(`${this.url}/update/` + product.get('id'), product)
+  create(product: FormData): Observable<Product> {
+    return this.httpClient.post<Product>(`${this.url}/create`, product, {
+      headers: this.header,
+    });
   }
 
-  delete(id: string): Observable<void>{
-    return this.httpClient.delete<void>(`${this.url}/delete/${id}`)
+  update(product: FormData): Observable<Product> {
+    return this.httpClient.put<Product>(
+      `${this.url}/update/` + product.get('id'),
+      product,
+      { headers: this.header }
+    );
   }
 
-  searchImg(filename: string):Observable<Blob>{
-    return this.httpClient.get<Blob>(`${this.url}/assets/` + filename, { responseType: 'blob' as 'json' })
+  delete(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.url}/delete/${id}`, {
+      headers: this.header,
+    });
+  }
+
+  searchImg(filename: string): Observable<Blob> {
+    return this.httpClient.get<Blob>(`${this.url}/assets/` + filename, {
+      responseType: 'blob' as 'json',
+      headers: this.header,
+    });
   }
 }
