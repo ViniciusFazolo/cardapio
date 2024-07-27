@@ -46,6 +46,10 @@ export const routes: Routes = [
         component: NewProductComponent,
       },
       {
+        path: 'product/update/:id',
+        component: NewProductComponent,
+      },
+      {
         path: 'category',
         component: ListCategoryComponent,
       },
