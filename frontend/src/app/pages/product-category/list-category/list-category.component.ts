@@ -47,10 +47,6 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
     this.categoryService.getAll().subscribe((categories) => {
       this.categories = categories;
 
-      // for (const obj of this.categories) {
-      //   obj.imageUrl = 'http://localhost:8080/categoryImages/' + obj.image 
-      // }
-
       if (this.dtElement.dtInstance != undefined) {
         this.rerender()
         return

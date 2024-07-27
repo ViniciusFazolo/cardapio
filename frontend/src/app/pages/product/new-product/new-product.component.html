@@ -1,17 +1,28 @@
-<app-default-layout-pages [title]="id ? 'Editar Produto' : 'Novo Produto'" (submit)="save()">
+<app-default-layout-pages
+  [title]="id ? 'Editar Produto' : 'Novo Produto'"
+  (submit)="save()"
+>
+  <h1 [textContent]=""></h1>
   <form [formGroup]="myForm">
     <div class="row mb-3">
-      <div class="col-12">
-        <div class="col" *ngIf="imgUrl">
-          <div class="mb-2">
-            <img [src]="imgUrl" class="img-fluid border border-1">
-          </div>
-          <div class="mb-2">
-            <button class="btn btn-sm btn-secondary" type="button" (click)="chooseImage()" *ngIf="!showInputFile">Escolher outra imagem</button>
-          </div>
+      <div class="col" *ngIf="imgUrl">
+        <div class="mb-2">
+          <img [src]="imgUrl" class="img-fluid border border-1" />
         </div>
+        <div class="mb-2">
+          <button
+            class="btn btn-sm btn-secondary"
+            type="button"
+            (click)="chooseImage()"
+            *ngIf="!showInputFile"
+          >
+            Escolher outra imagem
+          </button>
+        </div>
+      </div>
 
-        <div class="mb-3">
+      <div class="col-12">
+        <div class="mb-3" *ngIf="showInputFile">
           <label for="image" class="form-label">Imagem: *</label>
           <input
             type="file"
@@ -70,7 +81,7 @@
             formControlName="category"
           >
             @for (category of categories; track $index) {
-            <option [value]="category.id">{{ category.description }}</option>
+              <option [value]="category.id" [selected]="category.id == itemToEdit?.category?.id">{{ category.description }}</option>
             }
           </select>
           @if (myForm.controls['category'].invalid &&

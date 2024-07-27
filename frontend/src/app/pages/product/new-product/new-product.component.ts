@@ -91,7 +91,6 @@ export class NewProductComponent implements OnInit {
       this.myForm.controls['image'].clearValidators();
       this.myForm.controls['image'].updateValueAndValidity();
 
-      this.imgUrl = 'http://localhost:8080/productImages/' + this.itemToEdit.urlImage;
       this.loadImage(response)
       this.showInputFile = false;
     });
@@ -184,8 +183,9 @@ export class NewProductComponent implements OnInit {
   }
 
   loadImage(response: Product){
-    this.categoryService.searchImg(response.urlImage).subscribe((res) => {
-      const file = new File([res], response.urlImage, { type: res.type });
+    this.productService.searchImg(response.image).subscribe((res) => {
+      const file = new File([res], response.image, { type: res.type });
+      this.imgUrl = URL.createObjectURL(file)
       this.imageUploaded = file
     })
   }

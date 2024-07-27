@@ -7,7 +7,7 @@ export interface Product {
   id?: string;
   price: number;
   description: string;
-  urlImage: string;
+  image: string;
   category: Category;
 }
 
@@ -25,41 +25,30 @@ export class ProductService {
   }
 
   getAll(): Observable<Product[]> {
-    return this.httpClient.get<Product[]>(`${this.url}/listAll`, {
-      headers: this.header,
-    });
+    return this.httpClient.get<Product[]>(`${this.url}/listAll`, {headers: this.header});
   }
 
   getById(id: string): Observable<Product> {
-    return this.httpClient.get<Product>(`${this.url}/list/` + id, {
-      headers: this.header,
-    });
+    return this.httpClient.get<Product>(`${this.url}/list/` + id, {headers: this.header});
   }
 
   create(product: FormData): Observable<Product> {
-    return this.httpClient.post<Product>(`${this.url}/create`, product, {
-      headers: this.header,
-    });
+    return this.httpClient.post<Product>(`${this.url}/create`, product, {headers: this.header});
   }
 
   update(product: FormData): Observable<Product> {
     return this.httpClient.put<Product>(
-      `${this.url}/update/` + product.get('id'),
-      product,
-      { headers: this.header }
-    );
+      `${this.url}/update/` + product.get('id'), product,{headers: this.header});
   }
 
   delete(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.url}/delete/${id}`, {
-      headers: this.header,
-    });
+    return this.httpClient.delete<void>(`${this.url}/delete/${id}`, {headers: this.header});
   }
 
   searchImg(filename: string): Observable<Blob> {
     return this.httpClient.get<Blob>(`${this.url}/assets/` + filename, {
       responseType: 'blob' as 'json',
-      headers: this.header,
+      headers: this.header
     });
   }
 }
