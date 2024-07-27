@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cardapio.backend.DTO.mapper.ProductMapper;
 import com.cardapio.backend.DTO.request.RequestProductDTO;
 import com.cardapio.backend.DTO.response.ResponseProductDTO;
+import com.cardapio.backend.models.Category;
 import com.cardapio.backend.models.Product;
+import com.cardapio.backend.repositories.CategoryRepository;
 import com.cardapio.backend.repositories.ProductRepository;
 import com.cardapio.backend.util.UtilFunctions;
 
@@ -30,6 +32,9 @@ public class ProductService {
     
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private ProductMapper productMapper;
@@ -52,7 +57,7 @@ public class ProductService {
                 throw new RuntimeException("Product already exists");
             });
         }
-        System.out.println(uploadDir);
+        
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
         String imageUrl = UtilFunctions.saveImage(image, uploadDir);
@@ -61,8 +66,9 @@ public class ProductService {
         product.setPrice(request.price());
         product.setDescription(request.description());
         product.setUrlImage(imageUrl);
-        product.setCategory(request.category());
 
+        Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
+        product.setCategory(category);
 
         product = productRepository.save(product);
         return ResponseEntity.ok().body(productMapper.toDTO(product));
@@ -105,7 +111,9 @@ public class ProductService {
         return productRepository.findById(id).map(product -> {
             product.setPrice(request.price());
             product.setDescription(request.description());
-            product.setCategory(request.category());
+
+            Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
+            product.setCategory(category);
 
             if(!request.image().equals(null)){
 
