@@ -6,11 +6,13 @@ import { Subject } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLinkWithHref } from '@angular/router';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-list-product',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule],
+  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, ProgressBarModule, NgIf],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css'
 })
@@ -22,6 +24,8 @@ export class ListProductComponent {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
+
+  showProgressBar: boolean = true
 
   constructor(
     private productService: ProductService,
@@ -40,6 +44,8 @@ export class ListProductComponent {
   getCategories() {
     this.productService.getAll().subscribe((products) => {
       this.products = products;
+
+      this.showProgressBar = false;
 
       if (this.dtElement.dtInstance != undefined) {
         this.rerender()

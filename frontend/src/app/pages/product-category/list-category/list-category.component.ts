@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { Category, CategoryService } from '../../../services/category.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLinkWithHref } from '@angular/router';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-list-category',
@@ -16,6 +17,8 @@ import { Subject } from 'rxjs';
     CommonModule,
     RouterLinkWithHref,
     DataTablesModule,
+    ProgressBarModule,
+    NgIf
   ],
   templateUrl: './list-category.component.html',
   styleUrl: './list-category.component.css',
@@ -28,6 +31,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
+
+  showProgressBar: boolean = true
 
   constructor(
     private categoryService: CategoryService,
@@ -46,6 +51,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   getCategories() {
     this.categoryService.getAll().subscribe((categories) => {
       this.categories = categories;
+
+      this.showProgressBar = false
 
       if (this.dtElement.dtInstance != undefined) {
         this.rerender()
