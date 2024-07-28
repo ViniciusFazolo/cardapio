@@ -1,35 +1,28 @@
 <app-header [establishment]="'Nelson Vinicius restaurante'" [tableNumber]="4" />
 <app-navbar />
 <app-userlayout>
-    <div class="col mb-3">
-        <app-card
-          [title]="'Espetinho'"
-          [subtitle]="'seg - sex'"
-          [text]="'Das 16 as 18'"
-          [bgimage]="'assets/images/espetinho.jpg'"
-          data-bs-toggle="collapse"
-          data-bs-target="#espetinhoCollapse"
-          aria-expanded="false"
-          aria-controls="espetinhoCollapse"
-        >
-          <div class="collapse" id="espetinhoCollapse">
-            <app-product
-              [image]="'assets/images/espetinho.jpg'"
-              [imageDescription]="'Espeto de boi'"
-              [description]="'Boi'"
-              [price]="'7'"
-            />
-            <hr />
-          </div>
-        </app-card>
-      </div>
+  @for (category of categories; track $index) {
       <div class="col mb-3">
         <app-card
-          [title]="'Hamburgueres'"
-          [subtitle]="'seg - sex'"
-          [text]="'Das 16 as 18'"
-          [bgimage]="'assets/images/hamburguer.jpeg'"
-        ></app-card>
-      </div>
+        [title]="category.description"
+        [subtitle]="'seg - sex'"
+        [text]="'Das 16 as 18'"
+        [bgimage]="category.imageUrl"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#' + category.description"
+        aria-expanded="false"
+        [attr.aria-controls]="category.description"
+      >
+        <app-product
+          [image]="'assets/images/espetinho.jpg'"
+          [imageDescription]="'Espeto de boi'"
+          [description]="'Boi'"
+          [price]="'7'"
+          class="collapse"
+          [id]="category.description"
+        />
+      </app-card>
+    </div>
+  }
 </app-userlayout>
 <app-footer />

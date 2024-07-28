@@ -12,5 +12,5 @@ export class CardComponent {
   @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() text: string = '';
-  @Input() bgimage: string = '';
+  @Input() bgimage: string | undefined;
 }

@@ -81,7 +81,7 @@
             formControlName="category"
           >
             @for (category of categories; track $index) {
-              <option [value]="category.id" [selected]="category.id == itemToEdit?.category?.id">{{ category.description }}</option>
+              <option [value]="category.id" [selected]="category.id == itemToEdit.category.id">{{ category.description }}</option>
             }
           </select>
           @if (myForm.controls['category'].invalid &&

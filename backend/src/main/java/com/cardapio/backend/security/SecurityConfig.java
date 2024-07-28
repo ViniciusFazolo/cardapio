@@ -29,6 +29,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/user/create").permitAll() //libera os endpoints, nao precisa de autenticação
                         .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/category/listAll").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/category/assets/{filename}").permitAll()
                         .anyRequest().authenticated() // qualquer outro endpoint precisa ser autenticado
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
