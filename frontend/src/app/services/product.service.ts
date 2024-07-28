@@ -29,7 +29,11 @@ export class ProductService {
   }
 
   getById(id: string): Observable<Product> {
-    return this.httpClient.get<Product>(`${this.url}/list/` + id, {headers: this.header});
+    return this.httpClient.get<Product>(`${this.url}/list/${id}`, {headers: this.header});
+  }
+
+  getByCategory(id: string): Observable<Product[]>{
+    return this.httpClient.get<Product[]>(`${this.url}/listByCategory/${id}`)
   }
 
   create(product: FormData): Observable<Product> {
@@ -38,7 +42,7 @@ export class ProductService {
 
   update(product: FormData): Observable<Product> {
     return this.httpClient.put<Product>(
-      `${this.url}/update/` + product.get('id'), product,{headers: this.header});
+      `${this.url}/update/` + product.get('id'), product, {headers: this.header});
   }
 
   delete(id: string): Observable<void> {
