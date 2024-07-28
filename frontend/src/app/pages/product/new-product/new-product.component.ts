@@ -56,6 +56,7 @@ export class NewProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCategories();
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
@@ -68,7 +69,6 @@ export class NewProductComponent implements OnInit {
           }
         );
       }
-      this.getCategories();
     });
   }
 
@@ -85,7 +85,7 @@ export class NewProductComponent implements OnInit {
       this.myForm.patchValue({
         description: this.itemToEdit.description,
         price: this.itemToEdit.price,
-        category: this.itemToEdit.category.description
+        category: this.itemToEdit.category.id
       });
 
       this.myForm.controls['image'].clearValidators();
