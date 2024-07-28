@@ -1,3 +1,9 @@
 a{
     text-decoration: none;
 }
+
+img{
+    width: 100px;
+    height: 70px;
+    object-fit: contain;
+}

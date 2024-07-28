@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
 export class ProductComponent {
   @Input() description: string = '';
   @Input() price: string | null = '';
-  @Input() image: string = '';
+  @Input() image: string | undefined;
   @Input() imageDescription: string = '';
 
   constructor(private currencyPipe: CurrencyPipe) {
