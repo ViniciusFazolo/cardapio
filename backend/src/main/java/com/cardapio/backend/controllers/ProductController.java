@@ -35,6 +35,11 @@ public class ProductController {
         return productService.listAll();
     }
 
+    @GetMapping("/listByCategory/{id}")
+    public ResponseEntity<List<ResponseProductDTO>> listByCategory(@PathVariable String id){
+        return productService.listByCategory(id);
+    }
+
     @GetMapping("/assets/{filename}")
     public ResponseEntity<Resource> file(@PathVariable String filename){
         return productService.file(filename);
