@@ -74,6 +74,12 @@ public class ProductService {
         return ResponseEntity.ok().body(productMapper.toDTO(product));
     }
 
+    public ResponseEntity<List<ResponseProductDTO>> listByCategory(String id){
+        List<ResponseProductDTO> products = productRepository.findByCategoryId(id).stream().map(productMapper::toDTO).collect(Collectors.toList());
+
+        return ResponseEntity.ok().body(products);
+    }
+
     public ResponseEntity<List<ResponseProductDTO>> listAll(){
         List<ResponseProductDTO> products = productRepository.findAll().stream().map(productMapper::toDTO).collect(Collectors.toList());
 
