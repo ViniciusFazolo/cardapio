@@ -12,6 +12,7 @@ import { Category, CategoryService } from '../../../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-new-category',
@@ -22,6 +23,7 @@ import { NgIf } from '@angular/common';
     ReactiveFormsModule,
     FormsModule,
     NgIf,
+    SkeletonModule
   ],
   templateUrl: './new-category.component.html',
   styleUrl: './new-category.component.css',
@@ -34,6 +36,7 @@ export class NewCategoryComponent implements OnInit {
   imageUploaded!: File;
   imgUrl: string | ArrayBuffer | null = null;
   showInputFile: boolean = true
+  showSkeleton: boolean = true
 
   constructor(
     private categoryService: CategoryService,
@@ -51,6 +54,7 @@ export class NewCategoryComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
+        this.showSkeleton = true
         this.categoryService.getById(this.id).subscribe(
           () => {
             this.getById();
@@ -128,6 +132,7 @@ export class NewCategoryComponent implements OnInit {
 
       this.loadImage(response)
       this.showInputFile = false;
+      this.showSkeleton = false
     });
   }
 
