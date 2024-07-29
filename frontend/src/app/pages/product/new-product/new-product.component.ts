@@ -14,6 +14,7 @@ import {
 import { ActivatedRoute, Router, Routes } from '@angular/router';
 import { Product, ProductService } from '../../../services/product.service';
 import { NgIf } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-new-product',
@@ -25,7 +26,8 @@ import { NgIf } from '@angular/common';
     NgxMaskPipe,
     ReactiveFormsModule,
     FormsModule,
-    NgIf
+    NgIf,
+    SkeletonModule
   ],
   templateUrl: './new-product.component.html',
   styleUrl: './new-product.component.css',
@@ -39,6 +41,7 @@ export class NewProductComponent implements OnInit {
   itemToEdit!: Product
   showInputFile: boolean = true
   imgUrl!: string | ArrayBuffer | null;
+  showSkeleton: boolean = false
 
   constructor(
     private categoryService: CategoryService,
@@ -60,6 +63,7 @@ export class NewProductComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
+        this.showSkeleton = true
         this.productService.getById(this.id).subscribe(
           () => {
             this.getById()
@@ -93,6 +97,7 @@ export class NewProductComponent implements OnInit {
 
       this.loadImage(response)
       this.showInputFile = false;
+      this.showSkeleton = false
     });
   }
 

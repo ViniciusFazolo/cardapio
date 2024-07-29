@@ -5,10 +5,14 @@
   <h1 [textContent]=""></h1>
   <form [formGroup]="myForm">
     <div class="row mb-3">
-      <div class="col" *ngIf="imgUrl">
-        <div class="mb-2">
-          <img [src]="imgUrl" class="img-fluid border border-1" />
+      <label for="image" class="form-label">Imagem: *</label>
+      <div class="col-12" *ngIf="imgUrl">
+        <div class="mb-2" *ngIf="!showSkeleton">
+          <img [src]="imgUrl" class="img-fluid border border-1 mb-2 me-2" />
         </div>
+        <p-skeleton height="12em" styleClass="mb-2" *ngIf="showSkeleton" />
+      </div>
+      <div class="col-12">
         <div class="mb-2">
           <button
             class="btn btn-sm btn-secondary"
@@ -19,11 +23,11 @@
             Escolher outra imagem
           </button>
         </div>
+        <p-skeleton height="2.3em" width="180px" *ngIf="showSkeleton" />
       </div>
 
       <div class="col-12">
         <div class="mb-3" *ngIf="showInputFile">
-          <label for="image" class="form-label">Imagem: *</label>
           <input
             type="file"
             class="form-control shadow-sm"
@@ -37,9 +41,10 @@
           }
         </div>
       </div>
+
       <div class="col-md-4">
-        <div class="mb-3">
-          <label for="description" class="form-label">Descrição: *</label>
+        <label for="description" class="form-label">Descrição: *</label>
+        <div class="mb-3" *ngIf="!showSkeleton">
           <input
             type="text"
             class="form-control shadow-sm"
@@ -52,10 +57,12 @@
           <small class="text-danger">Campo obrigatório</small>
           }
         </div>
+        <p-skeleton height="2.3em" *ngIf="showSkeleton" />
       </div>
+
       <div class="col-md-4">
-        <div class="mb-3">
-          <label for="price" class="form-label">Preço: *</label>
+        <label for="price" class="form-label">Preço: *</label>
+        <div class="mb-3" *ngIf="!showSkeleton">
           <input
             type="text"
             class="form-control shadow-sm"
@@ -71,17 +78,23 @@
           <small class="text-danger">Campo obrigatório</small>
           }
         </div>
+        <p-skeleton height="2.3em" *ngIf="showSkeleton" />
       </div>
       <div class="col-md-4">
-        <div class="mb-3">
-          <label for="category" class="form-label">Categoria: *</label>
+        <label for="category" class="form-label">Categoria: *</label>
+        <div class="mb-3" *ngIf="!showSkeleton">
           <select
             class="form-select form-control shadow-sm"
             id="category"
             formControlName="category"
           >
             @for (category of categories; track $index) {
-              <option [value]="category.id" [selected]="itemToEdit && category.id == itemToEdit.category.id">{{ category.description }}</option>
+            <option
+              [value]="category.id"
+              [selected]="itemToEdit && category.id == itemToEdit.category.id"
+            >
+              {{ category.description }}
+            </option>
             }
           </select>
           @if (myForm.controls['category'].invalid &&
@@ -89,8 +102,12 @@
           <small class="text-danger">Campo obrigatório</small>
           }
         </div>
+        <p-skeleton height="2.3em" *ngIf="showSkeleton" />
       </div>
     </div>
-    <app-btns-end [previousPage]="'/adm/product'"></app-btns-end>
+    <app-btns-end
+      [previousPage]="'/adm/product'"
+      [showSkeleton]="showSkeleton"
+    ></app-btns-end>
   </form>
 </app-default-layout-pages>
