@@ -1,10 +1,13 @@
 <div class="btnsEnd">
-  <a [routerLink]="previousPage" class="btn btn-danger me-1">
+  <a [routerLink]="previousPage" class="btn btn-danger me-1" *ngIf="!showSkeleton">
     <i class="fa-solid fa-xmark me-3"></i>
     <span>CANCELAR</span>
   </a>
-  <button class="btn btn-success" (click)="onClick()">
+  <p-skeleton height="2.4em" width="120px" styleClass="d-inline-block me-1" *ngIf="showSkeleton" />
+
+  <button class="btn btn-success" (click)="onClick()" *ngIf="!showSkeleton">
     <i class="fa-solid fa-floppy-disk me-3"></i>
     <span>SALVAR</span>
   </button>
+  <p-skeleton height="2.4em" width="100px" *ngIf="showSkeleton" class="d-inline-block"/>
 </div>

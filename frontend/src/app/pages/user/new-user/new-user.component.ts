@@ -5,11 +5,14 @@ import { User, UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { SkeletonModule } from 'primeng/skeleton';
+import { NgIf } from '@angular/common';
+
 
 @Component({
   selector: 'app-new-user',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, BtnsEndComponent, ReactiveFormsModule],
+  imports: [DefaultLayoutPagesComponent, BtnsEndComponent, ReactiveFormsModule, SkeletonModule, NgIf],
   templateUrl: './new-user.component.html',
   styleUrl: './new-user.component.css'
 })
@@ -17,6 +20,7 @@ export class NewUserComponent {
   myForm: FormGroup;
   id: string | null = null
   itemToEdit!: User
+  showSkeleton: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -37,6 +41,7 @@ export class NewUserComponent {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
+        this.showSkeleton = true
         this.userService.getById(this.id).subscribe(
           () => {
             this.getById();
@@ -106,6 +111,8 @@ export class NewUserComponent {
   getById() {
     this.userService.getById(this.id!).subscribe((response) => {
       this.itemToEdit = response;
+
+      this.showSkeleton = false
 
       this.myForm.patchValue({
         username: this.itemToEdit.name,
