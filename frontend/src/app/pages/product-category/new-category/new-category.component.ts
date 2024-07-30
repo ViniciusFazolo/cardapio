@@ -36,7 +36,7 @@ export class NewCategoryComponent implements OnInit {
   imageUploaded!: File;
   imgUrl: string | ArrayBuffer | null = null;
   showInputFile: boolean = true
-  showSkeleton: boolean = true
+  showSkeleton: boolean = false
 
   constructor(
     private categoryService: CategoryService,

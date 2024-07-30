@@ -7,8 +7,9 @@
         <div class="mb-2" *ngIf="!showSkeleton">
           <img [src]="imgUrl" class="img-fluid border border-1">
         </div>
-        <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
       </div>
+      <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
+      
       <div class="col-12">
         <div class="mb-2" *ngIf="!showSkeleton">
           <button class="btn btn-sm btn-secondary" type="button" (click)="chooseImage()" *ngIf="!showInputFile">Escolher outra imagem</button>
@@ -17,7 +18,7 @@
       </div>
 
       <div class="col-12" *ngIf="showInputFile">
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!showSkeleton">
           <input type="file" class="form-control shadow-sm" id="image" formControlName="image"
             (change)="uploadImage($event)">
 
