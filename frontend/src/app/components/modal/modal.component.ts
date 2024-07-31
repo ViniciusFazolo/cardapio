@@ -1,10 +1,10 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
   standalone: true,
-  imports: [NgClass],
+  imports: [NgClass, NgIf],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css',
 })

@@ -1,5 +1,6 @@
 import { NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Category } from '../../pages/home-user/home-user.component';
 
 @Component({
   selector: 'app-card',
@@ -9,8 +10,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './card.component.css'
 })
 export class CardComponent {
-  @Input() title: string = '';
   @Input() subtitle: string = '';
   @Input() text: string = '';
-  @Input() bgimage: string | undefined;
+  @Input() category!: Category
 }

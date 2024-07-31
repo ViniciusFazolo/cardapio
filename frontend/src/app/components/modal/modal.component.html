@@ -1,10 +1,10 @@
 <div class="modal" [id]="id" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog" [ngClass]="{'modal-dialog-centered': positionMiddle, 'modal-dialog-scrollable': scrollable}">
         <div class="modal-content">
-            <div class="modal-header position-relative">
+            <div class="modal-header position-relative" *ngIf="title">
                 <h1 class="modal-title fs-5">{{title}}</h1>
                 <a class="btn position-absolute end-0" data-bs-dismiss="modal" role="button">
-                    <i class="fa-solid fa-xmark fa-2x"></i>
+                    <i class="fa-solid fa-xmark fa-lg"></i>
                 </a> 
             </div>
             <div class="modal-body">

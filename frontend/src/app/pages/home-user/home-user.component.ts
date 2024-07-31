@@ -8,8 +8,10 @@ import { CardComponent } from '../../components/card/card.component';
 import { UserlayoutComponent } from "../../components/userlayout/userlayout.component";
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
+import { ModalComponent } from "../../components/modal/modal.component";
+import { NgIf } from '@angular/common';
   
-interface Product{
+export interface Product{
   id?: string;
   price: number;
   description: string;
@@ -18,7 +20,7 @@ interface Product{
   category: Category
 }
 
-interface Category {
+export interface Category {
   id?: string,
   description: string,
   image: string,
@@ -29,7 +31,7 @@ interface Category {
 @Component({
   selector: 'app-home-user',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, NavbarComponent, ProductComponent, CardComponent, UserlayoutComponent],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, NavbarComponent, ProductComponent, CardComponent, UserlayoutComponent, ModalComponent, NgIf],
   templateUrl: './home-user.component.html',
   styleUrl: './home-user.component.css'
 })
@@ -37,6 +39,7 @@ interface Category {
 export class HomeUserComponent implements OnInit{
   categories!: Category[];
   products!: Product[]
+  selectedProduct!: Product
 
   constructor(private categoryService: CategoryService, private productService: ProductService){}
 
@@ -75,5 +78,9 @@ export class HomeUserComponent implements OnInit{
         obj.imageUrl =  URL.createObjectURL(file)
       })
     }
+  }
+
+  openProductDetails(product: Product){
+    this.selectedProduct = product
   }
 }

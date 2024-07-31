@@ -1,20 +1,20 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Product } from '../../pages/home-user/home-user.component';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, ModalComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
 export class ProductComponent {
-  @Input() description: string = '';
-  @Input() price: string | null = '';
-  @Input() image: string | undefined;
-  @Input() imageDescription: string = '';
+  @Input() product!: Product;
+  @Output() openProductDetails = new EventEmitter<Product>()
 
-  constructor(private currencyPipe: CurrencyPipe) {
-    this.price = this.currencyPipe.transform(this.price, 'BRL', 'symbol', '1.2-2', 'pt-BR');
+  onClick(product: Product){
+    this.openProductDetails.emit(product)
   }
 }
