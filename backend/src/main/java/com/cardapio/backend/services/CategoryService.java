@@ -34,7 +34,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    private final String uploadDir = "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
+    private final String uploadDir = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
             + File.separator + "categoryImages";
 
     public CategoryService() {
