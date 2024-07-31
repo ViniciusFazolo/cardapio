@@ -31,20 +31,7 @@
   </app-default-layout-pages>
   
   <!-- Modal -->
-<div class="modal" id="alertDelete" tabindex="-1" aria-labelledby="alertDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="alertDeleteLabel">Exclusão de registro</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Realmente deseja excluir o registro?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteItem()">Excluir</button>
-      </div>
-    </div>
-  </div>
-</div>
+<app-modal [id]="'alertDelete'" [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
+(confirm)="deleteItem()">
+<p>Realmente deseja excluir o registro?</p>
+</app-modal>

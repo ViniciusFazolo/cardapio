@@ -8,6 +8,7 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   selector: 'app-list-category',
@@ -18,7 +19,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
     RouterLinkWithHref,
     DataTablesModule,
     ProgressBarModule,
-    NgIf
+    NgIf,
+    ModalComponent
   ],
   templateUrl: './list-category.component.html',
   styleUrl: './list-category.component.css',
@@ -51,14 +53,13 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   getCategories() {
     this.categoryService.getAll().subscribe((categories) => {
       this.categories = categories;
-
       this.showProgressBar = false
-
+      
       if (this.dtElement.dtInstance != undefined) {
         this.rerender()
         return
       }
-      
+
       this.dtTrigger.next(null);
     });
   }
@@ -75,7 +76,7 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
         this.getCategories();
       },
       () => {
-        this.toastr.error('Erro ao excluir registro!');
+        this.toastr.error('Erro ao excluir registro. Possa ser que esteja vinculado a um ou mais registros!');
       }
     );
   }

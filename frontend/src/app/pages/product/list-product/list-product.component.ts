@@ -8,11 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 import { RouterLinkWithHref } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { NgIf } from '@angular/common';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   selector: 'app-list-product',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, ProgressBarModule, NgIf],
+  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, ProgressBarModule, NgIf, ModalComponent],
   templateUrl: './list-product.component.html',
   styleUrl: './list-product.component.css'
 })

@@ -1,17 +1,16 @@
 <div class="modal" [id]="id" tabindex="-1" aria-hidden="true">
-    <span>
-        <i class="fa-solid fa-xmark"></i>
-    </span> 
     <div class="modal-dialog" [ngClass]="{'modal-dialog-centered': positionMiddle, 'modal-dialog-scrollable': scrollable}">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header position-relative">
                 <h1 class="modal-title fs-5">{{title}}</h1>
+                <a class="btn position-absolute end-0" data-bs-dismiss="modal" role="button">
+                    <i class="fa-solid fa-xmark fa-2x"></i>
+                </a> 
             </div>
             <div class="modal-body">
                 <ng-content/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{btnSecondary}}</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
                     (click)="onClick()">{{btnPrimary}}</button>
             </div>

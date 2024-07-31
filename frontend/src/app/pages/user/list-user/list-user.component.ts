@@ -8,11 +8,12 @@ import { ToastrService } from 'ngx-toastr';
 import { User, UserService } from '../../../services/user.service';
 import { NgIf, NgStyle } from '@angular/common';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { ModalComponent } from '../../../components/modal/modal.component';
 
 @Component({
   selector: 'app-list-user',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, NgStyle, ProgressBarModule, NgIf],
+  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, NgStyle, ProgressBarModule, NgIf, ModalComponent],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.css'
 })

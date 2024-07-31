@@ -29,6 +29,11 @@ export class LoginComponent {
   }
 
   submit(){
+    if(!this.loginForm.valid){
+      this.toastr.warning('Preencha todos os campos');
+      return;
+    }
+
     this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
       next: () => {
         this.toastr.success("Login feito com sucesso!")

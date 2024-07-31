@@ -1,5 +1,5 @@
-<app-login-layout (submit)="submit()" [disableBtn]="!loginForm.valid">
-  <form [formGroup]="loginForm">
+<app-login-layout>
+  <form [formGroup]="loginForm" (submit)="submit()">
     <app-primary-input
       [classes]="'form-control shadow-sm'"
       [inputName]="'email'"
@@ -16,5 +16,6 @@
       [type]="'password'"
       formControlName="password"
     ></app-primary-input>
+    <button class="btn btn-primary mt-2">Login</button>
   </form>
 </app-login-layout>

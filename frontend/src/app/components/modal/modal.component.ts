@@ -12,7 +12,6 @@ export class ModalComponent {
   @Input() id!: string;
   @Input() title!: string;
   @Input() btnPrimary!: string;
-  @Input() btnSecondary!: string;
   @Input() positionMiddle: boolean = false;
   @Input() scrollable: boolean = false;
   @Output() confirm = new EventEmitter();
