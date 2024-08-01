@@ -22,6 +22,7 @@ import com.cardapio.backend.DTO.mapper.ProductMapper;
 import com.cardapio.backend.DTO.request.RequestProductDTO;
 import com.cardapio.backend.DTO.response.ResponseProductDTO;
 import com.cardapio.backend.exception.DescriptionUniqueException;
+import com.cardapio.backend.models.Category;
 import com.cardapio.backend.models.Product;
 import com.cardapio.backend.repositories.CategoryRepository;
 import com.cardapio.backend.repositories.ProductRepository;
