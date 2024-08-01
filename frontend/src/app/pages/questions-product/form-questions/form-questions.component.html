@@ -1,0 +1,31 @@
+<app-default-layout-pages [title]="'Nova coleção de perguntas'" >
+    <form [formGroup]="myForm">
+        <div class="mb-2">
+            <label for="" class="form-label">Descrição: *</label>
+            <input type="text" class="form-control" placeholder="Ponto da carne" formControlName="description">
+        </div>
+
+        <div formArrayName="questions" class="mb-2">
+            @for (question of myForm.value.questions; track $index) {
+                <div class="mb-2">
+                    <label class="form-label">Pergunta {{ $index + 1 }}:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" [formControlName]="$index">
+                        <button class="btn btn-danger" type="button" (click)="removeQuestion($index)">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mb-2">
+            <button class="btn btn-outline-secondary" (click)="addQuestion()">
+                <i class="fa-solid fa-plus"></i>
+                Adicionar pergunta
+            </button>
+        </div>
+
+        <app-btns-end [previousPage]="'/adm/questions/'"/>
+    </form>
+</app-default-layout-pages>

@@ -5,7 +5,7 @@
   </a>
   <p-skeleton height="2.4em" width="120px" styleClass="d-inline-block me-1" *ngIf="showSkeleton" />
 
-  <button class="btn btn-success" (click)="onClick()" *ngIf="!showSkeleton">
+  <button class="btn btn-success" (click)="onClick()" *ngIf="!showSkeleton && showBtn">
     <i class="fa-solid fa-floppy-disk me-3"></i>
     <span>SALVAR</span>
   </button>

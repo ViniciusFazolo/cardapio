@@ -6,7 +6,7 @@
 
   .product-options, .card-bg{
     margin: 0 auto;
-    width: 500px;
+    max-width: 500px;
   }
 
   .card-bg::before {

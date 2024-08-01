@@ -13,6 +13,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 export class BtnsEndComponent {
   @Input() previousPage!: string
   @Input() showSkeleton!: boolean;
+  @Input() showBtn: boolean = true;
   @Output() onClickEmitter = new EventEmitter();
 
   onClick(){

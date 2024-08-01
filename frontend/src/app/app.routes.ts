@@ -11,6 +11,8 @@ import { NewCategoryComponent } from './pages/product-category/new-category/new-
 import { AuthguardService } from './services/authguard.service';
 import { AuthguardInverseService } from './services/authguard-inverse.service';
 import { HomeUserComponent } from './pages/home-user/home-user.component';
+import { FormQuestionsComponent } from './pages/questions-product/form-questions/form-questions.component';
+import { ListQuestionsComponent } from './pages/questions-product/list-questions/list-questions.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +63,19 @@ export const routes: Routes = [
         path: 'category/update/:id',
         component: NewCategoryComponent,
       },
+      {
+        path: 'questions',
+        component: ListQuestionsComponent
+      },
+      {
+        path: 'questions/create',
+        component: FormQuestionsComponent
+      },
+      {
+        path: 'questions/update/:id',
+        component: FormQuestionsComponent
+      },
+
     ],
   },
   {
