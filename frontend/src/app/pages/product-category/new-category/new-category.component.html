@@ -3,17 +3,22 @@
     <div class="row">
       <label for="image" class="form-label">Imagem: *</label>
 
-      <div class="col" *ngIf="imgUrl">
-        <div class="mb-2">
+      <div class="col-12" *ngIf="imgUrl">
+        <div class="mb-2" *ngIf="!showSkeleton">
           <img [src]="imgUrl" class="img-fluid border border-1">
         </div>
-        <div class="mb-2">
+      </div>
+      <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
+      
+      <div class="col-12">
+        <div class="mb-2" *ngIf="!showSkeleton">
           <button class="btn btn-sm btn-secondary" type="button" (click)="chooseImage()" *ngIf="!showInputFile">Escolher outra imagem</button>
         </div>
+        <p-skeleton height="2.3em" width="180px" styleClass="mb-2" *ngIf="showSkeleton" />
       </div>
 
       <div class="col-12" *ngIf="showInputFile">
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!showSkeleton">
           <input type="file" class="form-control shadow-sm" id="image" formControlName="image"
             (change)="uploadImage($event)">
 
@@ -25,8 +30,8 @@
       </div>
 
       <div class="col-12">
-        <div class="mb-4">
-          <label for="description" class="form-label">Descrição: *</label>
+        <label for="description" class="form-label">Descrição: *</label>
+        <div class="mb-4" *ngIf="!showSkeleton">
           <input type="text" class="form-control shadow-sm" formControlName="description" id="description"
             placeholder="Refrigerantes" />
           @if (myForm.controls['description'].invalid &&
@@ -34,9 +39,10 @@
           <small class="text-danger">Campo obrigatório</small>
           }
         </div>
+        <p-skeleton height="2.3em" styleClass="mb-4" *ngIf="showSkeleton" />
       </div>
     </div>
 
-    <app-btns-end [previousPage]="'/adm/category'"></app-btns-end>
+    <app-btns-end [previousPage]="'/adm/category'" [showSkeleton]="showSkeleton"></app-btns-end>
   </form>
 </app-default-layout-pages>

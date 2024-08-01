@@ -1,0 +1,32 @@
+<app-header [establishment]="'Nelson Vinicius restaurante'" [tableNumber]="4" />
+<app-navbar />
+<app-userlayout>
+  @for (category of categories; track $index) {
+  <div class="col mb-3">
+    <app-card
+      [title]="category.description"
+      [subtitle]="'seg - sex'"
+      [text]="'Das 16 as 18'"
+      [bgimage]="category.imageUrl"
+      data-bs-toggle="collapse"
+      [attr.data-bs-target]="'#' + category.description"
+      aria-expanded="false"
+      [attr.aria-controls]="category.description"
+    >
+      @for (product of products; track $index) {
+        @if(category.id == product.category.id){
+          <app-product
+          [image]="product.imageUrl"
+          [imageDescription]="product.description"
+          [description]="product.description"
+          [price]="product.price.toString()"
+          class="collapse"
+          [id]="category.description"
+          />
+        }
+      }
+    </app-card>
+  </div>
+  }
+</app-userlayout>
+<app-footer />

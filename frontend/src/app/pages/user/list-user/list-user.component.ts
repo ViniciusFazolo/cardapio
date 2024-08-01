@@ -6,12 +6,13 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { RouterLinkWithHref } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User, UserService } from '../../../services/user.service';
-import { NgClass, NgIf, NgStyle } from '@angular/common';
+import { NgIf, NgStyle } from '@angular/common';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-list-user',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, NgStyle],
+  imports: [DefaultLayoutPagesComponent, RouterLinkWithHref, DataTablesModule, NgStyle, ProgressBarModule, NgIf],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.css'
 })
@@ -23,6 +24,8 @@ export class ListUserComponent {
   dtTrigger: Subject<any> = new Subject<any>();
   @ViewChild(DataTableDirective, { static: false })
   dtElement!: DataTableDirective;
+
+  showProgressBar: boolean = true
 
   constructor(
     private userService: UserService,
@@ -41,6 +44,8 @@ export class ListUserComponent {
   getCategories() {
     this.userService.getAll().subscribe((users) => {
       this.users = users;
+
+      this.showProgressBar = false;
 
       if (this.dtElement.dtInstance != undefined) {
         this.rerender()

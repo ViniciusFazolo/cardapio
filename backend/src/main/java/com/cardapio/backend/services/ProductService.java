@@ -23,6 +23,7 @@ import com.cardapio.backend.DTO.request.RequestProductDTO;
 import com.cardapio.backend.DTO.response.ResponseProductDTO;
 import com.cardapio.backend.exception.DescriptionUniqueException;
 import com.cardapio.backend.models.Product;
+import com.cardapio.backend.repositories.CategoryRepository;
 import com.cardapio.backend.repositories.ProductRepository;
 import com.cardapio.backend.util.UtilFunctions;
 
@@ -31,6 +32,9 @@ public class ProductService {
     
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private ProductMapper productMapper;
@@ -53,7 +57,6 @@ public class ProductService {
                 throw new RuntimeException("Product already exists");
             });
         }
-
         if(productRepository.findByDescription(request.description()).isPresent()){
             throw new DescriptionUniqueException();
         }
@@ -66,8 +69,9 @@ public class ProductService {
         product.setPrice(request.price());
         product.setDescription(request.description());
         product.setUrlImage(imageUrl);
-        product.setCategory(request.category());
 
+        Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
+        product.setCategory(category);
 
         product = productRepository.save(product);
         return ResponseEntity.ok().body(productMapper.toDTO(product));
@@ -115,13 +119,14 @@ public class ProductService {
     public ResponseEntity<ResponseProductDTO> update(RequestProductDTO request, String id){
         return productRepository.findById(id).map(product -> {
             product.setPrice(request.price());
-            product.setCategory(request.category());
+            Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
+            product.setCategory(category);
 
             if(productRepository.findByDescription(request.description()).isPresent()){
                 throw new DescriptionUniqueException();
             }
             product.setDescription(request.description());
-            
+
             if(!request.image().equals(null)){
 
                 if(!request.image().getOriginalFilename().equals(product.getUrlImage())){

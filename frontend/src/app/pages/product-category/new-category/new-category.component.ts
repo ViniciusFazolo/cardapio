@@ -12,6 +12,7 @@ import { Category, CategoryService } from '../../../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-new-category',
@@ -22,6 +23,7 @@ import { NgIf } from '@angular/common';
     ReactiveFormsModule,
     FormsModule,
     NgIf,
+    SkeletonModule
   ],
   templateUrl: './new-category.component.html',
   styleUrl: './new-category.component.css',
@@ -34,6 +36,7 @@ export class NewCategoryComponent implements OnInit {
   imageUploaded!: File;
   imgUrl: string | ArrayBuffer | null = null;
   showInputFile: boolean = true
+  showSkeleton: boolean = false
 
   constructor(
     private categoryService: CategoryService,
@@ -51,6 +54,7 @@ export class NewCategoryComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
+        this.showSkeleton = true
         this.categoryService.getById(this.id).subscribe(
           () => {
             this.getById();
@@ -126,12 +130,13 @@ export class NewCategoryComponent implements OnInit {
       this.myForm.controls['image'].clearValidators();
       this.myForm.controls['image'].updateValueAndValidity();
 
-      this.imgUrl = 'http://localhost:8080/categoryImages/' + this.itemToEdit.image;
       this.loadImage(response)
       this.showInputFile = false;
+      this.showSkeleton = false
     });
   }
 
+  //recebe uma imagem do input file
   uploadImage(e: any) {
     const file = e.target.files[0];
 
@@ -162,9 +167,11 @@ export class NewCategoryComponent implements OnInit {
     this.imgUrl = null
   }
 
+  //carrega a imagem de uma categoria
   loadImage(response: Category){
     this.categoryService.searchImg(response.image).subscribe((res) => {
       const file = new File([res], response.image, { type: res.type });
+      this.imgUrl = URL.createObjectURL(file)
       this.imageUploaded = file
     })
   }

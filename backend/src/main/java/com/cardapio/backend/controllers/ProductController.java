@@ -7,10 +7,10 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +26,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseProductDTO> save(@RequestBody RequestProductDTO request){
+    public ResponseEntity<ResponseProductDTO> save(@ModelAttribute RequestProductDTO request){
         return productService.save(request);
     }
 
@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<ResponseProductDTO> update(@RequestBody RequestProductDTO request, @PathVariable String id){
+    public ResponseEntity<ResponseProductDTO> update(@ModelAttribute RequestProductDTO request, @PathVariable String id){
         return productService.update(request, id);
     }
 
