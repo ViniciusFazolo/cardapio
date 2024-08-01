@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cardapio.backend.DTO.mapper.CategoryMapper;
 import com.cardapio.backend.DTO.request.RequestCategoryDTO;
 import com.cardapio.backend.DTO.response.ResponseCategoryDTO;
+import com.cardapio.backend.exception.DescriptionUniqueException;
 import com.cardapio.backend.models.Category;
 import com.cardapio.backend.repositories.CategoryRepository;
 import com.cardapio.backend.util.UtilFunctions;
@@ -51,6 +52,11 @@ public class CategoryService {
                 throw new RuntimeException("Category already exists");
             });
         }
+
+        if(categoryRepository.findByDescription(request.description()).isPresent()){
+            throw new DescriptionUniqueException();
+        }
+
         System.out.println(uploadDir);
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
@@ -102,6 +108,10 @@ public class CategoryService {
 
     public ResponseEntity<ResponseCategoryDTO> update(RequestCategoryDTO request, String id) {
         return categoryRepository.findById(id).map(category -> {
+            if(categoryRepository.findByDescription(request.description()).isPresent()){
+                throw new DescriptionUniqueException();
+            }
+            
             category.setDescription(request.description());
 
             if (!request.image().equals(null)) {

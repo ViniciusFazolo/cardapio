@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cardapio.backend.DTO.mapper.ProductMapper;
 import com.cardapio.backend.DTO.request.RequestProductDTO;
 import com.cardapio.backend.DTO.response.ResponseProductDTO;
+import com.cardapio.backend.exception.DescriptionUniqueException;
 import com.cardapio.backend.models.Category;
 import com.cardapio.backend.models.Product;
 import com.cardapio.backend.repositories.CategoryRepository;
@@ -57,7 +58,10 @@ public class ProductService {
                 throw new RuntimeException("Product already exists");
             });
         }
-        
+        if(productRepository.findByDescription(request.description()).isPresent()){
+            throw new DescriptionUniqueException();
+        }
+        System.out.println(uploadDir);
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
         String imageUrl = UtilFunctions.saveImage(image, uploadDir);
@@ -116,10 +120,13 @@ public class ProductService {
     public ResponseEntity<ResponseProductDTO> update(RequestProductDTO request, String id){
         return productRepository.findById(id).map(product -> {
             product.setPrice(request.price());
-            product.setDescription(request.description());
-
             Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
             product.setCategory(category);
+
+            if(productRepository.findByDescription(request.description()).isPresent()){
+                throw new DescriptionUniqueException();
+            }
+            product.setDescription(request.description());
 
             if(!request.image().equals(null)){
 
