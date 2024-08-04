@@ -1,9 +1,7 @@
 package com.cardapio.backend.services;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -38,14 +36,6 @@ public class CategoryService {
     private final String uploadDir = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
             + File.separator + "categoryImages";
 
-    public CategoryService() {
-        try {
-            Files.createDirectories(Paths.get(uploadDir));
-        } catch (IOException e) {
-            throw new RuntimeException("Directory not exists", e);
-        }
-    }
-
     public ResponseEntity<ResponseCategoryDTO> save(RequestCategoryDTO request) {
         if (request.id() != null) {
             categoryRepository.findById(request.id()).ifPresent(category -> {
@@ -57,7 +47,6 @@ public class CategoryService {
             throw new DescriptionUniqueException();
         }
 
-        System.out.println(uploadDir);
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
         String imageUrl = UtilFunctions.saveImage(image, uploadDir);
@@ -85,7 +74,6 @@ public class CategoryService {
 
         try {
             img = new UrlResource(path.toUri());
-            System.out.println(img);
 
             if (imgExtension.equals("png")) {
                 mediaType = MediaType.IMAGE_PNG;

@@ -1,9 +1,7 @@
 package com.cardapio.backend.services;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -40,17 +38,8 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    private final String uploadDir = "backend" + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
+    private final String uploadDir = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static"
             + File.separator + "productImages";
-
-
-    public ProductService() {
-        try {
-            Files.createDirectories(Paths.get(uploadDir));
-        } catch (IOException e) {
-            throw new RuntimeException("Directory not exists", e);
-        }
-    }
 
     public ResponseEntity<ResponseProductDTO> save(RequestProductDTO request) {
         if(request.id() != null){
@@ -58,10 +47,11 @@ public class ProductService {
                 throw new RuntimeException("Product already exists");
             });
         }
+
         if(productRepository.findByDescription(request.description()).isPresent()){
             throw new DescriptionUniqueException();
         }
-        System.out.println(uploadDir);
+        
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
         String imageUrl = UtilFunctions.saveImage(image, uploadDir);

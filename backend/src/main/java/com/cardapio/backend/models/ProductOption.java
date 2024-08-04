@@ -1,5 +1,7 @@
 package com.cardapio.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,14 +11,15 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Ask {
+public class ProductOption {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private String ask;
+    private String option;
 
+    @JsonIgnore
     @ManyToOne
-    private DescriptionAsk description;
+    private ProductOptionTitle description;
 }

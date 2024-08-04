@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class DescriptionAsk {
+public class ProductOptionTitle {
     
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
