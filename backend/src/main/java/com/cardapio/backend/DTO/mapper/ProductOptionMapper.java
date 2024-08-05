@@ -24,6 +24,7 @@ public class ProductOptionMapper {
         return new ResponseProductOptionDTO(
             productOptionTitle.getId(),
             productOptionTitle.getDescription(),
+            productOptionTitle.isRequired(),
             options
         );
     }

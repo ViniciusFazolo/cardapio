@@ -30,6 +30,7 @@ public class ProductOptionService {
     public ResponseEntity<ResponseProductOptionDTO> save(RequestProductOptionDTO request) {
         ProductOptionTitle productOptionTitle = new ProductOptionTitle();
         productOptionTitle.setDescription(request.description());
+        productOptionTitle.setRequired(request.required());
         productOptionTitleRepository.save(productOptionTitle);
 
         List<ProductOption> options = new ArrayList<ProductOption>();
@@ -43,7 +44,7 @@ public class ProductOptionService {
         }
 
         return ResponseEntity.ok(new ResponseProductOptionDTO(productOptionTitle.getId(),
-                productOptionTitle.getDescription(), options));
+                productOptionTitle.getDescription(), productOptionTitle.isRequired(), options));
     }
 
     public ResponseEntity<List<ResponseProductOptionDTO>> listAll() {
@@ -70,6 +71,7 @@ public class ProductOptionService {
     public ResponseEntity<ResponseProductOptionDTO> update(RequestProductOptionDTO request, String id) {
         return productOptionTitleRepository.findById(id).map(productOptionTitle -> {
             productOptionTitle.setDescription(request.description());
+            productOptionTitle.setRequired(request.required());
             
             List<ProductOption> currentProductOptions = productOptionRepository.findByDescription(productOptionTitle);
             

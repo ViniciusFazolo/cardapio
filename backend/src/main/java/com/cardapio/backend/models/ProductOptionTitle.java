@@ -14,4 +14,5 @@ public class ProductOptionTitle {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String description;
+    private boolean required;
 }
