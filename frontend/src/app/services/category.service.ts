@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CrudRepository } from '../interfaces/CrudRepository';
 
 export interface Category{
   id?: string,
@@ -12,7 +13,7 @@ export interface Category{
   providedIn: 'root'
 })
 
-export class CategoryService {
+export class CategoryService implements CrudRepository<Category>{
   private url: string = 'http://localhost:8080/api/category'
   private header: HttpHeaders;
 

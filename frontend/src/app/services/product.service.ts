@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from './category.service';
+import { CrudRepository } from '../interfaces/CrudRepository';
 
 export interface Product {
   id?: string;
@@ -14,7 +15,7 @@ export interface Product {
 @Injectable({
   providedIn: 'root',
 })
-export class ProductService {
+export class ProductService implements CrudRepository<Product>{
   private url: string = 'http://localhost:8080/api/product';
   private header: HttpHeaders;
 
