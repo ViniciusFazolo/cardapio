@@ -64,15 +64,15 @@ export const routes: Routes = [
         component: NewCategoryComponent,
       },
       {
-        path: 'questions',
+        path: 'productOption',
         component: ListQuestionsComponent
       },
       {
-        path: 'questions/create',
+        path: 'productOption/create',
         component: FormQuestionsComponent
       },
       {
-        path: 'questions/update/:id',
+        path: 'productOption/update/:id',
         component: FormQuestionsComponent
       },
 
