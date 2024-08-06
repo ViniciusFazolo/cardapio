@@ -22,7 +22,9 @@ import com.cardapio.backend.DTO.response.ResponseProductDTO;
 import com.cardapio.backend.exception.DescriptionUniqueException;
 import com.cardapio.backend.models.Category;
 import com.cardapio.backend.models.Product;
+import com.cardapio.backend.models.ProductOptionTitle;
 import com.cardapio.backend.repositories.CategoryRepository;
+import com.cardapio.backend.repositories.ProductOptionTitleRepository;
 import com.cardapio.backend.repositories.ProductRepository;
 import com.cardapio.backend.util.UtilFunctions;
 
@@ -34,6 +36,9 @@ public class ProductService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductOptionTitleRepository productOptionTitleRepository;
 
     @Autowired
     private ProductMapper productMapper;
@@ -60,9 +65,17 @@ public class ProductService {
         product.setPrice(request.price());
         product.setDescription(request.description());
         product.setUrlImage(imageUrl);
-
+        product.setProductOptionTitles(request.productOptionTitle());
+        
         Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
         product.setCategory(category);
+
+        for(ProductOptionTitle obj : request.productOptionTitle()){
+            ProductOptionTitle productOptionTitle = productOptionTitleRepository.findById(obj.getId()).orElseThrow(() -> {throw new RuntimeException("Coleção de perguntas não encontrada");});
+            
+            productOptionTitle.getProducts().add(product);
+            productOptionTitleRepository.save(productOptionTitle);
+        }
 
         product = productRepository.save(product);
         return ResponseEntity.ok().body(productMapper.toDTO(product));

@@ -19,6 +19,7 @@ public class ProductMapper {
         product.setPrice(request.price());
         product.setDescription(request.description());
         product.setUrlImage(request.image().getOriginalFilename());
+        product.setProductOptionTitles(request.productOptionTitle());
 
         Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
         product.setCategory(category);
