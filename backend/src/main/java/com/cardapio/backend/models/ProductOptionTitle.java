@@ -2,15 +2,23 @@ package com.cardapio.backend.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductOptionTitle {
     
     @Id
@@ -19,6 +27,7 @@ public class ProductOptionTitle {
     private String description;
     private boolean required;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "productOptionTitles")
     private List<Product> products;
 }
