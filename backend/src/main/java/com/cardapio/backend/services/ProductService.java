@@ -4,8 +4,10 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +73,8 @@ public class ProductService {
         product.setCategory(category);
 
         for(ProductOptionTitle obj : request.productOptionTitle()){
-            ProductOptionTitle productOptionTitle = productOptionTitleRepository.findById(obj.getId()).orElseThrow(() -> {throw new RuntimeException("Coleção de perguntas não encontrada");});
-            
-            productOptionTitle.getProducts().add(product);
-            productOptionTitleRepository.save(productOptionTitle);
+            obj.getProducts().add(product);
+            productOptionTitleRepository.save(obj);
         }
 
         product = productRepository.save(product);
@@ -122,17 +122,19 @@ public class ProductService {
 
     public ResponseEntity<ResponseProductDTO> update(RequestProductDTO request, String id){
         return productRepository.findById(id).map(product -> {
+            productRepository.findByDescription(request.description()).ifPresent(obj -> {
+                if(!obj.getId().equals(product.getId())){
+                    throw new DescriptionUniqueException();
+                }
+            });
+           
+            product.setDescription(request.description());
             product.setPrice(request.price());
+            
             Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
             product.setCategory(category);
 
-            if(productRepository.findByDescription(request.description()).isPresent()){
-                throw new DescriptionUniqueException();
-            }
-            product.setDescription(request.description());
-
             if(!request.image().equals(null)){
-
                 if(!request.image().getOriginalFilename().equals(product.getUrlImage())){
                     // apaga o arquivo antes de atualizar
                     UtilFunctions.fileExistsDelete(product.getUrlImage(), uploadDir);
@@ -141,6 +143,33 @@ public class ProductService {
                         String imageUrl = UtilFunctions.saveImage(request.image(), uploadDir);
                         product.setUrlImage(imageUrl);
                     }
+                }
+            }
+            
+            Set<ProductOptionTitle> newOptions = new HashSet<>(request.productOptionTitle());
+            Set<ProductOptionTitle> currentOptions = new HashSet<>(product.getProductOptionTitles());
+
+            Set<ProductOptionTitle> optionsToRemove = new HashSet<>(currentOptions);
+            optionsToRemove.removeAll(newOptions);
+            
+            Set<ProductOptionTitle> optionsToAdd = new HashSet<>(newOptions);
+            optionsToAdd.removeAll(currentOptions);
+
+            // Remove opções antigas do banco
+            if (!optionsToRemove.isEmpty()) {
+                product.getProductOptionTitles().removeAll(optionsToRemove);
+                for (ProductOptionTitle option : optionsToRemove) {
+                    option.getProducts().remove(product);
+                    productOptionTitleRepository.save(option);
+                }
+            }
+
+            // Adiciona novas opções no banco
+            if (!optionsToAdd.isEmpty()) {
+                product.getProductOptionTitles().addAll(optionsToAdd);
+                for (ProductOptionTitle option : optionsToAdd) {
+                    option.getProducts().add(product);
+                    productOptionTitleRepository.save(option);
                 }
             }
 

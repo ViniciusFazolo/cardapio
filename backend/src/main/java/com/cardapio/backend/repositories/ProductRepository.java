@@ -12,7 +12,5 @@ import com.cardapio.backend.models.Product;
 public interface ProductRepository extends JpaRepository<Product, String>{
 
     List<Product> findByCategoryId(String id);
-
     Optional<Product> findByDescription(String description);
-    
 }

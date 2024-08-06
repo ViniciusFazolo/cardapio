@@ -33,7 +33,8 @@ public class ProductMapper {
             product.getPrice(),
             product.getDescription(),
             product.getUrlImage(),
-            product.getCategory()
+            product.getCategory(),
+            product.getProductOptionTitles()
         );
     }
 
