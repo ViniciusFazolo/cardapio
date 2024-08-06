@@ -61,7 +61,7 @@ export class NewProductComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
       category: new FormControl(null, [Validators.required]),
-      productOptionTitle: new FormControl([], [Validators.required])
+      productOptionTitle: new FormControl([])
     });
   }
 
@@ -100,10 +100,16 @@ export class NewProductComponent implements OnInit {
     this.productService.getById(this.id!).subscribe((response) => {
       this.itemToEdit = response
 
+      let productOptionIds: string[] = []
+      this.itemToEdit.productOptionTitle.forEach(item => {
+        productOptionIds.push(item.id!)
+      })
+      
       this.myForm.patchValue({
         description: this.itemToEdit.description,
         price: this.itemToEdit.price,
-        category: this.itemToEdit.category.id
+        category: this.itemToEdit.category.id,
+        productOptionTitle: productOptionIds
       });
 
       this.myForm.controls['image'].clearValidators();
@@ -134,8 +140,8 @@ export class NewProductComponent implements OnInit {
     product.append('price', this.myForm.value.price);
     product.append('category', this.myForm.value.category);
     product.append('image', this.imageUploaded);
-
-    const productOptionTitle = this.myForm.value.productOptionTitle;
+    
+    const productOptionTitle = this.myForm.value.productOptionTitle
     product.append('productOptionTitle', productOptionTitle)
 
     this.productService.create(product).subscribe(
@@ -162,6 +168,9 @@ export class NewProductComponent implements OnInit {
     if (this.id) {
       product.append('id', this.id);
     }
+
+    const productOptionTitle = this.myForm.value.productOptionTitle
+    product.append('productOptionTitle', productOptionTitle)
 
     this.productService.update(product).subscribe(
       (response) => {

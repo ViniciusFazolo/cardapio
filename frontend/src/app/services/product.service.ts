@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from './category.service';
 import { CrudRepository } from '../interfaces/CrudRepository';
+import { ProductOption } from './product-option.service';
 
 export interface Product {
   id?: string;
@@ -10,6 +11,7 @@ export interface Product {
   description: string;
   image: string;
   category: Category;
+  productOptionTitle: ProductOption[]
 }
 
 @Injectable({
