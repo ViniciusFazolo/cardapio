@@ -1,20 +1,23 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { Category, CategoryService } from '../../../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import {
+  FormArray,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product, ProductService } from '../../../services/product.service';
 import { NgIf } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ProductOption, ProductOptionService } from '../../../services/product-option.service';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-new-product',
@@ -27,13 +30,15 @@ import { SkeletonModule } from 'primeng/skeleton';
     ReactiveFormsModule,
     FormsModule,
     NgIf,
-    SkeletonModule
+    SkeletonModule,
+    NgSelectModule
   ],
   templateUrl: './new-product.component.html',
   styleUrl: './new-product.component.css',
 })
 export class NewProductComponent implements OnInit {
   categories!: Category[];
+  productOptions!: ProductOption[]
   img: string = '';
   imageUploaded!: File;
   myForm: FormGroup;
@@ -46,6 +51,7 @@ export class NewProductComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
+    private productOptionService: ProductOptionService,
     private toastr: ToastrService,
     private route: Router,
     private activatedRoute: ActivatedRoute
@@ -55,11 +61,13 @@ export class NewProductComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
       category: new FormControl(null, [Validators.required]),
+      productOptionTitle: new FormControl([], [Validators.required])
     });
   }
 
   ngOnInit(): void {
     this.getCategories();
+    this.getProductOptions();
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
@@ -80,6 +88,12 @@ export class NewProductComponent implements OnInit {
     this.categoryService.getAll().subscribe((res) => {
       this.categories = res;
     });
+  }
+
+  getProductOptions(){
+    this.productOptionService.getAll().subscribe({
+      next: (res) => {this.productOptions = res}
+    })
   }
 
   getById() {
@@ -120,6 +134,9 @@ export class NewProductComponent implements OnInit {
     product.append('price', this.myForm.value.price);
     product.append('category', this.myForm.value.category);
     product.append('image', this.imageUploaded);
+
+    const productOptionTitle = this.myForm.value.productOptionTitle;
+    product.append('productOptionTitle', productOptionTitle)
 
     this.productService.create(product).subscribe(
       (response) => {
@@ -193,5 +210,16 @@ export class NewProductComponent implements OnInit {
       this.imgUrl = URL.createObjectURL(file)
       this.imageUploaded = file
     })
+  }
+
+  addProductOptionTitle(event: any){
+    const selectedOptions = event.value; // Should be an array of selected IDs
+    const formArray = this.myForm.get('productOptionTitle') as FormArray;
+    formArray.clear();
+    selectedOptions.forEach((id: string) => {
+      formArray.push(new FormControl(id));
+    });
+
+    console.log(this.myForm.value.productOptionTitle)
   }
 }

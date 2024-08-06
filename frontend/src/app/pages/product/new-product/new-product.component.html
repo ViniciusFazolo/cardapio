@@ -11,8 +11,13 @@
           <img [src]="imgUrl" class="img-fluid border border-1 me-2" />
         </div>
       </div>
-      <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
-      
+      <p-skeleton
+        height="12em"
+        width="300px"
+        styleClass="mb-2"
+        *ngIf="showSkeleton"
+      />
+
       <div class="col-12">
         <div class="mb-2" *ngIf="!showSkeleton">
           <button
@@ -24,7 +29,12 @@
             Escolher outra imagem
           </button>
         </div>
-        <p-skeleton height="2.3em" width="180px" styleClass="mb-2" *ngIf="showSkeleton" />
+        <p-skeleton
+          height="2.3em"
+          width="180px"
+          styleClass="mb-2"
+          *ngIf="showSkeleton"
+        />
       </div>
 
       <div class="col-12" *ngIf="showInputFile">
@@ -43,7 +53,7 @@
         </div>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="description" class="form-label">Descrição: *</label>
         <div class="mb-3" *ngIf="!showSkeleton">
           <input
@@ -61,7 +71,7 @@
         <p-skeleton height="2.3em" *ngIf="showSkeleton" />
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-6">
         <label for="price" class="form-label">Preço: *</label>
         <div class="mb-3" *ngIf="!showSkeleton">
           <input
@@ -81,23 +91,38 @@
         </div>
         <p-skeleton height="2.3em" *ngIf="showSkeleton" />
       </div>
-      <div class="col-md-4">
+
+      <div class="col-md-6">
         <label for="category" class="form-label">Categoria: *</label>
         <div class="mb-3" *ngIf="!showSkeleton">
-          <select
-            class="form-select form-control shadow-sm"
-            id="category"
-            formControlName="category"
+          <ng-select
+          [items]="categories"
+          bindLabel="description"
+          bindValue="id"
+          formControlName="category"
+        >
+        </ng-select>
+
+          @if (myForm.controls['category'].invalid &&
+          myForm.controls['category'].touched) {
+          <small class="text-danger">Campo obrigatório</small>
+          }
+        </div>
+        <p-skeleton height="2.3em" *ngIf="showSkeleton" />
+      </div>
+
+      <div class="col-md-6">
+        <label for="category" class="form-label">Coleção de Perguntas: *</label>
+        <div class="mb-3" *ngIf="!showSkeleton">
+          <ng-select
+            [multiple]="true"
+            formControlName="productOptionTitle"
+            [items]="productOptions"
+            bindLabel="description"
+            bindValue="id"
           >
-            @for (category of categories; track $index) {
-            <option
-              [value]="category.id"
-              [selected]="itemToEdit && category.id == itemToEdit.category.id"
-            >
-              {{ category.description }}
-            </option>
-            }
-          </select>
+          </ng-select>
+
           @if (myForm.controls['category'].invalid &&
           myForm.controls['category'].touched) {
           <small class="text-danger">Campo obrigatório</small>
