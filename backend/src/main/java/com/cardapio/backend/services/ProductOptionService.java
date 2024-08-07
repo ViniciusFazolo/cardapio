@@ -12,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,11 +38,8 @@ public class ProductOptionService {
         List<ProductOption> options = new ArrayList<ProductOption>();
 
         for (ProductOption item : request.options()) {
-            ProductOption option = new ProductOption();
-            option.setOption(item.getOption());
-            option.setDescription(productOptionTitle);
-
-            options.add(productOptionRepository.save(option));
+            item.setDescription(productOptionTitle);
+            options.add(productOptionRepository.save(item));
         }
 
         return ResponseEntity.ok(new ResponseProductOptionDTO(productOptionTitle.getId(),
@@ -62,36 +61,43 @@ public class ProductOptionService {
                 .orElseThrow(() -> new RuntimeException("Descricao das opções não encontrado"));
 
         List<ProductOption> options = productOptionRepository.findByDescription(productOptionTitle);
-
         ResponseProductOptionDTO responseDTO = productOptionMapper.toDTO(productOptionTitle, options);
 
         return ResponseEntity.ok().body(responseDTO);
     }
 
     public ResponseEntity<ResponseProductOptionDTO> update(RequestProductOptionDTO request, String id) {
+        
         return productOptionTitleRepository.findById(id).map(productOptionTitle -> {
             productOptionTitle.setDescription(request.description());
             productOptionTitle.setRequired(request.required());
-            
-            List<ProductOption> currentProductOptions = productOptionRepository.findByDescription(productOptionTitle);
-            
-            //Atualiza a lista
-            List<String> updatedOptionIds = request.options().stream()
-            .map(ProductOption::getId)
-            .collect(Collectors.toList());
 
-            List<ProductOption> productOptionsToRemove = currentProductOptions.stream()
-            .filter(option -> !updatedOptionIds.contains(option.getId()))
-            .collect(Collectors.toList());
-
-            if(!productOptionsToRemove.isEmpty()){
-                productOptionRepository.deleteAll(productOptionsToRemove);
+            Set<ProductOption> updateOptions = new HashSet<>();
+            for (ProductOption option : request.options()) {
+                option.setDescription(productOptionTitle);
+                updateOptions.add(option);
             }
 
-            //Atualiza os valores
+            List<ProductOption> current = productOptionRepository.findByDescription(productOptionTitle);
+            Set<ProductOption> currentOptions = new HashSet<>(current);
+
+            Set<ProductOption> optionsToRemove = new HashSet<>(currentOptions);
+            optionsToRemove.removeAll(updateOptions);
+            Set<ProductOption> optionsToAdd = new HashSet<>(updateOptions);
+            optionsToAdd.removeAll(currentOptions); 
+
+            if(!optionsToRemove.isEmpty()){
+                productOptionRepository.deleteAll(optionsToRemove);
+            }
+
+            if(!optionsToAdd.isEmpty()){
+                productOptionRepository.saveAll(optionsToAdd);
+            }
+
+            //Atualiza os valores 
             for(ProductOption productOptionUpdate : request.options()){
                 if(productOptionUpdate.getId() == null){
-                    productOptionUpdate.setDescription(productOptionTitle);
+                    productOptionUpdate.setDescription(productOptionTitle); //vincula a um titulo
                     productOptionRepository.save(productOptionUpdate);
                 }else{
                     productOptionRepository.findById(productOptionUpdate.getId()).ifPresent(productOption -> {
@@ -101,7 +107,7 @@ public class ProductOptionService {
                 }
             }
             
-            currentProductOptions = productOptionRepository.findByDescription(productOptionTitle);
+            List<ProductOption> currentProductOptions = productOptionRepository.findByDescription(productOptionTitle);
             productOptionTitleRepository.save(productOptionTitle);
 
             return ResponseEntity.ok().body(productOptionMapper.toDTO(productOptionTitle, currentProductOptions));

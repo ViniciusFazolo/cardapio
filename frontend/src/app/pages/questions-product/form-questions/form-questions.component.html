@@ -14,8 +14,8 @@
             @for (option of myForm.value.options; track $index) {
                 <div class="mb-2">
                     <label class="form-label">Pergunta {{ $index + 1 }}:</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" [formControlName]="$index">
+                    <div class="input-group" [formGroupName]="$index">
+                        <input type="text" class="form-control" formControlName="option">
                         <button class="btn btn-danger" type="button" (click)="removeQuestion($index)">
                             <i class="fa-solid fa-xmark"></i>
                         </button>

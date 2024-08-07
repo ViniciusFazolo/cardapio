@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Optional } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import {
   FormArray,
@@ -79,14 +79,10 @@ export class FormQuestionsComponent implements OnInit {
   }
 
   create() {
-    const options: Option[] = (this.myForm.get('options') as FormArray).controls.map(control => ({
-      option: control.value,
-    }));
-
     const produtOption: ProductOption = {
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: options
+      options: this.myForm.value.options
     };
 
     this.productOptionService.create(produtOption).subscribe({
@@ -101,15 +97,11 @@ export class FormQuestionsComponent implements OnInit {
   }
 
   update() {
-    const options: Option[] = (this.myForm.get('options') as FormArray).controls.map(control => ({
-      option: control.value,
-    }));
-
     const produtOption: ProductOption = {
       id: this.id!,
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: options
+      options: this.myForm.value.options
     };
 
     this.productOptionService.update(produtOption).subscribe({
@@ -133,14 +125,22 @@ export class FormQuestionsComponent implements OnInit {
       const optionsArray = this.myForm.get('options') as FormArray;
       optionsArray.clear();
       response.options.forEach(option => {
-        optionsArray.push(new FormControl(option.option, [Validators.required]));
+        optionsArray.push(new FormGroup({
+          id: new FormControl(option.id),
+          option: new FormControl(option.option, [Validators.required])
+        }));
       });
+
+      console.log(this.myForm.value.options)
     })
   }
 
   addQuestion() {
     (this.myForm.get('options') as FormArray).push(
-      new FormControl('', [Validators.required])
+      new FormGroup({
+        id: new FormControl(null),
+        option: new FormControl('', [Validators.required])
+      })
     );
   }
 
