@@ -23,7 +23,9 @@
     </ng-container>
     
     <ng-container *ngIf="showSkeleton">
-      <p-skeleton max-width="500px" height="6.5rem" borderRadius="2rem" styleClass="mb-3"/>
+      <div class="col skeleton">
+        <p-skeleton width="100%" height="6.5rem" borderRadius="2rem" styleClass="mb-3"/>
+      </div>
     </ng-container>
   }
 </app-userlayout>
