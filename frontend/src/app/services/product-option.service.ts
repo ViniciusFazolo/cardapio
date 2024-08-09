@@ -12,7 +12,7 @@ export interface ProductOption {
   id?: string;
   description: string;
   required: boolean,
-  options: Option[];
+  productOptions: Option[];
 }
 
 @Injectable({

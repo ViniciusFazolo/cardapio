@@ -82,7 +82,7 @@ export class FormQuestionsComponent implements OnInit {
     const produtOption: ProductOption = {
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: this.myForm.value.options
+      productOptions: this.myForm.value.options
     };
 
     this.productOptionService.create(produtOption).subscribe({
@@ -101,7 +101,7 @@ export class FormQuestionsComponent implements OnInit {
       id: this.id!,
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: this.myForm.value.options
+      productOptions: this.myForm.value.options
     };
 
     this.productOptionService.update(produtOption).subscribe({
@@ -124,14 +124,12 @@ export class FormQuestionsComponent implements OnInit {
       
       const optionsArray = this.myForm.get('options') as FormArray;
       optionsArray.clear();
-      response.options.forEach(option => {
+      response.productOptions.forEach(option => {
         optionsArray.push(new FormGroup({
           id: new FormControl(option.id),
           option: new FormControl(option.option, [Validators.required])
         }));
       });
-
-      console.log(this.myForm.value.options)
     })
   }
 

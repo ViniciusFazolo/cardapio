@@ -10,6 +10,8 @@ import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
 import { ModalComponent } from "../../components/modal/modal.component";
 import { NgIf } from '@angular/common';
+import { ChooseQtdProductComponent } from '../../components/choose-qtd-product/choose-qtd-product.component';
+import { ProductOption } from '../../services/product-option.service';
   
 export interface Product{
   id?: string;
@@ -18,6 +20,7 @@ export interface Product{
   image: string;
   imageUrl?: string,
   category: Category
+  productOptionTitle: ProductOption[]
 }
 
 export interface Category {
@@ -31,7 +34,7 @@ export interface Category {
 @Component({
   selector: 'app-home-user',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, RouterOutlet, NavbarComponent, ProductComponent, CardComponent, UserlayoutComponent, ModalComponent, NgIf],
+  imports: [HeaderComponent, FooterComponent, RouterOutlet, NavbarComponent, ProductComponent, CardComponent, UserlayoutComponent, ModalComponent, NgIf, ChooseQtdProductComponent],
   templateUrl: './home-user.component.html',
   styleUrl: './home-user.component.css'
 })
@@ -39,7 +42,6 @@ export interface Category {
 export class HomeUserComponent implements OnInit{
   categories!: Category[];
   products!: Product[]
-  selectedProduct!: Product
 
   constructor(private categoryService: CategoryService, private productService: ProductService){}
 
@@ -67,6 +69,7 @@ export class HomeUserComponent implements OnInit{
   getProducts(){
     this.productService.getAll().subscribe(response => {
       this.products = response
+      console.log(response)
       this.getImagesProduct()
     })
   }
@@ -78,9 +81,5 @@ export class HomeUserComponent implements OnInit{
         obj.imageUrl =  URL.createObjectURL(file)
       })
     }
-  }
-
-  openProductDetails(product: Product){
-    this.selectedProduct = product
   }
 }
