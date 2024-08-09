@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
@@ -8,17 +8,45 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
   imports: [NgxMaskDirective, NgxMaskPipe],
   templateUrl: './choose-qtd-product.component.html',
   styleUrl: './choose-qtd-product.component.css',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ChooseQtdProductComponent),
+      multi: true,
+    },
+  ]
 })
-export class ChooseQtdProductComponent {
-  quantity: number = 0;
+export class ChooseQtdProductComponent implements ControlValueAccessor{
+  onChange: any = () => {};
+  onTouched: any = () => {};
+  value: number = 0;
 
   add() {
-    if (this.quantity == 99) return;
-    this.quantity += 1;
+    if (this.value == 99) return;
+    this.value += 1;
+    this.onChange(this.value)
   }
 
   less() {
-    if (this.quantity == 0) return;
-    this.quantity -= 1;
+    if (this.value == 0) return;
+    this.value -= 1;
+    this.onChange(this.value)
+  }
+
+  onInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.onChange(value);
+  }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
   }
 }

@@ -1,4 +1,4 @@
 <div class="mt-3">
     <span>Alguma observação?</span>
-    <input type="text" class="mt-2 w-100 note border border-secondary-subtle border-opacity-25 rounded-2 p-3">
+    <input type="text" class="mt-2 w-100 note border border-secondary-subtle border-opacity-25 rounded-2 p-3" [value]="value" (input)="onInput($event)">
 </div>
