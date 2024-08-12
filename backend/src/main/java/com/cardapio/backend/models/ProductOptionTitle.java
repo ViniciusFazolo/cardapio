@@ -27,6 +27,7 @@ public class ProductOptionTitle {
     private String id;
     private String description;
     private boolean required;
+    private int qtOptionsSelected;
 
     @OneToMany(mappedBy = "description")
     private List<ProductOption> productOptions;
