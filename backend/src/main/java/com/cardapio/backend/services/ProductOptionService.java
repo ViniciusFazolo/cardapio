@@ -33,17 +33,18 @@ public class ProductOptionService {
         ProductOptionTitle productOptionTitle = new ProductOptionTitle();
         productOptionTitle.setDescription(request.description());
         productOptionTitle.setRequired(request.required());
+        productOptionTitle.setQtOptionsSelected(request.qtOptionsSelected());
         productOptionTitleRepository.save(productOptionTitle);
 
         List<ProductOption> options = new ArrayList<ProductOption>();
 
-        for (ProductOption item : request.options()) {
+        for (ProductOption item : request.productOptions()) {
             item.setDescription(productOptionTitle);
             options.add(productOptionRepository.save(item));
         }
 
         return ResponseEntity.ok(new ResponseProductOptionDTO(productOptionTitle.getId(),
-                productOptionTitle.getDescription(), productOptionTitle.isRequired(), options));
+                productOptionTitle.getDescription(), productOptionTitle.isRequired(), productOptionTitle.getQtOptionsSelected(),options));
     }
 
     public ResponseEntity<List<ResponseProductOptionDTO>> listAll() {
@@ -71,9 +72,10 @@ public class ProductOptionService {
         return productOptionTitleRepository.findById(id).map(productOptionTitle -> {
             productOptionTitle.setDescription(request.description());
             productOptionTitle.setRequired(request.required());
+            productOptionTitle.setQtOptionsSelected(request.qtOptionsSelected());
 
             Set<ProductOption> updateOptions = new HashSet<>();
-            for (ProductOption option : request.options()) {
+            for (ProductOption option : request.productOptions()) {
                 option.setDescription(productOptionTitle);
                 updateOptions.add(option);
             }
@@ -95,7 +97,7 @@ public class ProductOptionService {
             }
 
             //Atualiza os valores 
-            for(ProductOption productOptionUpdate : request.options()){
+            for(ProductOption productOptionUpdate : request.productOptions()){
                 if(productOptionUpdate.getId() == null){
                     productOptionUpdate.setDescription(productOptionTitle); //vincula a um titulo
                     productOptionRepository.save(productOptionUpdate);

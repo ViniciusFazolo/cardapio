@@ -19,13 +19,14 @@ public class ProductOptionMapper {
     //     return descriptionAsk;
     // }
 
-    public ResponseProductOptionDTO toDTO(ProductOptionTitle productOptionTitle, List<ProductOption> options) {
+    public ResponseProductOptionDTO toDTO(ProductOptionTitle productOptionTitle, List<ProductOption> productOptions) {
         
         return new ResponseProductOptionDTO(
             productOptionTitle.getId(),
             productOptionTitle.getDescription(),
             productOptionTitle.isRequired(),
-            options
+            productOptionTitle.getQtOptionsSelected(),
+            productOptions
         );
     }
 
