@@ -11,7 +11,8 @@ export interface Option {
 export interface ProductOption {
   id?: string;
   description: string;
-  required: boolean,
+  required: boolean;
+  qtOptionsSelected: number;
   productOptions: Option[];
 }
 

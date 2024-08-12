@@ -1,9 +1,17 @@
 <app-default-layout-pages [title]="'Nova coleção de perguntas'" [title]="id ? 'Editar Coleção de Perguntas' : 'Nova Coleção de Perguntas'">
     <form [formGroup]="myForm" (submit)="save()">
-        <div class="form-check form-switch mb-2">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" formControlName="required">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Obrigatório</label>
-          </div>
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" role="switch" id="required" formControlName="required">
+                    <label class="form-check-label" for="required">Obrigatório</label>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <app-numeric-spinner [label]="'Quantas opções devem ser selecionadas?'" [class]="'flex-column'" formControlName="qtOptionsSelected"/>
+            </div>
+        </div>
 
         <div class="mb-2">
             <label for="" class="form-label">Descrição: *</label>
@@ -20,6 +28,11 @@
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
+
+                    <!-- @if (myForm.controls['qtOptionsSelected'].invalid &&
+                        myForm.controls['qtOptionsSelected'].touched) {
+                        <small class="text-danger">Campo obrigatório</small>
+                    } -->
                 </div>
             }
         </div>

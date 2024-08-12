@@ -22,6 +22,12 @@ img{
     font-weight: bold;
     color: white;
     background-color: rgb(223, 39, 39);
+    max-height: 25px;
+}
+
+.qtSelected{
+    font-size: 0.8rem;
+    color: #888888;
 }
 
 input[type="checkbox"]:checked{
