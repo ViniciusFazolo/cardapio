@@ -26,8 +26,8 @@ img{
 }
 
 .qtSelected{
-    font-size: 0.8rem;
-    color: #888888;
+    font-size: 0.75rem;
+    color: #313131;
 }
 
 input[type="checkbox"]:checked{
@@ -37,4 +37,8 @@ input[type="checkbox"]:checked{
 
 input[type="checkbox"]{
     box-shadow: none;
+}
+
+.title{
+    font-weight: 500;
 }

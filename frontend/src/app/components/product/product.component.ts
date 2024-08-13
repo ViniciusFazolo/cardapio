@@ -6,6 +6,7 @@ import { ProductNotesComponent } from '../product-notes/product-notes.component'
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { NumericSpinnerComponent } from '../numeric-spinner/numeric-spinner.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +20,7 @@ export class ProductComponent implements OnInit{
   
   @Input() product!: Product;
 
-  constructor(){
+  constructor(private toastr: ToastrService){
     this.myForm = new FormGroup({
       qtItems: new FormControl(0, [Validators.required]),
       notes: new FormControl(''),
@@ -71,6 +72,26 @@ export class ProductComponent implements OnInit{
   }
 
   submit(){
-    
+    if(!this.myForm.value.qtItems){
+      this.toastr.warning("Selecione a quantidade!")
+      return
+    }
+
+    const productOptions = this.myForm.get('productOptions') as FormArray
+    for(const productOption of productOptions.controls) {
+      if(productOption.get('required')?.value){
+        const options = productOption.get('options') as FormArray
+        const checked = options.controls.some(option => {
+          return option.get('checked')?.value
+        })
+
+        if(!checked){
+          this.toastr.warning("Selecione pelo menos um item dos campos obrigatórios")
+          return
+        }
+      }
+    }
+
+    console.log(this.myForm)
   }
 }

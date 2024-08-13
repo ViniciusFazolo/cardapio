@@ -10,7 +10,6 @@ import {
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { InputGroupModule } from 'primeng/inputgroup';
 import {
-  Option,
   ProductOption,
   ProductOptionService,
 } from '../../../services/product-option.service';
@@ -129,7 +128,8 @@ export class FormQuestionsComponent implements OnInit {
     this.productOptionService.getById(this.id!).subscribe((response) => {
       this.myForm.patchValue({
         description: response.description,
-        required: response.required
+        required: response.required,
+        qtOptionsSelected: response.qtOptionsSelected
       })
       
       const optionsArray = this.myForm.get('options') as FormArray;
