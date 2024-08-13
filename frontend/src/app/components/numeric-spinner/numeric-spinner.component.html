@@ -1,11 +1,17 @@
-<div class="d-flex mb-3 gap-2" [ngClass]="class">
-    <span>{{label}}</span>
+<div class="d-flex mb-2 gap-2" [ngClass]="class">
+    @if (titleStyle == 'title') {
+      <span for="qt">{{label}}</span>
+    }
+    @else {
+      <label for="qt">{{label}}</label>
+    }
     <div class="card flex-row" style="height: 40px; max-width: 150px;">
       <button class="p-2 px-3 btn d-flex align-items-center justify-content-center" type="button" (click)="less()">
         <i class="fa-solid fa-minus text-secondary"></i>
       </button>
       
       <input
+            id="qt"
             type="text"
             class="quantity"
             mask="00"

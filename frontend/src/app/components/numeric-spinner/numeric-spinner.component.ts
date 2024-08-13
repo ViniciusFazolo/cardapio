@@ -1,7 +1,10 @@
 import { NgClass } from '@angular/common';
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+
+type TitleStyle = 'title' | 'label'
 
 @Component({
   selector: 'app-numeric-spinner',
@@ -24,6 +27,7 @@ export class NumericSpinnerComponent implements ControlValueAccessor{
 
   @Input() label: string = ''
   @Input() class: string = ''
+  @Input() titleStyle: TitleStyle = 'title'
   
   add() {
     if (this.value == 99) return;
