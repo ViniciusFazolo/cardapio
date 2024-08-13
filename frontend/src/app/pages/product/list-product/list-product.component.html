@@ -13,7 +13,7 @@
         @for (product of products; track $index) {
           <tr>
             <td class="align-middle">
-              <a [routerLink]="'/adm/product/update/' + product.id">{{product.description}}</a>
+              <a [routerLink]="'/adm/product/' + product.id">{{product.description}}</a>
             </td>
             <td class="align-middle">
               {{product.category.description}}

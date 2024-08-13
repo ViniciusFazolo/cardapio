@@ -36,7 +36,7 @@ export const routes: Routes = [
         component: NewUserComponent,
       },
       {
-        path: 'user/update/:id',
+        path: 'user/:id',
         component: NewUserComponent,
       },
       {
@@ -48,7 +48,7 @@ export const routes: Routes = [
         component: NewProductComponent,
       },
       {
-        path: 'product/update/:id',
+        path: 'product/:id',
         component: NewProductComponent,
       },
       {
@@ -60,7 +60,7 @@ export const routes: Routes = [
         component: NewCategoryComponent,
       },
       {
-        path: 'category/update/:id',
+        path: 'category/:id',
         component: NewCategoryComponent,
       },
       {
@@ -72,7 +72,7 @@ export const routes: Routes = [
         component: FormQuestionsComponent
       },
       {
-        path: 'productOption/update/:id',
+        path: 'productOption/:id',
         component: FormQuestionsComponent
       },
 

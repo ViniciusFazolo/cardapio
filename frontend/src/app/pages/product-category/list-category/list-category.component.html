@@ -13,7 +13,7 @@
         @for (category of categories; track $index) {
         <tr>
           <td class="align-middle">
-            <a [routerLink]="'/adm/category/update/' + category.id">{{category.description}}</a>
+            <a [routerLink]="'/adm/category/' + category.id">{{category.description}}</a>
           </td>
           <td class="text-center align-middle">
             <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete"

@@ -12,7 +12,7 @@
         @for (user of users; track $index) {
           <tr>
             <td class="align-middle text-start" [ngStyle]="{'background-color': !user.active ? 'rgba(218, 92, 92, 0.253)' : ''}">
-              <a [routerLink]="'/adm/user/update/' + user.id">{{user.name}}</a>
+              <a [routerLink]="'/adm/user/' + user.id">{{user.name}}</a>
             </td>
             <td class="text-center align-middle">
               <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(user.id!)">

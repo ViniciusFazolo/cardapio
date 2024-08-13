@@ -12,7 +12,7 @@
             @for (productOption of productOptions; track $index) {
               <tr>
                 <td class="align-middle text-start">
-                  <a [routerLink]="'/adm/productOption/update/' + productOption.id">{{productOption.description}}</a>
+                  <a [routerLink]="'/adm/productOption/' + productOption.id">{{productOption.description}}</a>
                 </td>
                 <td class="text-center align-middle">
                   <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(productOption.id!)">
