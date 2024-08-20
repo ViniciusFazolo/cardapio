@@ -7,6 +7,7 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { CheckboxModule } from 'primeng/checkbox';
 import { NumericSpinnerComponent } from '../numeric-spinner/numeric-spinner.component';
 import { ToastrService } from 'ngx-toastr';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
   selector: 'app-product',
@@ -20,7 +21,7 @@ export class ProductComponent implements OnInit{
   
   @Input() product!: Product;
 
-  constructor(private toastr: ToastrService){
+  constructor(private toastr: ToastrService, private modal: ModalService){
     this.myForm = new FormGroup({
       qtItems: new FormControl(0, [Validators.required]),
       notes: new FormControl(''),
@@ -91,7 +92,9 @@ export class ProductComponent implements OnInit{
         }
       }
     }
+  }
 
-    console.log(this.myForm)
+  showModal(){
+    this.modal.showModal()
   }
 }

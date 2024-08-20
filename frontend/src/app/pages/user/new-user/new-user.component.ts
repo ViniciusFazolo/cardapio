@@ -7,12 +7,13 @@ import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NgIf } from '@angular/common';
+import { PrimaryInputComponent } from "../../../components/primary-input/primary-input.component";
 
 
 @Component({
   selector: 'app-new-user',
   standalone: true,
-  imports: [DefaultLayoutPagesComponent, BtnsEndComponent, ReactiveFormsModule, SkeletonModule, NgIf],
+  imports: [DefaultLayoutPagesComponent, BtnsEndComponent, ReactiveFormsModule, SkeletonModule, NgIf, PrimaryInputComponent],
   templateUrl: './new-user.component.html',
   styleUrl: './new-user.component.css'
 })

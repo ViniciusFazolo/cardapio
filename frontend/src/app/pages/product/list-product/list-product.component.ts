@@ -9,6 +9,7 @@ import { RouterLinkWithHref } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { NgIf } from '@angular/common';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-list-product',
@@ -30,7 +31,8 @@ export class ListProductComponent {
 
   constructor(
     private productService: ProductService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modal: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,7 @@ export class ListProductComponent {
   //save item id to delete if confirm
   saveItem(idItem: string) {
     this.idItem = idItem;
+    this.showModal()
   }
 
   deleteItem() {
@@ -72,6 +75,8 @@ export class ListProductComponent {
         this.toastr.error('Erro ao excluir registro!');
       }
     );
+    
+    this.showModal()
   }
 
   private createDataTable() {
@@ -96,5 +101,9 @@ export class ListProductComponent {
       dtInstance.destroy();
       this.dtTrigger.next(null);
     });
+  }
+
+  showModal(){
+    this.modal.showModal()
   }
 }

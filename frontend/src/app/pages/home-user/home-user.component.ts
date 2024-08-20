@@ -66,6 +66,8 @@ export class HomeUserComponent implements OnInit{
         obj.imageUrl =  URL.createObjectURL(file)
       })
     }
+
+    console.log(this.categories)
   }
 
   getProducts(){

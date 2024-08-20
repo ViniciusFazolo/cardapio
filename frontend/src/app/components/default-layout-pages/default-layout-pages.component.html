@@ -1,22 +1,75 @@
-<app-navbar-adm></app-navbar-adm>
-<div class="container-fluid my-3">
-  <div class="card border border-0 shadow-sm">
-    <div class="card-body px-4">
-      <div class="row align-items-center">
-        <div class="col">
-          <h5 class="mt-3">{{ title }}</h5>
-        </div>
-        @if(showBtn){
-        <div class="col text-end">
-          <a class="btn btn-success" [routerLink]="btnNewLink">
-            <span>Novo</span>
-            <i class="fa-solid fa-plus ms-2"></i>
+<div class="flex">
+  <aside [ngClass]="{ 'w-0': !isSidebarOpen, 'min-w-60': isSidebarOpen }"
+    class="h-screen bg-white text-black shadow-lg fixed top-0 left-0 z-30 transition-all duration-300">
+    <ng-container *ngIf="isSidebarOpen">
+      <div class="p-5 relative">
+        <button class="absolute right-1 top-1 p-3 block md:hidden" (click)="toggleSidebar()">
+          <i class="fa-solid fa-xmark fa-lg"></i>
+        </button>
+
+        <h5 class="text-lg">Nelson Vinícius</h5>
+
+        <hr class="border border-gray-100 my-4" />
+
+        <div class="flex flex-col">
+          <a routerLink="/adm/productOption"
+            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            (click)="closeSidebarOnClickLink()">
+            <i class="fa-solid fa-question me-2"></i>
+            Perguntas do produto
+          </a>
+          <a routerLink="/adm/category"
+            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            (click)="closeSidebarOnClickLink()">
+            <i class="fa-solid fa-tag me-2"></i>
+            Categoria do Produto
+          </a>
+          <a routerLink="/adm/product"
+            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            (click)="closeSidebarOnClickLink()">
+            <i class="fa-solid fa-box me-2"></i>
+            Produtos
+          </a>
+          <a routerLink="/adm/user"
+            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            (click)="closeSidebarOnClickLink()">
+            <i class="fa-solid fa-user me-2"></i>
+            Usuários
           </a>
         </div>
-        }
       </div>
-      <hr class="border">
-      <ng-content></ng-content>
+    </ng-container>
+  </aside>
+
+  <div (click)="toggleSidebar()" class="md:hidden w-screen h-screen bg-black opacity-50 fixed z-20"
+    [ngClass]="{'hidden': !isSidebarOpen}"></div>
+
+  <div class="w-full transition-all duration-300" [ngClass]="{'md:ml-60': isSidebarOpen}">
+    <app-navbar-adm (isSidebarOpen)="toggleSidebar()"></app-navbar-adm>
+    <div class="px-4 pb-4 mt-20">
+      <div class="min-h-[85vh] p-4 shadow-sm rounded-md bg-white">
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <h5 class="md:text-md my-2">{{ title }}</h5>
+          </div>
+          
+          @if(btnNewLink != ''){
+            <div class="min-w-20">
+              <a class="bg-green-700 py-1.5 px-3 rounded-md text-white md:hover:bg-green-800 text-sm transition"
+                [routerLink]="btnNewLink">
+                <span>Novo</span>
+                <i class="fa-solid fa-plus ms-2"></i>
+              </a>
+            </div>
+          }
+        </div>
+
+        <hr class="border border-gray-100 my-4" />
+
+        <div class="h-full">
+          <ng-content></ng-content>
+        </div>
+      </div>
     </div>
   </div>
 </div>

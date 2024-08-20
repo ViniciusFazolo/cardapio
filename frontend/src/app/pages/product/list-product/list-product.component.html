@@ -13,14 +13,14 @@
         @for (product of products; track $index) {
           <tr>
             <td class="align-middle">
-              <a [routerLink]="'/adm/product/' + product.id">{{product.description}}</a>
+              <a [routerLink]="'/adm/product/' + product.id" class="text-blue-400 md:hover:text-blue-500 transition">{{product.description}}</a>
             </td>
             <td class="align-middle">
               {{product.category.description}}
             </td>
             <td class="align-middle">
-              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(product.id!)">
-                <i class="fa-solid fa-trash"></i>
+              <button class="h-8 w-8 bg-red-500 rounded-lg md:hover:bg-red-600 transition" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(product.id!)">
+                <i class="fa-solid fa-trash text-white"></i>
               </button>
             </td>
           </tr>
@@ -31,7 +31,7 @@
   </app-default-layout-pages>
   
   <!-- Modal -->
-<app-modal [id]="'alertDelete'" [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
+<app-modal [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
 (confirm)="deleteItem()">
 <p>Realmente deseja excluir o registro?</p>
 </app-modal>

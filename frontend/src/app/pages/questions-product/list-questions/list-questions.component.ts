@@ -12,6 +12,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { RouterLinkWithHref } from '@angular/router';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { NgIf } from '@angular/common';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-list-questions',
@@ -34,7 +35,8 @@ export class ListQuestionsComponent implements OnInit, OnDestroy{
 
   constructor(
     private productOptionService: ProductOptionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modal: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class ListQuestionsComponent implements OnInit, OnDestroy{
   //save item id to delete if confirm
   saveItem(idItem: string) {
     this.idItem = idItem;
+    this.showModal()
   }
 
   deleteItem() {
@@ -76,6 +79,8 @@ export class ListQuestionsComponent implements OnInit, OnDestroy{
         this.toastr.error('Erro ao excluir registro!');
       }
     );
+
+    this.showModal()
   }
   
   private createDataTable() {
@@ -100,5 +105,9 @@ export class ListQuestionsComponent implements OnInit, OnDestroy{
       dtInstance.destroy();
       this.dtTrigger.next(null);
     });
+  }
+
+  showModal(){
+    this.modal.showModal()
   }
 }

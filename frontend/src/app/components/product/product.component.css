@@ -1,35 +1,3 @@
-a{
-    text-decoration: none;
-}
-
-img{
-    width: 100px;
-    height: 70px;
-    object-fit: contain;
-}
-
-.product-bg{
-    background-color: rgb(240, 239, 239);
-}
-
-.title{
-    background-color: rgba(240, 244, 248, 0.808);
-}
-
-.required{
-    padding: 5px 8px;
-    font-size: 0.6rem;
-    font-weight: bold;
-    color: white;
-    background-color: rgb(223, 39, 39);
-    max-height: 25px;
-}
-
-.qtSelected{
-    font-size: 0.75rem;
-    color: #313131;
-}
-
 input[type="checkbox"]:checked{
     background-color: rgb(223, 39, 39);
     border: none !important;

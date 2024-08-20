@@ -1,25 +1,28 @@
 <app-default-layout-pages [title]="'Listagem de usuário'" [showBtn]="true" [btnNewLink]="'/adm/user/create'">
-  <div class="position-relative">
-    <p-progressBar *ngIf="showProgressBar" mode="indeterminate" [style]="{ height: '5px', width: '100%', position: 'absolute', top: '0', left: '0' }"></p-progressBar>
-    <table class="table mt-2 table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-      <thead class="table-secondary">
+  <div class="relative">
+    <p-progressBar *ngIf="showProgressBar" mode="indeterminate"
+      [style]="{ height: '5px', width: '100%', position: 'absolute', top: '0', left: '0' }"></p-progressBar>
+    <table class="table-auto" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+      <thead>
         <tr>
-          <th class="text-start col-12">Usuário</th>
-          <th class="text-center">Ações</th>
+          <th>Usuário</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
         @for (user of users; track $index) {
-          <tr>
-            <td class="align-middle text-start" [ngStyle]="{'background-color': !user.active ? 'rgba(218, 92, 92, 0.253)' : ''}">
-              <a [routerLink]="'/adm/user/' + user.id">{{user.name}}</a>
-            </td>
-            <td class="text-center align-middle">
-              <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(user.id!)">
-                <i class="fa-solid fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+        <tr>
+          <td class="align-middle text-start"
+            [ngStyle]="{'background-color': !user.active ? 'rgba(218, 92, 92, 0.253)' : ''}">
+            <a [routerLink]="'/adm/user/' + user.id"
+              class="text-blue-400 md:hover:text-blue-500 transition">{{user.name}}</a>
+          </td>
+          <td class="text-center align-middle">
+            <button class="h-8 w-8 bg-red-500 rounded-lg md:hover:bg-red-600 transition" (click)="saveItem(user.id!)">
+              <i class="fa-solid fa-trash text-white"></i>
+            </button>
+          </td>
+        </tr>
         }
       </tbody>
     </table>
@@ -27,7 +30,6 @@
 </app-default-layout-pages>
 
 <!-- Modal -->
-<app-modal [id]="'alertDelete'" [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
-  (confirm)="deleteItem()">
-  <p>Realmente deseja excluir o registro?</p>
-</app-modal>  
+<app-modal (confirm)="deleteItem()" [btnPrimary]="'Excluir'" [title]="'Exclusão de registro'">
+  <span>Realmente deseja excluir o registro?</span>
+</app-modal>

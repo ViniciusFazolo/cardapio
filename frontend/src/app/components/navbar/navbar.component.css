@@ -1,16 +1,6 @@
 .card-bg {
   background-size: cover;
   background-position: center;
-  color: white;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-}
-
-nav {
-  max-width: 500px;
-  margin: 0 auto;
-  overflow-x: auto;
 }
 
 a{

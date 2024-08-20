@@ -2,21 +2,21 @@
     <div class="position-relative">
         <p-progressBar *ngIf="showProgressBar" mode="indeterminate" [style]="{ height: '5px', width: '100%', position: 'absolute', top: '0', left: '0' }"></p-progressBar>
         <table class="table mt-2 table-striped table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
-          <thead class="table-secondary">
+          <thead class="bg-gray-100">
             <tr>
-              <th class="text-start col-12">Descrição</th>
-              <th class="text-center">Ações</th>
+              <th>Descrição</th>
+              <th>Ações</th>
             </tr>
           </thead>
           <tbody>
             @for (productOption of productOptions; track $index) {
-              <tr>
+              <tr class="border-b">
                 <td class="align-middle text-start">
-                  <a [routerLink]="'/adm/productOption/' + productOption.id">{{productOption.description}}</a>
+                  <a [routerLink]="'/adm/productOption/' + productOption.id" class="text-blue-400 md:hover:text-blue-500 transition">{{productOption.description}}</a>
                 </td>
                 <td class="text-center align-middle">
-                  <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(productOption.id!)">
-                    <i class="fa-solid fa-trash"></i>
+                  <button class="h-8 w-8 bg-red-500 rounded-lg md:hover:bg-red-600 transition" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(productOption.id!)">
+                    <i class="fa-solid fa-trash text-white"></i>
                   </button>
                 </td>
               </tr>
@@ -27,7 +27,7 @@
 </app-default-layout-pages>
 
 <!-- Modal -->
-<app-modal [id]="'alertDelete'" [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
+<app-modal [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
   (confirm)="deleteItem()">
   <p>Realmente deseja excluir o registro?</p>
 </app-modal>  

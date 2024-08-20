@@ -1,9 +1,9 @@
 <app-header [establishment]="'Nelson Vinicius restaurante'" [tableNumber]="4" />
 <app-navbar />
-<app-userlayout>
+<div class="max-w-md m-auto px-3">
   @for (category of categories; track $index) {
     <ng-container *ngIf="!showSkeleton">
-      <div class="col mb-3">
+      <div class="mb-3">
         <app-card
           [subtitle]="'seg - sex'"
           [text]="'Das 16 as 18'"
@@ -13,7 +13,6 @@
             @if(category.id == product.category.id){
               <app-product
               [product]="product"
-              class="collapse"
               [id]="category.description"
               />
             }
@@ -28,5 +27,5 @@
       </div>
     </ng-container>
   }
-</app-userlayout>
+</div>
 <app-footer />

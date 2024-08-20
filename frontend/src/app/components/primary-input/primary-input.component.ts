@@ -26,7 +26,6 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = 'text';
   @Input() placeholder: string = '';
   @Input() inputName: string = '';
-  @Input() classes: string = ''
 
   value: string = '';
   onChange: any = () => {};
