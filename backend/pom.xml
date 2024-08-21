@@ -80,6 +80,12 @@
 			<version>4.4.0</version>
 		</dependency>
 
+		<dependency>
+    		<groupId>org.javapos</groupId>
+    		<artifactId>javapos</artifactId>
+    		<version>1.14.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

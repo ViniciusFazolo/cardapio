@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JposEntries PUBLIC "-//JavaPOS//DTD//EN"
+                                "jpos/res/jcl.dtd">
+<JposEntries>
+    <JposEntry logicalName="Printer">
+        <creation factoryClass="com.company.pos.factory.YourPrinterFactory"
+                  serviceClass="com.company.pos.service.YourPrinterService"/>
+        <vendorName>Epson</vendorName>
+        <deviceCategory="POSPrinter"/>
+        <jposVersion>2.0.2</jposVersion>
+        <productName>Epson TM-T20X</productName>
+        <productDescription>Epson TM-T20X Modelo M352A</productDescription>
+        <productURL>https://epson.com.br/</productURL>
+    </JposEntry>
+</JposEntries>
