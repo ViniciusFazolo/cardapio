@@ -9,6 +9,7 @@ import { User, UserService } from '../../../services/user.service';
 import { NgIf, NgStyle } from '@angular/common';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-list-user',
@@ -30,7 +31,8 @@ export class ListUserComponent {
 
   constructor(
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modal: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,8 @@ export class ListUserComponent {
   //save item id to delete if confirm
   saveItem(idItem: string) {
     this.idItem = idItem;
+
+    this.showModal()
   }
 
   deleteItem() {
@@ -72,6 +76,8 @@ export class ListUserComponent {
         this.toastr.error('Erro ao excluir registro!');
       }
     );
+
+    this.showModal()
   }
 
   private createDataTable() {
@@ -96,5 +102,9 @@ export class ListUserComponent {
       dtInstance.destroy();
       this.dtTrigger.next(null);
     });
+  }
+
+  showModal(){
+    this.modal.showModal()
   }
 }

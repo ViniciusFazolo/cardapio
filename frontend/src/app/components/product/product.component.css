@@ -1,9 +1,12 @@
-a{
-    text-decoration: none;
+input[type="checkbox"]:checked{
+    background-color: rgb(223, 39, 39);
+    border: none !important;
 }
 
-img{
-    width: 100px;
-    height: 70px;
-    object-fit: contain;
+input[type="checkbox"]{
+    box-shadow: none;
+}
+
+.title{
+    font-weight: 500;
 }

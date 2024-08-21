@@ -1,46 +1,52 @@
 <app-default-layout-pages [title]="id ? 'Editar categoria' : 'Nova categoria'" (submit)="save()">
   <form [formGroup]="myForm">
-    <div class="row">
-      <label for="image" class="form-label">Imagem: *</label>
+    <label for="image" class="form-label">Imagem: *</label>
 
-      <div class="col-12" *ngIf="imgUrl">
-        <div class="mb-2" *ngIf="!showSkeleton">
-          <img [src]="imgUrl" class="img-fluid border border-1">
-        </div>
+    <div class="w-full" *ngIf="imgUrl">
+      <div class="mb-2" *ngIf="!showSkeleton">
+        <img [src]="imgUrl" class="img-fluid border border-1" />
       </div>
-      <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
-      
-      <div class="col-12">
-        <div class="mb-2" *ngIf="!showSkeleton">
-          <button class="btn btn-sm btn-secondary" type="button" (click)="chooseImage()" *ngIf="!showInputFile">Escolher outra imagem</button>
-        </div>
-        <p-skeleton height="2.3em" width="180px" styleClass="mb-2" *ngIf="showSkeleton" />
-      </div>
+    </div>
+    <p-skeleton height="12em" width="300px" styleClass="mb-2" *ngIf="showSkeleton" />
 
-      <div class="col-12" *ngIf="showInputFile">
-        <div class="mb-3" *ngIf="!showSkeleton">
-          <input type="file" class="form-control shadow-sm" id="image" formControlName="image"
-            (change)="uploadImage($event)">
-
-          @if (myForm.controls['image'].invalid &&
-          myForm.controls['image'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
-          }
-        </div>
+    <div>
+      <div class="mb-2" *ngIf="!showSkeleton">
+        <button class="py-2 px-3 bg-gray-200 rounded-lg md:hover:bg-gray-300 transition" type="button" (click)="chooseImage()" *ngIf="!showInputFile">
+          Escolher outra imagem
+        </button>
       </div>
+      <p-skeleton height="2.3em" width="180px" styleClass="mb-2" *ngIf="showSkeleton" />
+    </div>
 
-      <div class="col-12">
-        <label for="description" class="form-label">Descrição: *</label>
-        <div class="mb-4" *ngIf="!showSkeleton">
-          <input type="text" class="form-control shadow-sm" formControlName="description" id="description"
-            placeholder="Refrigerantes" />
-          @if (myForm.controls['description'].invalid &&
-          myForm.controls['description'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
-          }
-        </div>
-        <p-skeleton height="2.3em" styleClass="mb-4" *ngIf="showSkeleton" />
+    <div class="w-full" *ngIf="showInputFile">
+      <div class="mb-3" *ngIf="!showSkeleton">
+        <input type="file" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10  
+        file:bg-gray-50 file:border-0
+        file:me-4
+        file:py-2 file:px-3
+        dark:file:bg-gray-100 dark:file:text-black" 
+        id="image" 
+        formControlName="image"
+        (change)="uploadImage($event)" />
+
+        @if (myForm.controls['image'].invalid &&
+        myForm.controls['image'].touched) {
+        <small class="text-red-500">Campo obrigatório</small>
+        }
       </div>
+    </div>
+
+    <div class="w-full">
+      <label for="description">Descrição: *</label>
+      <div class="mb-4" *ngIf="!showSkeleton">
+        <input type="text" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50" formControlName="description" id="description"
+          placeholder="Refrigerantes" />
+        @if (myForm.controls['description'].invalid &&
+        myForm.controls['description'].touched) {
+        <small class="text-red-500">Campo obrigatório</small>
+        }
+      </div>
+      <p-skeleton height="2.3em" styleClass="mb-4" *ngIf="showSkeleton" />
     </div>
 
     <app-btns-end [previousPage]="'/adm/category'" [showSkeleton]="showSkeleton"></app-btns-end>

@@ -96,9 +96,11 @@ public class CategoryService {
 
     public ResponseEntity<ResponseCategoryDTO> update(RequestCategoryDTO request, String id) {
         return categoryRepository.findById(id).map(category -> {
-            if(categoryRepository.findByDescription(request.description()).isPresent()){
-                throw new DescriptionUniqueException();
-            }
+            categoryRepository.findByDescription(request.description()).ifPresent(obj -> {
+                if(!obj.getId().equals(category.getId())){
+                    throw new DescriptionUniqueException();
+                }
+            });
             
             category.setDescription(request.description());
 

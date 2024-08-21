@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.cardapio.backend.models.ProductOption;
 
-public record RequestProductOptionDTO(String description, boolean required, List<ProductOption> options) {
+public record RequestProductOptionDTO(String description, boolean required, int qtOptionsSelected,List<ProductOption> productOptions) {
     
 }

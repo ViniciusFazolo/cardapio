@@ -1,67 +1,70 @@
 <app-default-layout-pages [title]="id ? 'Editar Usuário' : 'Novo usuário'" (submit)="save()">
  <form [formGroup]="myForm">
-  <div class="row">
-    <div class="col-md-4">
+  <div class="flex flex-wrap md:flex-nowrap gap-0 md:gap-3">
+    <div class="md:w-2/4 w-full">
       <label for="username" class="form-label">Nome: *</label>
       <div class="mb-3" *ngIf="!showSkeleton">
-        <input type="text" class="form-control shadow-sm" placeholder="Vinícius" formControlName="username" id="username">
+        <input type="text" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50" formControlName="username" id="username">
         @if (myForm.controls['username'].invalid &&
         myForm.controls['username'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
+          <small class="text-red-500">Campo obrigatório</small>
         }
       </div>
       <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
     </div>
 
-    <div class="col-md-8">
+    <div class="md:w-2/4 w-full">
       <label for="usuemail" class="form-label">Email: *</label>
       <div class="mb-3" *ngIf="!showSkeleton">
-        <input type="email" class="form-control shadow-sm" placeholder="teste@gmail.com" formControlName="email" id="email">
+        <input type="email" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none bg-gray-50" formControlName="email" id="email">
         @if (myForm.controls['email'].errors?.['required'] && myForm.controls['email'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
+          <small class="text-red-500">Campo obrigatório</small>
         }
         @if(myForm.controls['email'].errors?.['email']){
-          <small class="text-danger">Email inválido</small>
+          <small class="text-red-500">Email inválido</small>
         }
       </div>
       <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
-    </div>
-
-    <div class="col-md-6">
-      <label for="usupassword" class="form-label">Senha: *</label>
-      <div class="mb-3" *ngIf="!showSkeleton">
-        <input type="password" class="form-control shadow-sm" formControlName="password" id="password">
-        @if (myForm.controls['password'].invalid &&
-        myForm.controls['password'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
-        }
-      </div>
-      <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
-    </div>
-
-    <div class="col-md-6">
-      <label for="usupassword2" class="form-label">Repetir senha: *</label>
-      <div class="mb-3" *ngIf="!showSkeleton">
-        <input type="password" class="form-control shadow-sm" formControlName="password2" id="password2">
-        @if (myForm.controls['password2'].invalid &&
-        myForm.controls['password2'].touched) {
-          <small class="text-danger">Campo obrigatório</small>
-        }
-      </div>
-      <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
-    </div>
-
-    <div class="col-1 mb-3">
-      <div class="form-check form-switch" *ngIf="!showSkeleton">
-        <input class="form-check-input" type="checkbox" role="switch" id="active" formControlName="active" checked>
-        <label class="form-check-label" for="active">Ativo</label>
-      </div>
-      <div *ngIf="showSkeleton">
-        <label class="form-label">Ativo</label>
-        <p-skeleton height="2.4em" *ngIf="showSkeleton"/>
-      </div>
     </div>
   </div>
+
+  <div class="flex flex-wrap md:flex-nowrap gap-0 md:gap-3">
+    <div class="md:w-2/4 w-full">
+      <label for="usupassword" class="form-label">Senha: *</label>
+      <div class="mb-3" *ngIf="!showSkeleton">
+        <input type="password" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50" formControlName="password" id="password">
+        @if (myForm.controls['password'].invalid &&
+        myForm.controls['password'].touched) {
+          <small class="text-red-500">Campo obrigatório</small>
+        }
+      </div>
+      <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
+    </div>
+
+    <div class="md:w-2/4 w-full">
+      <label for="usupassword2" class="form-label">Repetir senha: *</label>
+      <div class="mb-3" *ngIf="!showSkeleton">
+        <input type="password" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50" formControlName="password2" id="password2">
+        @if (myForm.controls['password2'].invalid &&
+        myForm.controls['password2'].touched) {
+          <small class="text-red-500">Campo obrigatório</small>
+        }
+      </div>
+      <p-skeleton height="2.4em" styleClass="mb-3" *ngIf="showSkeleton"/>
+    </div>
+  </div>
+
+    <div class="mb-3">
+      <div *ngIf="!showSkeleton">
+        <input type="checkbox" role="switch" id="active" formControlName="active" checked class="me-1">
+        <label for="active">Ativo</label>
+      </div>
+      <div *ngIf="showSkeleton" class="flex">
+        <p-skeleton height="0.9em" width="0.9em" *ngIf="showSkeleton"/>
+        <label class="form-label ms-1">Ativo</label>
+      </div>
+    </div>
+ 
   <app-btns-end [previousPage]="'/adm/user'" [showSkeleton]="showSkeleton"></app-btns-end> 
  </form>
 </app-default-layout-pages>

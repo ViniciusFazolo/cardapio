@@ -1,23 +1,17 @@
-<a
-  class="card card-bg overflow-hidden"
-  [ngStyle]="{ 'background-image': 'url(' + category.imageUrl + ')' }"
-  data-bs-toggle="collapse"
-  [attr.data-bs-target]="'#' + category.description"
-  aria-expanded="false"
-  [attr.aria-controls]="category.description"
->
-  <div class="card-body">
-    <div>
-      <h5 class="card-title">{{ category.description }}</h5>
+<a class="cursor-pointer">
+  <div [ngStyle]="{ 'background-image': 'url(' + category.imageUrl + ')' }" class="text-white p-3 rounded-3xl bg-cover bg-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+    <div class="relative">
+      <h5>{{ category.description }}</h5>
     </div>
-    <div>
-      <h6 class="card-subtitle">{{ subtitle }}</h6>
+    <div class="relative">
+      <h6>{{ subtitle }}</h6>
     </div>
-    <div>
-      <p class="card-text">{{ text }}</p>
+    <div class="relative">
+      <p>{{ text }}</p>
     </div>
   </div>
 </a>
-<div class="product-options" [id]="category.description">
+<div [id]="category.description">
   <ng-content></ng-content>
 </div>

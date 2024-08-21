@@ -1,19 +1,18 @@
-<div class="modal" [id]="id" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog" [ngClass]="{'modal-dialog-centered': positionMiddle, 'modal-dialog-scrollable': scrollable}">
-        <div class="modal-content">
-            <div class="modal-header position-relative" *ngIf="title">
-                <h1 class="modal-title fs-5">{{title}}</h1>
-                <a class="btn position-absolute end-0" data-bs-dismiss="modal" role="button">
-                    <i class="fa-solid fa-xmark fa-lg"></i>
-                </a> 
-            </div>
-            <div class="modal-body">
-                <ng-content/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-                    (click)="onClick()">{{btnPrimary}}</button>
-            </div>
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-5 z-30 p-3 overflow-y-scroll" *ngIf="isModalOpen">
+    <div class="bg-white rounded-lg shadow-lg max-w-[450px]" role="dialog">
+      <div class="p-6">
+        <div class="relative"> <!-- *ngIf="title" -->
+          <h1 class="font-semibold mb-2">{{title}}</h1>
+          <a class="absolute right-0 top-0" role="button" (click)="showModal()">
+            <i class="fa-solid fa-xmark fa-lg"></i>
+          </a>
         </div>
+        <div class="text-gray-900">
+          <ng-content />
+        </div>
+      </div>
+      <div class="bg-gray-100 p-3 text-end rounded-b-lg">
+        <button type="button" class="py-2 px-3 bg-red-600 text-white rounded-lg md:hover:bg-red-700 transition" (click)="onClick()">{{btnPrimary}}</button>
+      </div>
     </div>
-</div>
+  </div>

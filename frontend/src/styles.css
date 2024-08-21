@@ -1,4 +1,11 @@
+@import '../node_modules/primeng/resources/themes/lara-light-blue/theme.css';
+@import '../node_modules/primeng/resources/primeng.min.css';
 @import 'ngx-toastr/toastr';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 *{
     font-family: 'Poppins', sans-serif ;
@@ -34,8 +41,4 @@ input.ng-touched.ng-invalid, select.ng-touched.ng-invalid{
 
 small{
     font-size: 0.7rem !important;
-}
-
-a{
-    text-decoration: none !important;
 }

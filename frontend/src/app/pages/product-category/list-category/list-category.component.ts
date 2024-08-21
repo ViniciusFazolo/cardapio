@@ -9,6 +9,7 @@ import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ModalComponent } from '../../../components/modal/modal.component';
+import { ModalService } from '../../../services/modal.service';
 
 @Component({
   selector: 'app-list-category',
@@ -38,7 +39,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
 
   constructor(
     private categoryService: CategoryService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modal: ModalService
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   //save item id to delete if confirm
   saveItem(idItem: string) {
     this.idItem = idItem;
+    this.showModal()
   }
 
   deleteItem() {
@@ -79,6 +82,8 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
         this.toastr.error('Erro ao excluir registro. Possa ser que esteja vinculado a um ou mais registros!');
       }
     );
+    
+    this.showModal()
   }
 
   private createDataTable() {
@@ -103,5 +108,9 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
       dtInstance.destroy();
       this.dtTrigger.next(null);
     });
+  }
+
+  showModal(){
+    this.modal.showModal()
   }
 }

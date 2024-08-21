@@ -10,12 +10,12 @@ import {
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { InputGroupModule } from 'primeng/inputgroup';
 import {
-  Option,
   ProductOption,
   ProductOptionService,
 } from '../../../services/product-option.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NumericSpinnerComponent } from '../../../components/numeric-spinner/numeric-spinner.component';
 
 @Component({
   selector: 'app-form-questions',
@@ -25,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     ReactiveFormsModule,
     BtnsEndComponent,
     InputGroupModule,
+    NumericSpinnerComponent
   ],
   templateUrl: './form-questions.component.html',
   styleUrl: './form-questions.component.css',
@@ -44,6 +45,7 @@ export class FormQuestionsComponent implements OnInit {
     this.myForm = new FormGroup({
       required: new FormControl(true),
       description: new FormControl('', [Validators.required]),
+      qtOptionsSelected: new FormControl(0),
       options: new FormArray([]),
     });
   }
@@ -70,6 +72,11 @@ export class FormQuestionsComponent implements OnInit {
       this.toastr.warning('Preencha todos os campos!');
       return;
     }
+    
+    if(this.myForm.value.qtOptionsSelected > this.myForm.value.options.length){
+      this.toastr.warning('A quantidade de opções selecionadas deve ser menor ou igual as opções disponíveis!');
+      return;
+    }
 
     if (this.id) {
       this.update();
@@ -82,7 +89,8 @@ export class FormQuestionsComponent implements OnInit {
     const produtOption: ProductOption = {
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: this.myForm.value.options
+      productOptions: this.myForm.value.options,
+      qtOptionsSelected: this.myForm.value.qtOptionsSelected
     };
 
     this.productOptionService.create(produtOption).subscribe({
@@ -101,7 +109,8 @@ export class FormQuestionsComponent implements OnInit {
       id: this.id!,
       description: this.myForm.value.description,
       required: this.myForm.value.required,
-      options: this.myForm.value.options
+      qtOptionsSelected: this.myForm.value.qtOptionsSelected,
+      productOptions: this.myForm.value.options
     };
 
     this.productOptionService.update(produtOption).subscribe({
@@ -119,19 +128,18 @@ export class FormQuestionsComponent implements OnInit {
     this.productOptionService.getById(this.id!).subscribe((response) => {
       this.myForm.patchValue({
         description: response.description,
-        required: response.required
+        required: response.required,
+        qtOptionsSelected: response.qtOptionsSelected
       })
       
       const optionsArray = this.myForm.get('options') as FormArray;
       optionsArray.clear();
-      response.options.forEach(option => {
+      response.productOptions.forEach(option => {
         optionsArray.push(new FormGroup({
           id: new FormControl(option.id),
           option: new FormControl(option.option, [Validators.required])
         }));
       });
-
-      console.log(this.myForm.value.options)
     })
   }
 

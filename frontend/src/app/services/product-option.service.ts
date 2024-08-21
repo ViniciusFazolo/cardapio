@@ -11,8 +11,9 @@ export interface Option {
 export interface ProductOption {
   id?: string;
   description: string;
-  required: boolean,
-  options: Option[];
+  required: boolean;
+  qtOptionsSelected: number;
+  productOptions: Option[];
 }
 
 @Injectable({

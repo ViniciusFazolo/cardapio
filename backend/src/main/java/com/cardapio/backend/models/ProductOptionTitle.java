@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,10 @@ public class ProductOptionTitle {
     private String id;
     private String description;
     private boolean required;
+    private int qtOptionsSelected;
+
+    @OneToMany(mappedBy = "description")
+    private List<ProductOption> productOptions;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "productOptionTitles")

@@ -1,21 +1,17 @@
 <app-login-layout>
   <form [formGroup]="loginForm" (submit)="submit()">
     <app-primary-input
-      [classes]="'form-control shadow-sm'"
       [inputName]="'email'"
       [label]="'Email'"
-      [placeholder]="'Email'"
       [type]="'email'"
       formControlName="email"
-    ></app-primary-input>
+      ></app-primary-input>
     <app-primary-input
-      [classes]="'form-control shadow-sm'"
       [inputName]="'password'"
       [label]="'Senha'"
-      [placeholder]="'Senha'"
       [type]="'password'"
       formControlName="password"
     ></app-primary-input>
-    <button class="btn btn-primary mt-2">Login</button>
+    <button class="mt-2 bg-red-400 text-white px-5 py-2 rounded-md sm:hover:bg-red-500 transition">Login</button>
   </form>
 </app-login-layout>

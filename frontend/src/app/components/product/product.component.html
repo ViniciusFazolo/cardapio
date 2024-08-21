@@ -1,19 +1,56 @@
-<div class="card card-body border border-0 border-bottom rounded-0 ">
-  <a (click)="onClick(product)" data-bs-toggle="modal" [attr.data-bs-target]="'#' + product.description">
-    <div class="row">
-      <div class="col-3">
-          <img [src]="product.imageUrl" [alt]="product.description" class="img-fluid rounded-2">
-      </div>
-      <div class="col-6">
-          <h5>{{product.description}}</h5>
-      </div>
-      <div class="col-3">
-          <span>{{ product.price | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
-      </div>
+<div>
+  <a class="flex py-4 px-3" (click)="showModal()">
+    <div class="rounded-xl me-3">
+      <img [src]="product.imageUrl" [alt]="product.description" class="w-24 rounded-xl"/>
+    </div>
+    <div class="flex justify-between w-full">
+      <h5>{{ product.description }}</h5>
+      <span class="font-medium">
+        {{product.price | currency : "BRL" : "symbol" : "1.2-2" : "pt-BR"}}
+      </span>
     </div>
   </a>
 </div>
 
-<app-modal [id]="product.description" [btnPrimary]="'Pedir'" [positionMiddle]="true" [title]="product.description" [scrollable]="true">
-  {{product.description}}
+<app-modal [id]="product.description" [btnPrimary]="'Adicionar'" [positionMiddle]="true" [title]="product.description" (confirm)="submit()">
+  <form [formGroup]="myForm">
+    <app-numeric-spinner formControlName="qtItems" [label]="'Quantidade'" [class]="'items-center justify-between'" [titleStyle]="'title'"/>
+    
+    @if (product.productOptionTitle.length != 0) {
+      <hr class="border my-2">
+    }
+    
+    <div formArrayName="productOptions"> 
+      @for (productOptionTitle of myForm.value.productOptions; track $index) {
+        <div>
+          <div class="flex justify-between items-center p-2 rounded-2 bg-gray-100">
+            <div class="flex flex-col">
+              <span>{{productOptionTitle.description}}</span>
+              @if(productOptionTitle.qtOptionsSelected){
+                <span class="text-xs text-gray-800">Selecione até {{productOptionTitle.qtOptionsSelected}} {{productOptionTitle.qtOptionsSelected == 1 ? 'opção' : 'opções'}}</span>
+              }
+            </div>
+            
+            @if(productOptionTitle.required){
+              <span class="px-2 py-1.5 text-[0.6rem] font-bold text-white bg-red-600 rounded-lg">Obrigatório</span>
+            }
+          </div>
+          <div [formGroupName]="$index">
+            @for (option of productOptionTitle.options; track $index) {
+              <div formArrayName="options">
+                <div class="px-4 py-2 flex justify-between items-center" [formGroupName]="$index">
+                  <label [for]="option.id">{{option.option}}</label>
+                  <input [id]="option.id" formControlName="checked" class="border" type="checkbox"> 
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <hr class="border my-2">
+   
+    <app-product-notes formControlName="notes"/>
+  </form>
 </app-modal>

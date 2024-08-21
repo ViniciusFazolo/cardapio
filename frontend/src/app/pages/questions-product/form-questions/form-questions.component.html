@@ -1,36 +1,51 @@
-<app-default-layout-pages [title]="'Nova coleção de perguntas'" [title]="id ? 'Editar Coleção de Perguntas' : 'Nova Coleção de Perguntas'">
+<app-default-layout-pages [title]="'Nova coleção de perguntas'"
+    [title]="id ? 'Editar Coleção de Perguntas' : 'Nova Coleção de Perguntas'">
     <form [formGroup]="myForm" (submit)="save()">
-        <div class="form-check form-switch mb-2">
-            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" formControlName="required">
-            <label class="form-check-label" for="flexSwitchCheckDefault">Obrigatório</label>
-          </div>
+        <div class="mb-2 flex items-center">
+            <input class="me-2" type="checkbox" id="required" formControlName="required">
+            <label for="required">Obrigatório</label>
+        </div>
 
-        <div class="mb-2">
+        <app-numeric-spinner [label]="'Quantas opções devem ser selecionadas?'" [class]="'flex-col'"
+            formControlName="qtOptionsSelected" [titleStyle]="'label'" />
+
+        <div class="mb-2 w-full">
             <label for="" class="form-label">Descrição: *</label>
-            <input type="text" class="form-control" placeholder="Ponto da carne" formControlName="description">
+            <div>
+                <input type="text" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50" placeholder="Ponto da carne" formControlName="description">
+            </div>
+             @if (myForm.controls['description'].invalid &&
+                myForm.controls['description'].touched) {
+                <small class="text-red-500">Campo obrigatório</small>
+            }
         </div>
 
         <div formArrayName="options" class="mb-2">
             @for (option of myForm.value.options; track $index) {
-                <div class="mb-2">
-                    <label class="form-label">Pergunta {{ $index + 1 }}:</label>
-                    <div class="input-group" [formGroupName]="$index">
-                        <input type="text" class="form-control" formControlName="option">
-                        <button class="btn btn-danger" type="button" (click)="removeQuestion($index)">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
+            <div class="mb-2">
+                <label>Pergunta {{ $index + 1 }}:</label>
+                <div [formGroupName]="$index" class="relative">
+                    <input type="text" formControlName="option" class="border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-sm bg-gray-50">
+                    <button class="absolute right-0 w-10 h-full rounded-e-lg bg-red-500 md:hover:bg-red-600" type="button" (click)="removeQuestion($index)">
+                        <i class="fa-solid fa-xmark text-white"></i>
+                    </button>
                 </div>
+
+                <!-- @if (myForm.value.options.value.$index.value.option.invalid &&
+                        myForm.value.options.value.$index.value.option.touched) {
+                        <small class="text-red-500">Campo obrigatório</small>
+                    } -->
+            </div>
             }
         </div>
 
         <div class="mb-2">
-            <button class="btn btn-outline-secondary" type="button" (click)="addQuestion()">
+            <button class="py-2 px-3 bg-gray-300 rounded-lg md:hover:bg-gray-400 transition" type="button" (click)="addQuestion()">
                 <i class="fa-solid fa-plus"></i>
                 Adicionar pergunta
             </button>
         </div>
 
-        <app-btns-end [previousPage]="'/adm/productOption/'"/>
+        <app-btns-end [previousPage]="'/adm/productOption/'" />
     </form>
 </app-default-layout-pages>

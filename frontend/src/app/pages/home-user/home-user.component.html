@@ -1,25 +1,31 @@
 <app-header [establishment]="'Nelson Vinicius restaurante'" [tableNumber]="4" />
 <app-navbar />
-<app-userlayout>
+<div class="max-w-md m-auto px-3">
   @for (category of categories; track $index) {
-  <div class="col mb-3">
-    <app-card
-      [subtitle]="'seg - sex'"
-      [text]="'Das 16 as 18'"
-      [category]="category"
-    >
-      @for (product of products; track $index) {
-        @if(category.id == product.category.id){
-          <app-product
-          [product]="product"
-          class="collapse"
-          [id]="category.description"
-          (openProductDetails)="openProductDetails($event)"
-          />
-        }
-      }
-    </app-card>
-  </div>
+    <ng-container *ngIf="!showSkeleton">
+      <div class="mb-3">
+        <app-card
+          [subtitle]="'seg - sex'"
+          [text]="'Das 16 as 18'"
+          [category]="category"
+          >
+          @for (product of products; track $index) {
+            @if(category.id == product.category.id){
+              <app-product
+              [product]="product"
+              [id]="category.description"
+              />
+            }
+          }
+        </app-card>
+      </div>
+    </ng-container>
+    
+    <ng-container *ngIf="showSkeleton">
+      <div class="col skeleton">
+        <p-skeleton width="100%" height="6.5rem" borderRadius="2rem" styleClass="mb-3"/>
+      </div>
+    </ng-container>
   }
-</app-userlayout>
+</div>
 <app-footer />
