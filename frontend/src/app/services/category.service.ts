@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CrudRepository } from '../interfaces/CrudRepository';
+import { CrudService } from '../classes/CrudService';
+import { environment } from '../environments/environment';
 
 export interface Category{
   id?: string,
@@ -13,37 +15,16 @@ export interface Category{
   providedIn: 'root'
 })
 
-export class CategoryService implements CrudRepository<Category>{
-  private url: string = 'http://localhost:8080/api/category'
-  private header: HttpHeaders;
+export class CategoryService extends CrudService<Category>{
+  private header = new HttpHeaders({
+    'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
+  });
 
-  constructor(private httpClient: HttpClient) {
-    this.header = new HttpHeaders({
-      'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
-    })
+  constructor(httpClient: HttpClient, private http: HttpClient) {
+    super(httpClient, `${environment.apiUrl}/category`)
    }
-
-  getAll(): Observable<Category[]>{
-    return this.httpClient.get<Category[]>(`${this.url}/listAll`, {headers: this.header});
-  }
-
-  getById(id: string): Observable<Category>{
-    return this.httpClient.get<Category>(`${this.url}/list/` + id, {headers: this.header})
-  }
-
-  create(category: FormData): Observable<Category>{
-    return this.httpClient.post<Category>(`${this.url}/create`, category, {headers: this.header});
-  }
-
-  update(category: FormData): Observable<Category>{
-    return this.httpClient.put<Category>(`${this.url}/update/` + category.get('id'), category, {headers: this.header})
-  }
-
-  delete(id: string): Observable<void>{
-    return this.httpClient.delete<void>(`${this.url}/delete/${id}`, {headers: this.header})
-  }
-
+ 
   searchImg(filename: string):Observable<Blob>{
-    return this.httpClient.get<Blob>(`${this.url}/assets/` + filename, { responseType: 'blob' as 'json', headers: this.header })
+    return this.http.get<Blob>(`${environment.apiUrl}/category/assets/` + filename, { responseType: 'blob' as 'json', headers: this.header })
   }
 }
