@@ -1,6 +1,5 @@
 import { CurrencyPipe, FormatWidth } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { Product } from '../../pages/home-user/home-user.component';
 import { ModalComponent } from '../modal/modal.component';
 import { ProductNotesComponent } from '../product-notes/product-notes.component';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,6 +7,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { NumericSpinnerComponent } from '../numeric-spinner/numeric-spinner.component';
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../../services/modal.service';
+import { Product } from '../../interfaces/product/productHome';
 
 @Component({
   selector: 'app-product',

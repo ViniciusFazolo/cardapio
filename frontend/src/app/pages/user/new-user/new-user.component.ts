@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
-import { User, UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NgIf } from '@angular/common';
 import { PrimaryInputComponent } from "../../../components/primary-input/primary-input.component";
+import { User } from '../../../interfaces/user/user';
 
 @Component({
   selector: 'app-new-user',
@@ -42,9 +43,9 @@ export class NewUserComponent {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true
-        this.userService.getById(this.id).subscribe(
+        this.userService.listById(this.id).subscribe(
           () => {
-            this.getById();
+            this.listById();
           },
           () => {
             this.route.navigate(['/adm/user']);
@@ -108,8 +109,8 @@ export class NewUserComponent {
     );
   }
 
-  getById() {
-    this.userService.getById(this.id!).subscribe((response) => {
+  listById() {
+    this.userService.listById(this.id!).subscribe((response) => {
       this.itemToEdit = response;
 
       this.showSkeleton = false

@@ -147,7 +147,7 @@ export class NewProductComponent implements OnInit {
     const productOptionTitle = this.myForm.value.productOptionTitle
     product.append('productOptionTitle', productOptionTitle)
 
-    this.productService.create(product).subscribe(
+    this.productService.createWithFormData(product).subscribe(
       (response) => {
         this.toastr.success('Cadastrado com sucesso!');
         this.route.navigate(['/adm/product']);
@@ -175,7 +175,7 @@ export class NewProductComponent implements OnInit {
     const productOptionTitle = this.myForm.value.productOptionTitle
     product.append('productOptionTitle', productOptionTitle)
 
-    this.productService.update(product).subscribe(
+    this.productService.updateWithFormData(product).subscribe(
       (response) => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/product']);

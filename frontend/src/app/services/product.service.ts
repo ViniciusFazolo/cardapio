@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CrudService } from '../classes/CrudService';
 import { environment } from '../environments/environment';
-import { Product } from '../pages/home-user/home-user.component';
+import { Product } from '../interfaces/product/product';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,14 @@ export class ProductService extends CrudService<Product>{
 
   constructor(httpClient: HttpClient, private http: HttpClient) {
     super(httpClient, `${environment.apiUrl}/product`)
+  }
+
+  createWithFormData(obj: FormData): Observable<Product>{
+    return this.http.post<Product>(`${environment.apiUrl}/product/create`, obj, {headers: this.header});
+  }
+
+  updateWithFormData(obj: FormData): Observable<Product>{
+    return this.http.put<Product>(`${environment.apiUrl}/product/update/${obj.get('id')}` , obj, {headers: this.header});
   }
 
   searchImg(filename: string): Observable<Blob> {

@@ -1,6 +1,6 @@
 import { NgStyle } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Category } from '../../pages/home-user/home-user.component';
+import { Category } from '../../interfaces/category/categoryHome';
 
 @Component({
   selector: 'app-card',
