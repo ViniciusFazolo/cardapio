@@ -1,22 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CrudRepository } from '../interfaces/CrudRepository';
-import { Observable } from 'rxjs';
 import { CrudService } from '../classes/CrudService';
 import { environment } from '../environments/environment';
-
-export interface Option {
-  id?: string;
-  option: string;
-}
-
-export interface ProductOption {
-  id?: string;
-  description: string;
-  required: boolean;
-  qtOptionsSelected: number;
-  productOptions: Option[];
-}
+import { ProductOption } from '../interfaces/product-option/product-option';
 
 @Injectable({
   providedIn: 'root',

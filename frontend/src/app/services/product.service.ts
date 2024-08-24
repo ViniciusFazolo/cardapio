@@ -1,24 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from './category.service';
-import { CrudRepository } from '../interfaces/CrudRepository';
-import { ProductOption } from './product-option.service';
 import { CrudService } from '../classes/CrudService';
 import { environment } from '../environments/environment';
-
-export interface Product {
-  id?: string;
-  price: number;
-  description: string;
-  image: string;
-  category: Category;
-  productOptionTitle: ProductOption[]
-}
+import { Product } from '../pages/home-user/home-user.component';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class ProductService extends CrudService<Product>{
   private header = new HttpHeaders({
     'Authorization': 'Bearer ' + sessionStorage.getItem('auth-token')
