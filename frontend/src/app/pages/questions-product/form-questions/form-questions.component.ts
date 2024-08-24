@@ -10,12 +10,12 @@ import {
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { InputGroupModule } from 'primeng/inputgroup';
 import {
-  ProductOption,
   ProductOptionService,
 } from '../../../services/product-option.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NumericSpinnerComponent } from '../../../components/numeric-spinner/numeric-spinner.component';
+import { ProductOption } from '../../../interfaces/product-option/product-option';
 
 @Component({
   selector: 'app-form-questions',
@@ -55,9 +55,9 @@ export class FormQuestionsComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true;
-        this.productOptionService.getById(this.id).subscribe(
+        this.productOptionService.listById(this.id).subscribe(
           () => {
-            this.getById();
+            this.listById();
           },
           () => {
             this.route.navigate(['/adm/productOption']);
@@ -124,8 +124,8 @@ export class FormQuestionsComponent implements OnInit {
     });
   }
 
-  getById() {
-    this.productOptionService.getById(this.id!).subscribe((response) => {
+  listById() {
+    this.productOptionService.listById(this.id!).subscribe((response) => {
       this.myForm.patchValue({
         description: response.description,
         required: response.required,

@@ -9,7 +9,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { NgIf } from '@angular/common';
 import { PrimaryInputComponent } from "../../../components/primary-input/primary-input.component";
 
-
 @Component({
   selector: 'app-new-user',
   standalone: true,

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
-import { Category, CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLinkWithHref } from '@angular/router';
@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { ModalService } from '../../../services/modal.service';
+import { Category } from '../../../interfaces/category/category';
 
 @Component({
   selector: 'app-list-category',
@@ -53,7 +54,7 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   }
   
   getCategories() {
-    this.categoryService.getAll().subscribe((categories) => {
+    this.categoryService.listAll().subscribe((categories) => {
       this.categories = categories;
       this.showProgressBar = false
       

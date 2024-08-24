@@ -8,11 +8,12 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Category, CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
+import { Category } from '../../../interfaces/category/category';
 
 @Component({
   selector: 'app-new-category',
@@ -55,9 +56,9 @@ export class NewCategoryComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true
-        this.categoryService.getById(this.id).subscribe(
+        this.categoryService.listById(this.id).subscribe(
           () => {
-            this.getById();
+            this.listById();
           },
           () => {
             this.route.navigate(['/adm/category']);
@@ -85,7 +86,7 @@ export class NewCategoryComponent implements OnInit {
     category.append('description', this.myForm.value.description);
     category.append('image', this.imageUploaded);
 
-    this.categoryService.create(category).subscribe(
+    this.categoryService.createWithFormData(category).subscribe(
       (response) => {
         this.toastr.success('Cadastrado com sucesso!');
         this.route.navigate(['/adm/category']);
@@ -108,7 +109,7 @@ export class NewCategoryComponent implements OnInit {
       category.append('id', this.id);
     }
 
-    this.categoryService.update(category).subscribe(
+    this.categoryService.updateWithFormData(category).subscribe(
       (response) => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/category']);
@@ -119,8 +120,8 @@ export class NewCategoryComponent implements OnInit {
     );
   }
 
-  getById() {
-    this.categoryService.getById(this.id!).subscribe((response) => {
+  listById() {
+    this.categoryService.listById(this.id!).subscribe((response) => {
       this.itemToEdit = response;
 
       this.myForm.patchValue({

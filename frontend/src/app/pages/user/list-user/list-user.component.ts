@@ -5,11 +5,12 @@ import { Subject } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { RouterLinkWithHref } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { User, UserService } from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { NgIf, NgStyle } from '@angular/common';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { ModalService } from '../../../services/modal.service';
+import { User } from '../../../interfaces/user/user';
 
 @Component({
   selector: 'app-list-user',
@@ -45,7 +46,7 @@ export class ListUserComponent {
   }
   
   getCategories() {
-    this.userService.getAll().subscribe((users) => {
+    this.userService.listAll().subscribe((users) => {
       this.users = users;
 
       this.showProgressBar = false;

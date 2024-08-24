@@ -2,7 +2,7 @@ import {  Component, OnInit } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { Category, CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import {
   FormArray,
@@ -13,11 +13,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product, ProductService } from '../../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { NgIf } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ProductOption, ProductOptionService } from '../../../services/product-option.service';
+import { ProductOptionService } from '../../../services/product-option.service';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Category } from '../../../interfaces/category/category';
+import { ProductOption } from '../../../interfaces/product-option/product-option';
+import { Product } from '../../../interfaces/product/product';
 
 @Component({
   selector: 'app-new-product',
@@ -72,9 +75,9 @@ export class NewProductComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true
-        this.productService.getById(this.id).subscribe(
+        this.productService.listById(this.id).subscribe(
           () => {
-            this.getById()
+            this.listById()
           },
           () => {
             this.route.navigate(['/adm/product']);
@@ -85,19 +88,19 @@ export class NewProductComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoryService.getAll().subscribe((res) => {
+    this.categoryService.listAll().subscribe((res) => {
       this.categories = res;
     });
   }
 
   getProductOptions(){
-    this.productOptionService.getAll().subscribe({
+    this.productOptionService.listAll().subscribe({
       next: (res) => {this.productOptions = res}
     })
   }
 
-  getById() {
-    this.productService.getById(this.id!).subscribe((response) => {
+  listById() {
+    this.productService.listById(this.id!).subscribe((response) => {
       this.itemToEdit = response
 
       let productOptionIds: string[] = []

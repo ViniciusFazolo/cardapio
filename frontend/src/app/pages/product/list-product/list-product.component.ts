@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
-import { Product, ProductService } from '../../../services/product.service';
+import { ProductService } from '../../../services/product.service';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
@@ -10,6 +10,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { NgIf } from '@angular/common';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { ModalService } from '../../../services/modal.service';
+import { Product } from '../../../interfaces/product/product';
 
 @Component({
   selector: 'app-list-product',
@@ -45,7 +46,7 @@ export class ListProductComponent {
   }
   
   getCategories() {
-    this.productService.getAll().subscribe((products) => {
+    this.productService.listAll().subscribe((products) => {
       this.products = products;
 
       this.showProgressBar = false;

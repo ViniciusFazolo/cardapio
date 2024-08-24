@@ -4,7 +4,6 @@ import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import {
-  ProductOption,
   ProductOptionService,
 } from '../../../services/product-option.service';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +12,7 @@ import { RouterLinkWithHref } from '@angular/router';
 import { ModalComponent } from '../../../components/modal/modal.component';
 import { NgIf } from '@angular/common';
 import { ModalService } from '../../../services/modal.service';
+import { ProductOption } from '../../../interfaces/product-option/product-option';
 
 @Component({
   selector: 'app-list-questions',
@@ -49,7 +49,7 @@ export class ListQuestionsComponent implements OnInit, OnDestroy{
   }
 
   getProductOptions() {
-    this.productOptionService.getAll().subscribe((obj) => {
+    this.productOptionService.listAll().subscribe((obj) => {
       this.productOptions = obj;
 
       this.showProgressBar = false;

@@ -10,27 +10,10 @@ import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
 import { ModalComponent } from "../../components/modal/modal.component";
 import { NgIf } from '@angular/common';
-import { ProductOption } from '../../services/product-option.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NumericSpinnerComponent } from '../../components/numeric-spinner/numeric-spinner.component';
-  
-export interface Product{
-  id?: string;
-  price: number;
-  description: string;
-  image: string;
-  imageUrl?: string;
-  category: Category;
-  productOptionTitle: ProductOption[]
-}
-
-export interface Category {
-  id?: string,
-  description: string,
-  image: string,
-  imageUrl?: string
-  product?: Product[]
-}
+import { Category } from '../../interfaces/category/categoryHome';
+import { Product } from '../../interfaces/product/productHome';
 
 @Component({
   selector: 'app-home-user',
@@ -52,7 +35,7 @@ export class HomeUserComponent implements OnInit{
   }
 
   getCategories(){
-    this.categoryService.getAll().subscribe((response) => {
+    this.categoryService.listAll().subscribe((response) => {
       this.categories = response
       this.getImagesCategory()
       this.getProducts()
@@ -71,7 +54,7 @@ export class HomeUserComponent implements OnInit{
   }
 
   getProducts(){
-    this.productService.getAll().subscribe(response => {
+    this.productService.listAll().subscribe(response => {
       this.products = response
       this.getImagesProduct()
     })
