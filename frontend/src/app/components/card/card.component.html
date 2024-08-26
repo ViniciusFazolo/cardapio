@@ -1,4 +1,4 @@
-<a class="cursor-pointer">
+<a class="cursor-pointer" (click)="toggleProductsVisibility()">
   <div [ngStyle]="{ 'background-image': 'url(' + category.imageUrl + ')' }" class="text-white p-3 rounded-3xl bg-cover bg-center relative overflow-hidden">
     <div class="absolute inset-0 bg-black bg-opacity-30"></div>
     <div class="relative">
@@ -12,6 +12,9 @@
     </div>
   </div>
 </a>
-<div [id]="category.description">
-  <ng-content></ng-content>
-</div>
+
+@if (isProductsVisible) {
+  <div [id]="category.description">
+    <ng-content></ng-content>
+  </div>
+}
