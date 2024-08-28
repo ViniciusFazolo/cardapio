@@ -7,7 +7,8 @@ public record RequestProductOrderDTO(
     //String id,
     String product,
     //Order order,
-    int quantity
+    int quantity,
+    double valueTotalOrder
 ) {
     
 }

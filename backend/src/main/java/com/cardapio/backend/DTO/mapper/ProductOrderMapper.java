@@ -22,6 +22,7 @@ public class ProductOrderMapper {
         productOrder.setProduct(product);
         //productOrder.setOrder(request.order());
         productOrder.setQuantity(request.quantity());
+        productOrder.setValueTotalOrder(request.valueTotalOrder());
         
         return productOrder;
     }
@@ -31,7 +32,8 @@ public class ProductOrderMapper {
             productOrder.getId(),
             productOrder.getProduct(),
             productOrder.getOrder(),
-            productOrder.getQuantity()
+            productOrder.getQuantity(),
+            productOrder.getValueTotalOrder()
         );
     }
     
