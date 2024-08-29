@@ -4,7 +4,8 @@ public record RequestOrderDTO(
     String id,
     int tableNumber,
     int phoneNumber,
-    String clientName
+    String clientName,
+    double valueTotalOrder
 ) {
     
 }

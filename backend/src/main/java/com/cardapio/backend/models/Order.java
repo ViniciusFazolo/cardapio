@@ -23,4 +23,6 @@ public class Order {
     private String clientName;
     private LocalDateTime dateHour;
 
+    private double valueTotalOrder;
+
 }

@@ -14,7 +14,7 @@ public class OrderMapper {
         order.setTableNumber(request.tableNumber());
         order.setPhoneNumber(request.phoneNumber());
         order.setClientName(request.clientName());
-
+        order.setValueTotalOrder(request.valueTotalOrder());
         return order;
     }
 
@@ -24,7 +24,8 @@ public class OrderMapper {
             order.getTableNumber(),
             order.getPhoneNumber(),
             order.getClientName(),
-            order.getDateHour()
+            order.getDateHour(),
+            order.getValueTotalOrder()
         );
     }
 
