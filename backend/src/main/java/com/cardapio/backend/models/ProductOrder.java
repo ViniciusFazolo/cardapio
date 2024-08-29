@@ -23,6 +23,4 @@ public class ProductOrder {
 
     private int quantity;
 
-    private double valueTotalOrder;
-
 }
