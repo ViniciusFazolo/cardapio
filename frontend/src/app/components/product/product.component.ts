@@ -1,5 +1,5 @@
-import { CurrencyPipe, FormatWidth } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ModalComponent } from '../modal/modal.component';
 import { ProductNotesComponent } from '../product-notes/product-notes.component';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -8,6 +8,8 @@ import { NumericSpinnerComponent } from '../numeric-spinner/numeric-spinner.comp
 import { ToastrService } from 'ngx-toastr';
 import { ModalService } from '../../services/modal.service';
 import { Product } from '../../interfaces/product/productHome';
+import { CartService } from '../../services/cart.service';
+import { OrderFrontend, ProductOptionsFrontend } from '../../interfaces/order/orderFrontend';
 
 @Component({
   selector: 'app-product',
@@ -20,8 +22,9 @@ export class ProductComponent implements OnInit{
   myForm: FormGroup
   
   @Input() product!: Product;
+  @Output() toggleModal = new EventEmitter();
 
-  constructor(private toastr: ToastrService, private modal: ModalService){
+  constructor(private toastr: ToastrService, private modal: ModalService, private cart: CartService){
     this.myForm = new FormGroup({
       qtItems: new FormControl(0, [Validators.required]),
       notes: new FormControl(''),
@@ -73,6 +76,8 @@ export class ProductComponent implements OnInit{
   }
 
   submit(){
+    let productOptionsFrontend: ProductOptionsFrontend[] = []
+
     if(!this.myForm.value.qtItems){
       this.toastr.warning("Selecione a quantidade!")
       return
@@ -91,10 +96,28 @@ export class ProductComponent implements OnInit{
           return
         }
       }
+
+      productOptionsFrontend.push({
+          id: productOption.get('id')?.value,
+          description: productOption.get('description')?.value,
+          qtOptionsSelected: productOption.get('qtOptionsSelected')?.value,
+          required: productOption.get('required')?.value,
+          options: productOption.get('options')?.value,
+      })
+
     }
+    
+    let order: OrderFrontend = {
+      notes: this.myForm.value.notes,
+      qtItems: this.myForm.value.qtItems,
+      productOptions: productOptionsFrontend,
+      product: this.product
+    }
+
+    this.cart.addItemToCart(order)
   }
 
-  showModal(){
-    this.modal.showModal()
+  openModal(){
+    this.toggleModal.emit(this.product)
   }
 }
