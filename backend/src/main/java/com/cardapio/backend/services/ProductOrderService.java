@@ -12,7 +12,7 @@ import com.cardapio.backend.repositories.ProductOrderRepository;
 
 @Service
 public class ProductOrderService {
-    
+
     @Autowired
     private ProductOrderRepository productOrderRepository;
 
@@ -20,11 +20,17 @@ public class ProductOrderService {
     private ProductOrderMapper productOrderMapper;
 
     public ResponseEntity<ResponseProductOrderDTO> save(RequestProductOrderDTO request){
+        if (request.id() != null) {
+            productOrderRepository.findById(request.id()).ifPresent(category -> {
+                throw new RuntimeException("ProductOrder already exists");
+            });
+        }
+
         ProductOrder newProductOrder = productOrderRepository.save(productOrderMapper.toEntity(request));
         return ResponseEntity.ok().body(productOrderMapper.toDTO(newProductOrder));
     }
 
-    public ResponseEntity<Double> getTotalCont() {
-        return ResponseEntity.ok().body(productOrderRepository.getTotalCont());
+    public ResponseEntity<ResponseProductOrderDTO> findByPhoneNumberRecently(int phoneNumber){
+        return ResponseEntity.ok().body(productOrderMapper.toDTO(productOrderRepository.findRecentlyByPhoneNumber(phoneNumber)));
     }
 }
