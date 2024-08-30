@@ -1,4 +1,4 @@
-<div class="flex mb-2 gap-2" [ngClass]="class">
+<div class="flex" [ngClass]="class">
     @if (titleStyle == 'title') {
       <span for="qt">{{label}}</span>
     }
@@ -19,6 +19,7 @@
             (input)="onInput($event)"
             [(ngModel)]="value"
             (focus)="onTouched()"
+            (change)="onChange(value)"
           />
     
       <button class="p-2 px-3 flex items-center justify-center border-s bg-gray-100 rounded-e-lg md:hover:bg-gray-200 transition" type="button" (click)="add()">

@@ -1,7 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { Title } from '@angular/platform-browser';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 type TitleStyle = 'title' | 'label'
@@ -25,6 +24,7 @@ export class NumericSpinnerComponent implements ControlValueAccessor{
   onChange: (value: number) => void = () => {};
   onTouched: () => void = () => {};
 
+  @Output() valueChange = new EventEmitter<number>();
   @Input() label: string = '';
   @Input() class: string = '';
   @Input() titleStyle: TitleStyle = 'title';
@@ -37,6 +37,7 @@ export class NumericSpinnerComponent implements ControlValueAccessor{
     if (val >= 1 && val <= 99) {
       this._value = val;
       this.onChange(this._value);
+      this.valueChange.emit(this._value); 
     }
   }
 
