@@ -1,0 +1,70 @@
+<div class="max-w-5xl m-auto pt-3 px-5 h-full">
+    <app-navbar-cart />
+
+    <div class="mt-5 w-full">
+        <app-primary-input [label]="'Nome'" [inputName]="'name'" />
+        <app-primary-input [label]="'Celular'" [inputName]="'cel'" [type]="'tel'" [mask]="'(00) 00000-0000'" />
+        <app-primary-input [label]="'Mesa'" [inputName]="'table'" [type]="'text'" [mask]="'00'"
+            [placeholder]="'Número da mesa'" />
+    </div>
+
+    <div class="mt-5 h-full">
+        <h3 class="font-bold mb-3">Itens</h3>
+
+        @for (item of itensCart; track $index) {
+            <div class="mb-5">
+                <div class="flex items-center gap-4 max-w-lg" >
+                    <div class="rounded-xl">
+                        <img [src]="item.product.imageUrl" [alt]="item.product.description" class="w-16 rounded-xl" />
+                    </div>
+        
+                    <div>
+                        <span>
+                            {{item.product.description}}
+                        </span>
+                    </div>
+        
+                    <app-numeric-spinner [value]="item.qtItems" (valueChange)="qtItemOnChange($event, $index)"></app-numeric-spinner>
+        
+                    <span class="bg-red-600 px-2 py-1 rounded-lg cursor-pointer" (click)="removeItemCart(item)">
+                        <i class="fa-solid fa-trash text-white"></i>
+                    </span>
+                </div>
+
+                @if (item.notes) {
+                    <div class="mt-2">
+                        <span class="font-light">
+                            <span class="font-medium">Observação:</span>
+                            {{item.notes}}
+                        </span>
+                    </div>
+                }
+        
+                <div class="mt-2">
+                    <div class="flex gap-1 items-center flex-wrap">
+                        @for (productOption of item.productOptions; track $index) {
+                            @for (option of productOption.options; track $index) {
+                                @if (option.checked) {
+                                    <span class="border border-red-500 rounded-xl p-0.5 px-2">{{option.option}}</span>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <button class="px-4 py-2 bg-red-600 text-white md:hover:bg-red-700 transition fixed bottom-0 right-0 w-full" (click)="handleOrder()">
+        Pedir {{totalValueOrder | currency: "BRL"}}
+    </button>
+</div>
+
+@if (isModalOpen) {
+    <app-modal [btnPrimary]="'Ok'" (confirm)="redirectToHome()">
+        <div>
+            <i class="fa-solid fa-check fa-2xl text-green-600 me-2"></i>
+            <span>Pedido realizado</span>
+        </div>
+    </app-modal>
+}
