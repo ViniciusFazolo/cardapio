@@ -1,9 +1,9 @@
-<div class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-5 z-30 p-3 overflow-y-scroll" *ngIf="isModalOpen">
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center pt-5 z-30 p-3 overflow-y-scroll">
     <div class="bg-white rounded-lg shadow-lg max-w-[450px]" role="dialog">
       <div class="p-6">
-        <div class="relative"> <!-- *ngIf="title" -->
+        <div class="relative" *ngIf="title"> <!-- *ngIf="title" -->
           <h1 class="font-semibold mb-2">{{title}}</h1>
-          <a class="absolute right-0 top-0" role="button" (click)="showModal()">
+          <a class="absolute right-0 top-0" role="button" (click)="closeModal()">
             <i class="fa-solid fa-xmark fa-lg"></i>
           </a>
         </div>
