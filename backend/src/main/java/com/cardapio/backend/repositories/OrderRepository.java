@@ -7,5 +7,7 @@ import com.cardapio.backend.models.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, String>{
+
+    Order findByPhoneNumber(int phoneNumber);
     
 }

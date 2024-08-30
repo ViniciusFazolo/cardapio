@@ -23,15 +23,20 @@ public class OrderService {
     private OrderMapper orderMapper;
 
     public ResponseEntity<ResponseOrderDTO> save(RequestOrderDTO request) {
-        if(request.id() != null){
-            orderRepository.findById(request.id()).ifPresent(order -> {
-                throw new RuntimeException("Order already exists");
-            });
-        }
 
+        Order existingOrder = orderRepository.findByPhoneNumber(request.phoneNumber());
+        if (existingOrder != null && existingOrder.isStatusOrder()) {
+            return ResponseEntity.ok().body(orderMapper.toDTO(existingOrder));
+        }
+    
         Order newOrder = orderRepository.save(orderMapper.toEntity(request));
         return ResponseEntity.ok().body(orderMapper.toDTO(newOrder));
     }
+
+    public ResponseEntity<ResponseOrderDTO> findByPhoneNumber(int phoneNumber) {
+        return ResponseEntity.ok().body(orderMapper.toDTO(orderRepository.findByPhoneNumber(phoneNumber)));
+    }
+
 
     public ResponseEntity<List<ResponseOrderDTO>> listAll(){
         List<ResponseOrderDTO> orders = orderRepository.findAll().stream().map(orderMapper::toDTO).collect(Collectors.toList());

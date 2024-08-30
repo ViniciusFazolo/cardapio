@@ -25,7 +25,8 @@ public class OrderMapper {
             order.getPhoneNumber(),
             order.getClientName(),
             order.getDateHour(),
-            order.getValueTotalOrder()
+            order.getValueTotalOrder(),
+            order.isStatusOrder()
         );
     }
 
