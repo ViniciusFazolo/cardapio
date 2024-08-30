@@ -4,13 +4,14 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 
-type InputTypes = 'text' | 'password' | 'email';
+type InputTypes = 'text' | 'password' | 'email' | 'tel';
 
 @Component({
   selector: 'app-primary-input',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgxMaskDirective],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -26,6 +27,7 @@ export class PrimaryInputComponent implements ControlValueAccessor {
   @Input() type: InputTypes = 'text';
   @Input() placeholder: string = '';
   @Input() inputName: string = '';
+  @Input() mask: string = ''
 
   value: string = '';
   onChange: any = () => {};
