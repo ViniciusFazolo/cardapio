@@ -1,4 +1,4 @@
-import {  Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { BtnsEndComponent } from '../../../components/btns-end/btns-end.component';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -34,22 +34,22 @@ import { Product } from '../../../interfaces/product/product';
     FormsModule,
     NgIf,
     SkeletonModule,
-    NgSelectModule
+    NgSelectModule,
   ],
   templateUrl: './new-product.component.html',
   styleUrl: './new-product.component.css',
 })
 export class NewProductComponent implements OnInit {
   categories!: Category[];
-  productOptions!: ProductOption[]
+  productOptions!: ProductOption[];
   img: string = '';
   imageUploaded!: File;
   myForm: FormGroup;
   id!: string | null;
-  itemToEdit!: Product
-  showInputFile: boolean = true
+  itemToEdit!: Product;
+  showInputFile: boolean = true;
   imgUrl!: string | ArrayBuffer | null;
-  showSkeleton: boolean = false
+  showSkeleton: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -64,7 +64,7 @@ export class NewProductComponent implements OnInit {
       description: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
       category: new FormControl(null, [Validators.required]),
-      productOptionTitle: new FormControl([])
+      productOptionTitle: new FormControl([]),
     });
   }
 
@@ -74,53 +74,57 @@ export class NewProductComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get('id');
       if (this.id) {
-        this.showSkeleton = true
-        this.productService.listById(this.id).subscribe(
-          () => {
-            this.listById()
+        this.showSkeleton = true;
+        this.productService.listById(this.id).subscribe({
+          next: () => {
+            this.listById();
           },
-          () => {
+          error: () => {
             this.route.navigate(['/adm/product']);
           }
-        );
+        });
       }
     });
   }
 
   getCategories() {
-    this.categoryService.listAll().subscribe((res) => {
-      this.categories = res;
+    this.categoryService.listAll().subscribe({
+      next: (res) => {
+        this.categories = res;
+      }
     });
   }
 
-  getProductOptions(){
+  getProductOptions() {
     this.productOptionService.listAll().subscribe({
-      next: (res) => {this.productOptions = res}
-    })
+      next: (res) => {
+        this.productOptions = res;
+      },
+    });
   }
 
   listById() {
     this.productService.listById(this.id!).subscribe((response) => {
-      this.itemToEdit = response
+      this.itemToEdit = response;
+      this.imgUrl = this.itemToEdit.imageUrl
 
-      let productOptionIds: string[] = []
-      this.itemToEdit.productOptionTitle.forEach(item => {
-        productOptionIds.push(item.id!)
-      })
-      
+      let productOptionIds: string[] = [];
+      this.itemToEdit.productOptionTitle.forEach((item) => {
+        productOptionIds.push(item.id!);
+      });
+
       this.myForm.patchValue({
         description: this.itemToEdit.description,
         price: this.itemToEdit.price,
         category: this.itemToEdit.category.id,
-        productOptionTitle: productOptionIds
+        productOptionTitle: productOptionIds,
       });
 
       this.myForm.controls['image'].clearValidators();
       this.myForm.controls['image'].updateValueAndValidity();
 
-      this.loadImage(response)
       this.showInputFile = false;
-      this.showSkeleton = false
+      this.showSkeleton = false;
     });
   }
 
@@ -143,26 +147,26 @@ export class NewProductComponent implements OnInit {
     product.append('price', this.myForm.value.price);
     product.append('category', this.myForm.value.category);
     product.append('image', this.imageUploaded);
-    
-    const productOptionTitle = this.myForm.value.productOptionTitle
-    product.append('productOptionTitle', productOptionTitle)
 
-    this.productService.createWithFormData(product).subscribe(
-      (response) => {
+    const productOptionTitle = this.myForm.value.productOptionTitle;
+    product.append('productOptionTitle', productOptionTitle);
+
+    this.productService.createWithFormData(product).subscribe({
+      next: () => {
         this.toastr.success('Cadastrado com sucesso!');
         this.route.navigate(['/adm/product']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao cadastrar, tente novamente!');
       }
-    );
+    });
   }
 
   update() {
     const product = new FormData();
     product.append('description', this.myForm.value.description);
-    product.append('price', this.myForm.value.price)
-    product.append('category', this.myForm.value.category)
+    product.append('price', this.myForm.value.price);
+    product.append('category', this.myForm.value.category);
 
     if (this.imageUploaded) {
       product.append('image', this.imageUploaded);
@@ -172,18 +176,18 @@ export class NewProductComponent implements OnInit {
       product.append('id', this.id);
     }
 
-    const productOptionTitle = this.myForm.value.productOptionTitle
-    product.append('productOptionTitle', productOptionTitle)
+    const productOptionTitle = this.myForm.value.productOptionTitle;
+    product.append('productOptionTitle', productOptionTitle);
 
-    this.productService.updateWithFormData(product).subscribe(
-      (response) => {
+    this.productService.updateWithFormData(product).subscribe({
+      next: () => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/product']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao atualizar, tente novamente!');
       }
-    );
+    });
   }
 
   uploadImage(e: any) {
@@ -208,30 +212,20 @@ export class NewProductComponent implements OnInit {
     this.imageUploaded = file;
   }
 
-  chooseImage(){
-    this.myForm.controls['image'].addValidators([Validators.required])
+  chooseImage() {
+    this.myForm.controls['image'].addValidators([Validators.required]);
     this.myForm.controls['image'].updateValueAndValidity();
 
-    this.showInputFile = true
-    this.imgUrl = null
+    this.showInputFile = true;
+    this.imgUrl = ''
   }
 
-  loadImage(response: Product){
-    this.productService.searchImg(response.image).subscribe((res) => {
-      const file = new File([res], response.image, { type: res.type });
-      this.imgUrl = URL.createObjectURL(file)
-      this.imageUploaded = file
-    })
-  }
-
-  addProductOptionTitle(event: any){
+  addProductOptionTitle(event: any) {
     const selectedOptions = event.value; // Should be an array of selected IDs
     const formArray = this.myForm.get('productOptionTitle') as FormArray;
     formArray.clear();
     selectedOptions.forEach((id: string) => {
       formArray.push(new FormControl(id));
     });
-
-    console.log(this.myForm.value.productOptionTitle)
   }
 }

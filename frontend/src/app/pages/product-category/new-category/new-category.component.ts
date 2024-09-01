@@ -32,7 +32,7 @@ import { Category } from '../../../interfaces/category/category';
 export class NewCategoryComponent implements OnInit {
   myForm: FormGroup;
   id: string | null = null;
-  itemToEdit: Category = { description: '', image: '' };
+  itemToEdit!: Category
   
   imageUploaded!: File;
   imgUrl: string | ArrayBuffer | null = null;
@@ -56,14 +56,14 @@ export class NewCategoryComponent implements OnInit {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true
-        this.categoryService.listById(this.id).subscribe(
-          () => {
+        this.categoryService.listById(this.id).subscribe({
+          next: () => {
             this.listById();
           },
-          () => {
+          error: () => {
             this.route.navigate(['/adm/category']);
           }
-        );
+        });
       }
     });
   }
@@ -86,15 +86,15 @@ export class NewCategoryComponent implements OnInit {
     category.append('description', this.myForm.value.description);
     category.append('image', this.imageUploaded);
 
-    this.categoryService.createWithFormData(category).subscribe(
-      (response) => {
+    this.categoryService.createWithFormData(category).subscribe({
+      next: () => {
         this.toastr.success('Cadastrado com sucesso!');
         this.route.navigate(['/adm/category']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao cadastrar, tente novamente!');
       }
-    );
+    });
   }
 
   update() {
@@ -109,20 +109,21 @@ export class NewCategoryComponent implements OnInit {
       category.append('id', this.id);
     }
 
-    this.categoryService.updateWithFormData(category).subscribe(
-      (response) => {
+    this.categoryService.updateWithFormData(category).subscribe({
+      next: () => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/category']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao atualizar, tente novamente!');
       }
-    );
+    });
   }
 
   listById() {
     this.categoryService.listById(this.id!).subscribe((response) => {
       this.itemToEdit = response;
+      this.imgUrl = this.itemToEdit.imageUrl
 
       this.myForm.patchValue({
         description: this.itemToEdit.description,
@@ -131,7 +132,6 @@ export class NewCategoryComponent implements OnInit {
       this.myForm.controls['image'].clearValidators();
       this.myForm.controls['image'].updateValueAndValidity();
 
-      this.loadImage(response)
       this.showInputFile = false;
       this.showSkeleton = false
     });
@@ -165,15 +165,6 @@ export class NewCategoryComponent implements OnInit {
     this.myForm.controls['image'].updateValueAndValidity();
     
     this.showInputFile = true
-    this.imgUrl = null
-  }
-
-  //carrega a imagem de uma categoria
-  loadImage(response: Category){
-    this.categoryService.searchImg(response.image).subscribe((res) => {
-      const file = new File([res], response.image, { type: res.type });
-      this.imgUrl = URL.createObjectURL(file)
-      this.imageUploaded = file
-    })
+    this.imgUrl = ''
   }
 }
