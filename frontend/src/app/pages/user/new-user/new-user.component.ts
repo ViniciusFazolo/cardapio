@@ -43,14 +43,14 @@ export class NewUserComponent {
       this.id = params.get('id');
       if (this.id) {
         this.showSkeleton = true
-        this.userService.listById(this.id).subscribe(
-          () => {
+        this.userService.listById(this.id).subscribe({
+          next: () => {
             this.listById();
           },
-          () => {
+          error: () => {
             this.route.navigate(['/adm/user']);
           }
-        );
+        });
       }
     });
   }
@@ -81,15 +81,15 @@ export class NewUserComponent {
       active: this.myForm.value.active
     };
 
-    this.userService.create(user).subscribe(
-      (response) => {
+    this.userService.create(user).subscribe({
+      next: () => {
         this.toastr.success('Cadastrado com sucesso!');
         this.route.navigate(['/adm/user']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao cadastrar, tente novamente!');
       }
-    );
+    });
   }
 
   update() {
@@ -98,33 +98,35 @@ export class NewUserComponent {
     this.itemToEdit.password = this.myForm.value.password == '' ? this.itemToEdit.password : this.myForm.value.password 
     this.itemToEdit.active = this.myForm.value.active
 
-    this.userService.update(this.itemToEdit).subscribe(
-      (response) => {
+    this.userService.update(this.itemToEdit).subscribe({
+      next: () => {
         this.toastr.success('Atualizado com sucesso!');
         this.route.navigate(['/adm/user']);
       },
-      (error) => {
+      error: () => {
         this.toastr.error('Erro ao atualizar, tente novamente!');
       }
-    );
+    });
   }
 
   listById() {
-    this.userService.listById(this.id!).subscribe((response) => {
-      this.itemToEdit = response;
+    this.userService.listById(this.id!).subscribe({
+      next: (response) => {
+        this.itemToEdit = response;
 
-      this.showSkeleton = false
+        this.showSkeleton = false
 
-      this.myForm.patchValue({
-        username: this.itemToEdit.name,
-        email: this.itemToEdit.email,
-        active: this.itemToEdit.active
-      });
+        this.myForm.patchValue({
+          username: this.itemToEdit.name,
+          email: this.itemToEdit.email,
+          active: this.itemToEdit.active
+        });
 
-      this.myForm.controls['password'].clearValidators();
-      this.myForm.controls['password'].updateValueAndValidity();
-      this.myForm.controls['password2'].clearValidators();
-      this.myForm.controls['password2'].updateValueAndValidity();
+        this.myForm.controls['password'].clearValidators();
+        this.myForm.controls['password'].updateValueAndValidity();
+        this.myForm.controls['password2'].clearValidators();
+        this.myForm.controls['password2'].updateValueAndValidity();
+      }
     });
   }
 }
