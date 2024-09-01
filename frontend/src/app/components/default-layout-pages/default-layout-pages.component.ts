@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavbarAdmComponent } from "../navbar-adm/navbar-adm.component";
-import { RouterLinkWithHref, RouterOutlet } from '@angular/router';
-import { CommonModule, NgClass, NgIf } from '@angular/common';
+import { RouterLinkActive, RouterLinkWithHref, RouterOutlet } from '@angular/router';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-default-layout-pages',
   standalone: true,
-  imports: [NavbarAdmComponent, RouterOutlet, RouterLinkWithHref, NgClass, NgIf],
+  imports: [NavbarAdmComponent, RouterOutlet, RouterLinkWithHref, NgClass, NgIf, RouterLinkActive],
   templateUrl: './default-layout-pages.component.html',
   styleUrl: './default-layout-pages.component.css'
 })
@@ -34,6 +34,7 @@ export class DefaultLayoutPagesComponent implements OnInit{
   }
 
   closeSidebarOnClickLink(){
-    this.isSidebarOpen = false
+    if(window.innerWidth < 760)
+      this.isSidebarOpen = false
   }
 }

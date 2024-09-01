@@ -11,27 +11,31 @@
 
         <hr class="border border-gray-100 my-4" />
 
-        <div class="flex flex-col">
+        <div class="flex flex-col text-gray-700">
           <a routerLink="/adm/productOption"
-            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            [routerLinkActive]="['text-red-600', 'bg-gray-100']"
+            class="py-3 px-2 rounded-lg md:hover:text-red-600 text-sm"
             (click)="closeSidebarOnClickLink()">
             <i class="fa-solid fa-question me-2"></i>
             Perguntas do produto
           </a>
           <a routerLink="/adm/category"
-            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            [routerLinkActive]="['text-red-600', 'bg-gray-100']"
+            class="py-3 px-2 rounded-lg md:hover:text-red-600 text-sm"
             (click)="closeSidebarOnClickLink()">
             <i class="fa-solid fa-tag me-2"></i>
             Categoria do Produto
           </a>
           <a routerLink="/adm/product"
-            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            [routerLinkActive]="['text-red-600', 'bg-gray-100']"
+            class="py-3 px-2 rounded-lg md:hover:text-red-600 text-sm"
             (click)="closeSidebarOnClickLink()">
             <i class="fa-solid fa-box me-2"></i>
             Produtos
           </a>
           <a routerLink="/adm/user"
-            class="py-3 px-2 rounded-lg transition md:hover:bg-gray-500 md:hover:text-white text-sm"
+            [routerLinkActive]="['text-red-600', 'bg-gray-100']"
+            class="py-3 px-2 rounded-lg md:hover:text-red-600 text-sm"
             (click)="closeSidebarOnClickLink()">
             <i class="fa-solid fa-user me-2"></i>
             Usuários
@@ -50,12 +54,12 @@
       <div class="min-h-[85vh] p-4 shadow-sm rounded-md bg-white">
         <div class="flex items-center justify-between gap-3">
           <div>
-            <h5 class="md:text-md my-2">{{ title }}</h5>
+            <h3 class="my-2 text-xl font-normal">{{ title }}</h3>
           </div>
           
           @if(btnNewLink != ''){
             <div class="min-w-20">
-              <a class="bg-green-700 py-1.5 px-3 rounded-md text-white md:hover:bg-green-800 text-sm transition"
+              <a class="bg-red-700 py-1.5 px-3 rounded-md text-white md:hover:bg-red-800 text-sm transition"
                 [routerLink]="btnNewLink">
                 <span>Novo</span>
                 <i class="fa-solid fa-plus ms-2"></i>
