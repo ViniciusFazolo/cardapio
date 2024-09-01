@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
-import { RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../services/user.service';
 import { NgIf, NgStyle } from '@angular/common';
@@ -29,11 +29,13 @@ export class ListUserComponent {
   dtElement!: DataTableDirective;
 
   showProgressBar: boolean = true
+  isModalOpen: boolean = false
+  isDropdownOpen: number | null = null
 
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
-    private modal: ModalService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -46,37 +48,37 @@ export class ListUserComponent {
   }
   
   getCategories() {
-    this.userService.listAll().subscribe((users) => {
-      this.users = users;
+    this.userService.listAll().subscribe({
+      next: (users) => {
+        this.users = users;
 
-      this.showProgressBar = false;
+        this.showProgressBar = false;
 
-      if (this.dtElement.dtInstance != undefined) {
-        this.rerender()
-        return
+        if (this.dtElement.dtInstance != undefined) {
+          this.rerender()
+          return
+        }
+        
+        this.dtTrigger.next(null);
       }
-      
-      this.dtTrigger.next(null);
     });
   }
 
-  //save item id to delete if confirm
   saveItem(idItem: string) {
     this.idItem = idItem;
-
     this.showModal()
   }
 
   deleteItem() {
-    this.userService.delete(this.idItem).subscribe(
-      () => {
+    this.userService.delete(this.idItem).subscribe({
+      next: () => {
         this.toastr.success('Registro excluído com sucesso!');
         this.getCategories();
       },
-      () => {
+      error: () => {
         this.toastr.error('Erro ao excluir registro!');
       }
-    );
+    });
 
     this.showModal()
   }
@@ -106,6 +108,22 @@ export class ListUserComponent {
   }
 
   showModal(){
-    this.modal.showModal()
+    this.isModalOpen = !this.isModalOpen
+  }
+
+  toggleDropdown(index: number) {
+    this.isDropdownOpen = this.isDropdownOpen === index ? null : index
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    if (targetElement && !targetElement.closest('.relative.inline-block.text-left')) {
+      this.isDropdownOpen = null
+    }
+  }
+
+  goToEdit(id: string){
+    this.router.navigate([`/adm/user/${id}`])
   }
 }

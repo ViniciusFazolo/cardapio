@@ -1,15 +1,14 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DefaultLayoutPagesComponent } from '../../../components/default-layout-pages/default-layout-pages.component';
 import { CategoryService } from '../../../services/category.service';
 import { CommonModule, NgIf } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
-import { RouterLinkWithHref } from '@angular/router';
+import { Router, RouterLinkWithHref } from '@angular/router';
 import { DataTableDirective, DataTablesModule } from 'angular-datatables';
 import { Api, Config } from 'datatables.net';
 import { Subject } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ModalComponent } from '../../../components/modal/modal.component';
-import { ModalService } from '../../../services/modal.service';
 import { Category } from '../../../interfaces/category/category';
 
 @Component({
@@ -37,11 +36,13 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   dtElement!: DataTableDirective;
 
   showProgressBar: boolean = true
+  isModalOpen: boolean = false
+  isDropdownOpen: number | null = null
 
   constructor(
     private categoryService: CategoryService,
     private toastr: ToastrService,
-    private modal: ModalService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -54,16 +55,18 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   }
   
   getCategories() {
-    this.categoryService.listAll().subscribe((categories) => {
-      this.categories = categories;
-      this.showProgressBar = false
-      
-      if (this.dtElement.dtInstance != undefined) {
-        this.rerender()
-        return
-      }
+    this.categoryService.listAll().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+        this.showProgressBar = false
+        
+        if (this.dtElement.dtInstance != undefined) {
+          this.rerender()
+          return
+        }
 
-      this.dtTrigger.next(null);
+        this.dtTrigger.next(null);
+      }
     });
   }
 
@@ -74,15 +77,15 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   }
 
   deleteItem() {
-    this.categoryService.delete(this.idItem).subscribe(
-      () => {
+    this.categoryService.delete(this.idItem).subscribe({
+      next: () => {
         this.toastr.success('Registro excluído com sucesso!');
         this.getCategories();
       },
-      () => {
+      error: () => {
         this.toastr.error('Erro ao excluir registro. Possa ser que esteja vinculado a um ou mais registros!');
       }
-    );
+    });
     
     this.showModal()
   }
@@ -112,6 +115,22 @@ export class ListCategoryComponent implements OnInit, OnDestroy {
   }
 
   showModal(){
-    this.modal.showModal()
+    this.isModalOpen = !this.isModalOpen
+  }
+
+  toggleDropdown(index: number) {
+    this.isDropdownOpen = this.isDropdownOpen === index ? null : index
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const targetElement = event.target as HTMLElement;
+    if (targetElement && !targetElement.closest('.relative.inline-block.text-left')) {
+      this.isDropdownOpen = null
+    }
+  }
+
+  goToEdit(id: string){
+    this.router.navigate([`/adm/category/${id}`])
   }
 }

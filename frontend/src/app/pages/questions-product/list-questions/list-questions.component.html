@@ -10,14 +10,27 @@
           </thead>
           <tbody>
             @for (productOption of productOptions; track $index) {
-              <tr class="border-b">
-                <td class="align-middle text-start">
-                  <a [routerLink]="'/adm/productOption/' + productOption.id" class="text-blue-400 md:hover:text-blue-500 transition">{{productOption.description}}</a>
+              <tr class="border-b hover:bg-gray-50">
+                <td class="align-middle text-start w-52">
+                  <span class="text-gray-800">{{productOption.description}}</span>
                 </td>
                 <td class="text-center align-middle">
-                  <button class="h-8 w-8 bg-red-500 rounded-lg md:hover:bg-red-600 transition" data-bs-toggle="modal" data-bs-target="#alertDelete" (click)="saveItem(productOption.id!)">
-                    <i class="fa-solid fa-trash text-white"></i>
-                  </button>
+                  <div class="relative inline-block text-left">
+                    <div>
+                      <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true" (click)="toggleDropdown($index)">
+                        <i class="fa-solid fa-ellipsis"></i>
+                      </button>
+                    </div>
+                    
+                   @if (isDropdownOpen === $index) {
+                    <div class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <div class="py-1">
+                        <button (click)="goToEdit(productOption.id!)" class="text-start p-2 text-sm text-gray-800 w-full">Editar</button>
+                        <button (click)="saveItem(productOption.id!)" class="text-start p-2 text-sm text-gray-800 w-full">Apagar</button>
+                      </div>
+                    </div>
+                   }
+                  </div>
                 </td>
               </tr>
             }
@@ -27,7 +40,9 @@
 </app-default-layout-pages>
 
 <!-- Modal -->
-<app-modal [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
-  (confirm)="deleteItem()">
+@if (isModalOpen) {
+  <app-modal [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
+  (confirm)="deleteItem()" (close)="showModal()">
   <p>Realmente deseja excluir o registro?</p>
-</app-modal>  
+  </app-modal>
+}

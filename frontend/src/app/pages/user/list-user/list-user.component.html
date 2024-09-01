@@ -11,16 +11,28 @@
       </thead>
       <tbody>
         @for (user of users; track $index) {
-        <tr>
-          <td class="align-middle text-start"
+        <tr class="hover:bg-gray-50">
+          <td class="align-middle text-start w-52"
             [ngStyle]="{'background-color': !user.active ? 'rgba(218, 92, 92, 0.253)' : ''}">
-            <a [routerLink]="'/adm/user/' + user.id"
-              class="text-blue-400 md:hover:text-blue-500 transition">{{user.name}}</a>
+            <span class="text-gray-800">{{user.name}}</span>
           </td>
           <td class="text-center align-middle">
-            <button class="h-8 w-8 bg-red-500 rounded-lg md:hover:bg-red-600 transition" (click)="saveItem(user.id!)">
-              <i class="fa-solid fa-trash text-white"></i>
-            </button>
+            <div class="relative inline-block text-left">
+              <div>
+                <button type="button" class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" (click)="toggleDropdown($index)">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </button>
+              </div>
+              
+             @if (isDropdownOpen === $index) {
+              <div class="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div class="py-1">
+                  <button (click)="goToEdit(user.id!)" class="text-start p-2 text-sm text-gray-800 w-full">Editar</button>
+                  <button (click)="saveItem(user.id!)" class="text-start p-2 text-sm text-gray-800 w-full">Apagar</button>
+                </div>
+              </div>
+             }
+            </div>
           </td>
         </tr>
         }
@@ -30,6 +42,9 @@
 </app-default-layout-pages>
 
 <!-- Modal -->
-<app-modal (confirm)="deleteItem()" [btnPrimary]="'Excluir'" [title]="'Exclusão de registro'">
-  <span>Realmente deseja excluir o registro?</span>
-</app-modal>
+@if (isModalOpen) {
+  <app-modal [title]="'Exclusão de Registro'" [btnPrimary]="'Excluir'"
+  (confirm)="deleteItem()" (close)="showModal()">
+  <p>Realmente deseja excluir o registro?</p>
+  </app-modal>
+}
