@@ -26,6 +26,8 @@ public class OrderService {
 
         Order existingOrder = orderRepository.findByPhoneNumber(request.phoneNumber());
         if (existingOrder != null && existingOrder.isStatusOrder()) {
+            existingOrder.setValueTotalOrder(existingOrder.getValueTotalOrder() + request.valueTotalOrder());
+            orderRepository.save(orderMapper.toEntity(existingOrder));
             return ResponseEntity.ok().body(orderMapper.toDTO(existingOrder));
         }
     
@@ -46,6 +48,13 @@ public class OrderService {
 
     public ResponseEntity<ResponseOrderDTO> findById(String id){
         Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order not found"));
+        return ResponseEntity.ok().body(orderMapper.toDTO(order));
+    }
+
+    public ResponseEntity<ResponseOrderDTO> closeCont(int phoneNumber){
+        Order order = orderRepository.findByPhoneNumber(phoneNumber);
+        order.setStatusOrder(false);
+        orderRepository.save(order);
         return ResponseEntity.ok().body(orderMapper.toDTO(order));
     }
 
