@@ -30,4 +30,16 @@ public class OrderMapper {
         );
     }
 
+    public Order toEntity(Order order){
+        Order newOrder = new Order();
+        newOrder.setId(order.getId());
+        newOrder.setTableNumber(order.getTableNumber());
+        newOrder.setPhoneNumber(order.getPhoneNumber());
+        newOrder.setClientName(order.getClientName());
+        newOrder.setDateHour(order.getDateHour());
+        newOrder.setValueTotalOrder(order.getValueTotalOrder());
+        newOrder.setStatusOrder(order.isStatusOrder());
+        return newOrder;
+    }
+
 }
