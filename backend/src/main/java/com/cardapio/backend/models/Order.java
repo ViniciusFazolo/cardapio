@@ -21,6 +21,10 @@ public class Order {
     private int tableNumber;
     private int phoneNumber;
     private String clientName;
-    private LocalDateTime dateHour;
+    private LocalDateTime dateHour = LocalDateTime.now();
+
+    private double valueTotalOrder;
+
+    private boolean statusOrder = true;
 
 }

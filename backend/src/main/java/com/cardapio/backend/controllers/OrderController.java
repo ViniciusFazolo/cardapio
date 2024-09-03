@@ -48,5 +48,10 @@ public class OrderController {
     public void delete(@PathVariable String id){
         orderService.delete(id);
     }
+
+    @GetMapping("/close/{phoneNumber}")
+    public ResponseEntity<ResponseOrderDTO> close(@PathVariable int phoneNumber){
+        return orderService.closeCont(phoneNumber);
+    }
     
 }
