@@ -49,19 +49,19 @@ public class CategoryService {
 
         // salva a imagem no diretório especificado
         MultipartFile image = request.image();
-        String imageUrl = UtilFunctions.saveImage(image, uploadDir);
+        String imageName = UtilFunctions.saveImage(image, uploadDir);
 
         Category category = new Category();
         category.setDescription(request.description());
-        category.setUrlImage(imageUrl);
+        category.setImageName(imageName);
+        category.setProducts(null);
 
         category = categoryRepository.save(category);
         return ResponseEntity.ok().body(categoryMapper.toDTO(category));
     }
 
     public ResponseEntity<List<ResponseCategoryDTO>> listAll() {
-        List<ResponseCategoryDTO> categorys = categoryRepository.findAll().stream().map(categoryMapper::toDTO)
-                .collect(Collectors.toList());
+        List<ResponseCategoryDTO> categorys = categoryRepository.findAll().stream().map(categoryMapper::toDTO).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(categorys);
     }
@@ -106,13 +106,13 @@ public class CategoryService {
 
             if (!request.image().equals(null)) {
 
-                if (!request.image().getOriginalFilename().equals(category.getUrlImage())) {
+                if (!request.image().getOriginalFilename().equals(category.getImageName())) {
                     // apaga o arquivo antes de atualizar
-                    UtilFunctions.fileExistsDelete(category.getUrlImage(), uploadDir);
+                    UtilFunctions.fileExistsDelete(category.getImageName(), uploadDir);
 
                     if (request.image() != null) {
-                        String imageUrl = UtilFunctions.saveImage(request.image(), uploadDir);
-                        category.setUrlImage(imageUrl);
+                        String imageName = UtilFunctions.saveImage(request.image(), uploadDir);
+                        category.setImageName(imageName);
                     }
                 }
             }
@@ -125,7 +125,7 @@ public class CategoryService {
     public void delete(String id) {
         if (categoryRepository.existsById(id)) {
             Optional<Category> obj = categoryRepository.findById(id);
-            UtilFunctions.fileExistsDelete(obj.get().getUrlImage(), uploadDir);
+            UtilFunctions.fileExistsDelete(obj.get().getImageName(), uploadDir);
 
             categoryRepository.deleteById(id);
         } else {
