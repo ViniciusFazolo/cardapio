@@ -34,6 +34,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/product/listByCategory/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/product/listAll").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/product/assets/{filename}").permitAll()
+                        .requestMatchers("/categoryImages/**").permitAll()
+                        .requestMatchers("/productImages/**").permitAll()
                         .anyRequest().authenticated() // qualquer outro endpoint precisa ser autenticado
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
