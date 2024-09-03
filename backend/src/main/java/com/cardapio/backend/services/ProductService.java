@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -66,18 +65,23 @@ public class ProductService {
         Product product = new Product();
         product.setPrice(request.price());
         product.setDescription(request.description());
-        product.setUrlImage(imageUrl);
+        product.setImageName(imageUrl);
         product.setProductOptionTitles(request.productOptionTitle());
         
         Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
         product.setCategory(category);
+        
+        category.getProducts().add(product);
 
         for(ProductOptionTitle obj : request.productOptionTitle()){
+            if(obj.getId() == null) {
+                obj = productOptionTitleRepository.save(obj);
+            }
             obj.getProducts().add(product);
-            productOptionTitleRepository.save(obj);
         }
 
         product = productRepository.save(product);
+        categoryRepository.save(category);
         return ResponseEntity.ok().body(productMapper.toDTO(product));
     }
 
@@ -121,6 +125,7 @@ public class ProductService {
     }
 
     public ResponseEntity<ResponseProductDTO> update(RequestProductDTO request, String id){
+        System.out.println(request);
         return productRepository.findById(id).map(product -> {
             productRepository.findByDescription(request.description()).ifPresent(obj -> {
                 if(!obj.getId().equals(product.getId())){
@@ -131,17 +136,28 @@ public class ProductService {
             product.setDescription(request.description());
             product.setPrice(request.price());
             
-            Category category = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
-            product.setCategory(category);
+            //categoria antiga
+            Category oldCategory = categoryRepository.findById(product.getCategory().getId()).orElseThrow(() -> new RuntimeException("Category not found"));
+            
+            //categoria atual
+            Category currentCategory = categoryRepository.findById(request.category()).orElseThrow(() -> new RuntimeException("Category not found"));
+            
+            product.setCategory(currentCategory);
 
-            if(!request.image().equals(null)){
-                if(!request.image().getOriginalFilename().equals(product.getUrlImage())){
+            //verifica se o produto não permance com a mesma categoria. Então remove da velha lista e adiciona na atual
+            if(!product.getCategory().getId().equals(oldCategory.getId())){
+                oldCategory.getProducts().remove(product);
+                currentCategory.getProducts().add(product);
+            }
+            
+            if(request.image() != null){
+                if(!request.image().getOriginalFilename().equals(product.getImageName())){
                     // apaga o arquivo antes de atualizar
-                    UtilFunctions.fileExistsDelete(product.getUrlImage(), uploadDir);
+                    UtilFunctions.fileExistsDelete(product.getImageName(), uploadDir);
 
                     if(request.image() != null){
                         String imageUrl = UtilFunctions.saveImage(request.image(), uploadDir);
-                        product.setUrlImage(imageUrl);
+                        product.setImageName(imageUrl);
                     }
                 }
             }
@@ -180,8 +196,12 @@ public class ProductService {
 
     public void delete(String id){
         if(productRepository.existsById(id)){
-            Optional<Product> obj = productRepository.findById(id);
-            UtilFunctions.fileExistsDelete(obj.get().getUrlImage(), uploadDir);
+            Product obj = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+            
+            Category category = categoryRepository.findById(obj.getCategory().getId()).orElseThrow(() -> new RuntimeException("Category not found"));
+            category.getProducts().remove(obj);
+
+            UtilFunctions.fileExistsDelete(obj.getImageName(), uploadDir);
 
             productRepository.deleteById(id);
         }

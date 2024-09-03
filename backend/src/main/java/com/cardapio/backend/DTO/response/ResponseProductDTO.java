@@ -9,7 +9,7 @@ public record ResponseProductDTO(
     String id,
     float price,
     String description,
-    String image,
+    String imageUrl,
     Category category,
     List<ProductOptionTitle> productOptionTitle
 ) {
