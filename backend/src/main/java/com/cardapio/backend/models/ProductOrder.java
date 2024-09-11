@@ -22,5 +22,6 @@ public class ProductOrder {
     private Product product;
 
     private int quantity;
+    private String notes;
 
 }
