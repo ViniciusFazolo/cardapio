@@ -12,6 +12,7 @@ import com.cardapio.backend.DTO.request.RequestOrderDTO;
 import com.cardapio.backend.DTO.response.ResponseOrderDTO;
 import com.cardapio.backend.models.Order;
 import com.cardapio.backend.repositories.OrderRepository;
+import com.cardapio.backend.repositories.ProductOrderRepository;
 
 @Service
 public class OrderService {
@@ -22,20 +23,41 @@ public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private ProductOrderRepository productOrderRepository;
+
     public ResponseEntity<ResponseOrderDTO> save(RequestOrderDTO request) {
 
         Order existingOrder = orderRepository.findByPhoneNumber(request.phoneNumber());
         if (existingOrder != null && existingOrder.isStatusOrder()) {
             existingOrder.setValueTotalOrder(existingOrder.getValueTotalOrder() + request.valueTotalOrder());
+
+            if(existingOrder.getTableNumber() != request.tableNumber()){
+                existingOrder.setTableNumber(request.tableNumber());
+            }
+
             orderRepository.save(orderMapper.toEntity(existingOrder));
+
+            //seta o order nos produtos
+            request.products().forEach(obj -> {
+                obj.setOrder(existingOrder);
+            });
+            productOrderRepository.saveAll(request.products());
+
             return ResponseEntity.ok().body(orderMapper.toDTO(existingOrder));
         }
-    
+
         Order newOrder = orderRepository.save(orderMapper.toEntity(request));
+
+        request.products().forEach(obj -> {
+            obj.setOrder(newOrder);
+        });
+        productOrderRepository.saveAll(request.products());
+
         return ResponseEntity.ok().body(orderMapper.toDTO(newOrder));
     }
 
-    public ResponseEntity<ResponseOrderDTO> findByPhoneNumber(int phoneNumber) {
+    public ResponseEntity<ResponseOrderDTO> findByPhoneNumber(String phoneNumber) {
         return ResponseEntity.ok().body(orderMapper.toDTO(orderRepository.findByPhoneNumber(phoneNumber)));
     }
 
@@ -51,7 +73,7 @@ public class OrderService {
         return ResponseEntity.ok().body(orderMapper.toDTO(order));
     }
 
-    public ResponseEntity<ResponseOrderDTO> closeCont(int phoneNumber){
+    public ResponseEntity<ResponseOrderDTO> closeCont(String phoneNumber){
         Order order = orderRepository.findByPhoneNumber(phoneNumber);
         order.setStatusOrder(false);
         orderRepository.save(order);
