@@ -50,7 +50,7 @@ public class OrderController {
     }
 
     @GetMapping("/close/{phoneNumber}")
-    public ResponseEntity<ResponseOrderDTO> close(@PathVariable int phoneNumber){
+    public ResponseEntity<ResponseOrderDTO> close(@PathVariable String phoneNumber){
         return orderService.closeCont(phoneNumber);
     }
     
