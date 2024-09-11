@@ -19,7 +19,7 @@ public class Order {
     private String id;
 
     private int tableNumber;
-    private int phoneNumber;
+    private String phoneNumber;
     private String clientName;
     private LocalDateTime dateHour = LocalDateTime.now();
 
