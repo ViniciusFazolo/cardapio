@@ -1,11 +1,17 @@
 package com.cardapio.backend.DTO.request;
 
+import java.util.List;
+
+import com.cardapio.backend.models.ProductOrder;
+
 public record RequestOrderDTO(
     String id,
     int tableNumber,
-    int phoneNumber,
+    String phoneNumber,
     String clientName,
-    double valueTotalOrder
+    double valueTotalOrder,
+    List<ProductOrder> products
+
 ) {
     
 }
