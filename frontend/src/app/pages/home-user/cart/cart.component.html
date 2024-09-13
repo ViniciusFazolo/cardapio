@@ -2,10 +2,12 @@
     <app-navbar-cart />
 
     <div class="mt-5 w-full">
-        <app-primary-input [label]="'Nome'" [inputName]="'name'" />
-        <app-primary-input [label]="'Celular'" [inputName]="'cel'" [type]="'tel'" [mask]="'(00) 00000-0000'" />
-        <app-primary-input [label]="'Mesa'" [inputName]="'table'" [type]="'text'" [mask]="'00'"
-            [placeholder]="'Número da mesa'" />
+       <form [formGroup]="myForm">
+            <app-primary-input formControlName="name" [label]="'Nome'" [inputName]="'name'"/>
+            <app-primary-input formControlName="cel" [label]="'Celular'" [inputName]="'cel'" [type]="'tel'" [mask]="'(00) 00000-0000'" />
+            <app-primary-input formControlName="table" [label]="'Mesa'" [inputName]="'table'" [type]="'text'" [mask]="'00'"
+                [placeholder]="'Número da mesa'" />
+       </form>
     </div>
 
     <div class="mt-5 h-full">
