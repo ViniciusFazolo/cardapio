@@ -9,15 +9,12 @@
           [text]="'Das 16 as 18'"
           [category]="category"
           >
-          @for (product of products; track $index) {
-            @if(category.id == product.category.id){
+          @for (product of category.products; track $index) {
               <app-product
               [product]="product"
-              [id]="category.description"
-              (toggleModal)="toggleModal($event)"
+              (toggleModal)="handleModal($event)"
               />
             }
-          }
         </app-card>
       </div>
     </ng-container>
