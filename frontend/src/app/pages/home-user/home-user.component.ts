@@ -12,13 +12,13 @@ import { ModalComponent } from "../../components/modal/modal.component";
 import { NgIf } from '@angular/common';
 import { SkeletonModule } from 'primeng/skeleton';
 import { NumericSpinnerComponent } from '../../components/numeric-spinner/numeric-spinner.component';
-import { Category } from '../../interfaces/category/categoryHome';
-import { Product } from '../../interfaces/product/productHome';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrderFrontend, ProductOptionsFrontend } from '../../interfaces/order/orderFrontend';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
 import { Subscription } from 'rxjs';
+import { Category } from '../../interfaces/category/category';
+import { Product } from '../../interfaces/product/product';
 
 @Component({
   selector: 'app-home-user',
@@ -30,16 +30,15 @@ import { Subscription } from 'rxjs';
 
 export class HomeUserComponent implements OnInit{
   myForm: FormGroup
+  productSelect!: Product;
 
   categories!: Category[];
-  products!: Product[]
+  subscriptions: Subscription[] = [];
+  
   showSkeleton: boolean = true
   showModal: boolean = false;
   
-  subscriptions: Subscription[] = [];
-  productSelect!: Product;
-
-  constructor(private categoryService: CategoryService, private productService: ProductService, private toastr: ToastrService, private cart: CartService){
+  constructor(private categoryService: CategoryService, private toastr: ToastrService, private cart: CartService){
     this.myForm = new FormGroup({
       qtItems: new FormControl(0, [Validators.required]),
       notes: new FormControl(''),
@@ -52,41 +51,15 @@ export class HomeUserComponent implements OnInit{
   }
 
   getCategories(){
-    this.categoryService.listAll().subscribe((response) => {
-      this.categories = response
-      this.getImagesCategory()
-      this.getProducts()
+    this.categoryService.listAll().subscribe({
+      next: (response) => {
+        this.categories = response
+        this.showSkeleton = false
+      }
     })
   }
 
-  getImagesCategory(){
-    for (const obj of this.categories) {
-      this.categoryService.searchImg(obj.image).subscribe(response => {
-        const file = new File([response], obj.image, { type: response.type });
-        obj.imageUrl =  URL.createObjectURL(file)
-      })
-    }
-  }
-
-  getProducts(){
-    this.productService.listAll().subscribe(response => {
-      this.products = response
-      this.getImagesProduct()
-    })
-  }
-
-  getImagesProduct(){
-    for (const obj of this.products) {
-      this.productService.searchImg(obj.image).subscribe(response => {
-        const file = new File([response], obj.image, { type: response.type });
-        obj.imageUrl =  URL.createObjectURL(file)
-      })
-    }
-
-    this.showSkeleton = false
-  }
-
-  toggleModal(obj: Product){
+  handleModal(obj: Product){
     this.productSelect = obj
 
     const optionsArray = this.myForm.get('productOptions') as FormArray;
