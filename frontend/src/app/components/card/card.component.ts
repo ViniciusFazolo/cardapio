@@ -1,6 +1,6 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Category } from '../../interfaces/category/categoryHome';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Category } from '../../interfaces/category/category';
 
 @Component({
   selector: 'app-card',
@@ -9,13 +9,13 @@ import { Category } from '../../interfaces/category/categoryHome';
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
-export class CardComponent {
+export class CardComponent{
   isProductsVisible: boolean = false
 
   @Input() subtitle: string = '';
   @Input() text: string = '';
   @Input() category!: Category
-
+  
   toggleProductsVisibility(){
     this.isProductsVisible = !this.isProductsVisible
   }
