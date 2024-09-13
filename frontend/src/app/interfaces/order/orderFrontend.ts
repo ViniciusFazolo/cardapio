@@ -1,4 +1,4 @@
-import { Product } from "../product/productHome"
+import { Product } from "../product/product"
 
 export interface OptionsFrontend {
     checked: boolean,

@@ -1,6 +1,9 @@
+import { Product } from "../product/product";
+
 export interface Category {
     id?: string,
     description: string,
-    image: string,
+    imageUrl: string,
+    products: Product[]
 }
 
