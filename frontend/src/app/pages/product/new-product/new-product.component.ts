@@ -116,7 +116,7 @@ export class NewProductComponent implements OnInit {
       this.myForm.patchValue({
         description: this.itemToEdit.description,
         price: this.itemToEdit.price,
-        category: this.itemToEdit.category.id,
+        category: this.itemToEdit.category?.id,
         productOptionTitle: productOptionIds,
       });
 
@@ -221,7 +221,7 @@ export class NewProductComponent implements OnInit {
   }
 
   addProductOptionTitle(event: any) {
-    const selectedOptions = event.value; // Should be an array of selected IDs
+    const selectedOptions = event.value;
     const formArray = this.myForm.get('productOptionTitle') as FormArray;
     formArray.clear();
     selectedOptions.forEach((id: string) => {
