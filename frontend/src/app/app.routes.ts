@@ -13,6 +13,7 @@ import { AuthguardInverseService } from './services/authguard-inverse.service';
 import { HomeUserComponent } from './pages/home-user/home-user.component';
 import { FormQuestionsComponent } from './pages/questions-product/form-questions/form-questions.component';
 import { ListQuestionsComponent } from './pages/questions-product/list-questions/list-questions.component';
+import { CartComponent } from './pages/home-user/cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -82,6 +83,10 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     canActivate: [AuthguardInverseService]
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   },
   {
     path: '**',
