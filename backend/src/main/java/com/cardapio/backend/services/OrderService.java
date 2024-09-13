@@ -46,7 +46,7 @@ public class OrderService {
 
             return ResponseEntity.ok().body(orderMapper.toDTO(existingOrder));
         }
-
+    
         Order newOrder = orderRepository.save(orderMapper.toEntity(request));
 
         request.products().forEach(obj -> {
