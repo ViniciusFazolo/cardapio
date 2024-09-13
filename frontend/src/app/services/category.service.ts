@@ -25,8 +25,4 @@ export class CategoryService extends CrudService<Category>{
   updateWithFormData(obj: FormData): Observable<Category>{
     return this.http.put<Category>(`${environment.apiUrl}/category/update/${obj.get('id')}` , obj, {headers: this.header});
   }
-   
-  searchImg(filename: string):Observable<Blob>{
-    return this.http.get<Blob>(`${environment.apiUrl}/category/assets/` + filename, { responseType: 'blob' as 'json', headers: this.header })
-  }
 }
